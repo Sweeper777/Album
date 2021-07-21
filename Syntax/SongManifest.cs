@@ -7,28 +7,46 @@ namespace Album.Syntax {
     public class SongManifest {
 
         [JsonProperty("SongNames")]
-        public Dictionary<string, LineType> SongNames { get; set; }
+        public Dictionary<string, LineType> SongNames { get; }
 
         [JsonProperty("SpecialPushes")]
-        public Dictionary<string, int> SpecialPushes { get; set; }
+        public Dictionary<string, int> SpecialPushes { get; }
         
         [JsonProperty("SpecialSongs")]
-        public SpecialSongs SpecialSongs { get; set; }
+        public SpecialSongs SpecialSongs { get; }
+
+        public SongManifest(Dictionary<string, LineType> songNames,
+                            Dictionary<string, int> specialPushes,
+                            SpecialSongs specialSongs) {
+            SongNames = songNames;
+            SpecialPushes = specialPushes;
+            SpecialSongs = specialSongs;
+        }
     }
 
     public class SpecialSongs {
         [JsonProperty("PushX")]
-        public SpecialSongInfo PushX { get; set; }
+        public SpecialSongInfo PushX { get; }
 
         [JsonProperty("Branch")]
-        public SpecialSongInfo Branch { get; set; }
+        public SpecialSongInfo Branch { get; }
+
+        public SpecialSongs(SpecialSongInfo pushX, SpecialSongInfo branch) {
+            PushX = pushX;
+            Branch = branch;
+        }
     }
 
     public class SpecialSongInfo {
         [JsonProperty("StartWith")]
-        public string StartWith { get; set; }
+        public string StartWith { get; }
 
         [JsonProperty("EndWith")]
-        public string EndWith { get; set; }
+        public string EndWith { get; }
+
+        public SpecialSongInfo(string startWith, string endWith) {
+            StartWith = startWith;
+            EndWith = endWith;
+        }
     }
 }
