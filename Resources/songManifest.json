@@ -1,0 +1,48 @@
+{
+    "SongNames": {
+        "voracity, by myth & roid": "Input",
+        "do you hear the people sing? by lés miserables": "OutputChar",
+        "do you hear the people sing? by les miserables": "OutputChar",
+        "gasoline, by halsey": "OutputInt",
+        "man in the mirror, by michael jackson": "Double",
+        "man in the mirror, by mj": "Double",
+        "the right path, by thomas greenberg": "Halve",
+        "killer queen, by queen": "Clear",
+        "let it go, by idina menzel": "Pop",
+        "dirty deeds done dirt cheap, by ac/dc" : "Dup",
+        "d4c, by ac/dc": "Dup",
+        "dear maria, count me in, by all time low" : "Add",
+        "sink or swim, by tyrone wells": "Or",
+        "take it from me, by the weepies": "Sub",
+        "hideaway, by the weepies": "And",
+        "desperado, by the eagles": "Eor",
+        "i'm so tired, by lauv & troye sivan": "Quit",
+        "zenzenzense, by radwimps": "Swap",
+        "zenzenzensē, by radwimps": "Swap",
+        "zenzenzensei, by radwimps": "Swap",
+        "roundabout, by yes": "Cycle",
+        "rolling in the deep, by adele": "RCycle",
+        "king nothing, by metallica": "TopZero",
+        "loser, by kenshi yonezu": "TopNegative",
+        "nothing compares 2u, by sinéad o'connor": "TopPositive",
+        "nothing compares 2u, by sinead o'connor": "TopPositive",
+        "never gonna give you up, by rick astley": "InfiniteLoop"
+    },
+    "SpecialSongs": {
+        "PushX": {
+            "StartWith": null,
+            "EndWith": " Bottles of Beer On The Wall"
+        },
+        "Branch": {
+            "StartWith": "Country Roads, Take Me ",
+            "EndWith": null
+        }
+    },
+    "SpecialPushes": {
+        "1 bottle of beer on the wall": 1,
+        "no bottles of beer on the wall": 0,
+        "50 ways to say goodbye, by train": 50,
+        "i'm gonna be (500 miles), by the proclaimers": 500,
+        "senbonzakura, by kurousa-p": 1000
+    }
+}
