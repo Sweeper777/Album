@@ -5,7 +5,7 @@ namespace Album.Syntax {
     
     [JsonConverter(typeof(StringEnumConverter))]
     public enum LineType {
-        Unknown,
+        Comment,
         Input,
         OutputInt,
         OutputChar,
