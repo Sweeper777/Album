@@ -14,4 +14,8 @@
     <EmbeddedResource Include="Resources/songManifest.json" />
   </ItemGroup>
 
+  <PropertyGroup>
+  <Nullable>enable</Nullable>
+</PropertyGroup>
+
 </Project>
