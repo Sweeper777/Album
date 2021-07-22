@@ -96,7 +96,7 @@ Pushes `<number>` onto the stack. `<number>` can only be non-negative, and less 
 
     <original song name>, by <playlist creator name>
 
-This declares an original song (label) if `<playlist creator name>` is the same as the name in the playlist creator declaration.
+This declares an original song (label) if `<playlist creator name>` is the same as the name in the playlist creator declaration, otherwise this is a comment.
 
     Country Roads, Take Me <original song name>
 
@@ -113,5 +113,20 @@ There are also songs that push specific numbers onto the stack:
 Alternative spellings of all of these song names could be accepted depending on the implementation.
 
 Each song name can have trailing and leading whitespace, and can optionally be ended with a semicolon, or a period.
+
+The meaning of a line can be ambiguous. For example, the third line of:
+
+```
+Playlist created by Bob
+Home, by Bob, by Bob
+Country Roads, Take Me Home, by Bob
+```
+
+could be interpreted as declaring an original song named "Country Roads, Take Me Home", or it could be interpreted as the Country Roads song, with the `<original song name>` being "Home, by Bob". The second line is also problematic - this could be interpreted as an original song called "Home, by Bob", that is by Bob, or it could be parsed as "Home" by "Bob, by Bob". In the latter case though, since "Bob, by Bob" is not the playlist creator name, the line will just be a comment. To disambiguate this, the following rules apply,
+
+- if a line can be interpreted as a song that is neither a Country Roads song nor an original song, it will be interpreted as that song, otherwise;
+- if a line can be interpreted as a Country Roads song, it will be, otherwise;
+- if a line can be interpreted as an original song, it will be, otherwise;
+- the line is interpreted as a comment
 
 An Album implementation is NOT required to terminate the playlist after the last song is played, so it is recommended to add the song "I'm So Tired, by Lauv & Troye Sivan" at the end of every playlist that isn't intended to play on loop forever.
