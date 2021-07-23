@@ -86,12 +86,12 @@ namespace Album.Syntax {
 
     public class SpecialSongInfo {
         [JsonProperty("StartWith")]
-        public string StartWith { get; }
+        public string? StartWith { get; }
 
         [JsonProperty("EndWith")]
-        public string EndWith { get; }
+        public string? EndWith { get; }
 
-        public SpecialSongInfo(string startWith, string endWith) {
+        public SpecialSongInfo(string? startWith, string? endWith) {
             StartWith = startWith;
             EndWith = endWith;
         }

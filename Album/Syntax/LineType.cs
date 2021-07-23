@@ -25,7 +25,7 @@ namespace Album.Syntax {
         Swap,
         Cycle,
         RCycle,
-        Label,
+        OriginalSong,
         TopPositive,
         TopNegative,
         TopZero,

@@ -14,7 +14,7 @@ namespace Album.Syntax {
 
         public static LineInfo OfType(LineType type) {
             if (type == LineType.Push ||
-                type == LineType.Label ||
+                type == LineType.OriginalSong ||
                 type == LineType.Branch) {
                 throw new ArgumentException(
                     "type must not be a type of line that takes arguments!",
@@ -27,10 +27,10 @@ namespace Album.Syntax {
         public static LineInfo Push(int number)
             => new LineInfo(LineType.Push, null, number);
 
-        public static LineInfo Label(string name)
-            => new LineInfo(LineType.Label, name, null);
+        public static LineInfo OriginalSong(string name)
+            => new LineInfo(LineType.OriginalSong, name, null);
 
-        public static LineInfo Branch(string label)
-            => new LineInfo(LineType.Branch, label, null);
+        public static LineInfo Branch(string originalSong)
+            => new LineInfo(LineType.Branch, originalSong, null);
     }
 }
