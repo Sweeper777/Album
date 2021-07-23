@@ -4,6 +4,10 @@ using Newtonsoft.Json.Converters;
 namespace Album {
     [JsonConverter(typeof(StringEnumConverter))]
     public enum CompilerMessage {
-        NoPlaylistCreatorDeclFound
+        NoPlaylistCreatorDeclFound,
+        PushXTooSmall,
+        PushXTooLarge,
+        Push1,
+        InvalidOriginalSongName
     }
 }
