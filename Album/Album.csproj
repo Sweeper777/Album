@@ -7,11 +7,10 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="NUnit" Version="3.13.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources/songManifest.json" />
+    <EmbeddedResource Include="../Resources/songManifest.json" />
   </ItemGroup>
 
   <PropertyGroup>
