@@ -23,6 +23,14 @@ namespace Album.Syntax {
 
         }
 
+        private void OutputError(CompilerMessage message) {
+            Outputs.Add(new CompilerOutput(
+                message,
+                CompilerOutputType.Error,
+                currentLine
+            ));
+        }
+
 
         private string? ReadNextLine() {
             var line = reader.ReadLine()?.Cleaned().ToLowerInvariant();
@@ -30,6 +38,25 @@ namespace Album.Syntax {
                 currentLine++;
             }
             return line;
+        }
+
+        public string? FindPlaylistCreatorName() {
+            string? line;
+            while ((line = ReadNextLine()) != null) {
+                var name = FindPlaylistCreatorNameFrom(line);
+                if (name != null) {
+                    return name;
+                }
+            }
+            return null;
+        }
+
+        public string? FindPlaylistCreatorNameFrom(string line) {
+            if (line.StartsWith(PLAYLIST_CREATOR_PREFIX)) {
+                return line.Substring(PLAYLIST_CREATOR_PREFIX.Length).Cleaned();
+            } else {
+                return null;
+            }
         }
 
         protected virtual void Dispose(bool disposing)
