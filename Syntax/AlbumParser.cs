@@ -31,6 +31,18 @@ namespace Album.Syntax {
             ));
         }
 
+        public IList<LineInfo> Parse() {
+            var list = new List<LineInfo>();
+            var playlistCreatorName = FindPlaylistCreatorName();
+            if (playlistCreatorName == null) {
+                OutputError(CompilerMessage.NoPlaylistCreatorDeclFound);
+                return list;
+            }
+
+            // TODO: continue parsing
+
+            return list;
+        }
 
         private string? ReadNextLine() {
             var line = reader.ReadLine()?.Cleaned().ToLowerInvariant();
