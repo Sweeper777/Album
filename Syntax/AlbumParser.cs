@@ -23,6 +23,15 @@ namespace Album.Syntax {
 
         }
 
+
+        private string? ReadNextLine() {
+            var line = reader.ReadLine()?.Cleaned().ToLowerInvariant();
+            if (line != null) {
+                currentLine++;
+            }
+            return line;
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
@@ -40,5 +49,9 @@ namespace Album.Syntax {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+    }
+
+    static class StringCleaner {
+        public static string Cleaned(this string s) => s.Trim().Trim(';', '.');
     }
 }
