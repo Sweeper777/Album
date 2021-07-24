@@ -101,6 +101,20 @@ namespace Album.Syntax {
                 return LineInfo.Push(pushAmount);
             }
 
+            if (TryParseFromSpecialSongInfo(SongManifest.BranchSyntax, line, out var originalSong) &&
+                originalSong != "") {
+                return LineInfo.Branch(originalSong);
+            }
+
+            if (TryParseOriginalSong(line, playlistCreator, out originalSong) && 
+                originalSong != "") {
+                if (originalSong.Any(":;.".Contains)) {
+                    OutputError(CompilerMessage.InvalidOriginalSongName);
+                    return LineInfo.OfType(LineType.Comment);
+                } else {
+                    return LineInfo.OriginalSong(originalSong);
+                }
+            }
 
             return LineInfo.OfType(LineType.Comment);
         }
