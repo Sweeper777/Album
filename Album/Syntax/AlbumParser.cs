@@ -84,6 +84,23 @@ namespace Album.Syntax {
                 return LineInfo.Push(pushAmount);
             }
 
+            if (TryParseFromSpecialSongInfo(SongManifest.PushXSyntax, line, out var pushAmountString) &&
+                int.TryParse(pushAmountString, out pushAmount)) {
+                if (pushAmount < 0) {
+                    OutputError(CompilerMessage.PushXTooSmall);
+                    return LineInfo.OfType(LineType.Comment);
+                }
+                if (pushAmount > 99) {
+                    OutputError(CompilerMessage.PushXTooLarge);
+                    return LineInfo.OfType(LineType.Comment);
+                }
+                if (pushAmount == 1) {
+                    OutputError(CompilerMessage.Push1);
+                    return LineInfo.OfType(LineType.Comment);
+                }
+                return LineInfo.Push(pushAmount);
+            }
+
 
             return LineInfo.OfType(LineType.Comment);
         }
