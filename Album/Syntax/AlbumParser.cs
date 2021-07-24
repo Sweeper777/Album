@@ -1,13 +1,15 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Album.Syntax {
     public class AlbumParser: IDisposable {
         private const string PLAYLIST_CREATOR_PREFIX = "playlist created by ";
 
         private bool disposedValue;
-        private StreamReader reader;
+        private TextReader reader;
         private int currentLine = 0;
 
         public ISongManifest SongManifest { get; set; }
@@ -18,9 +20,9 @@ namespace Album.Syntax {
             this.reader = new StreamReader(stream);
         }
 
-        public AlbumParser(SongManifest manifest, string path) 
-            : this(manifest, File.OpenRead(path)) {
-
+        public AlbumParser(SongManifest manifest, string text) {
+            SongManifest = manifest;
+            this.reader = new StringReader(text);
         }
 
         private void OutputError(CompilerMessage message) {
@@ -52,20 +54,19 @@ namespace Album.Syntax {
             return line;
         }
 
-        public string? FindPlaylistCreatorName() {
-            string? line;
-            while ((line = ReadNextLine()) != null) {
+        private string? FindPlaylistCreatorName() {
+            while (ReadNextLine() is string line) {
                 var name = FindPlaylistCreatorNameFrom(line);
-                if (name != null) {
+                if (!string.IsNullOrEmpty(name)) {
                     return name;
                 }
             }
             return null;
         }
 
-        public string? FindPlaylistCreatorNameFrom(string line) {
+        private string? FindPlaylistCreatorNameFrom(string line) {
             if (line.StartsWith(PLAYLIST_CREATOR_PREFIX)) {
-                return line.Substring(PLAYLIST_CREATOR_PREFIX.Length).Cleaned();
+                return line.Substring(PLAYLIST_CREATOR_PREFIX.Length).TrimStart();
             } else {
                 return null;
             }
