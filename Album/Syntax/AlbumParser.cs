@@ -7,6 +7,7 @@ using System.Linq;
 namespace Album.Syntax {
     public class AlbumParser: IDisposable {
         private const string PLAYLIST_CREATOR_PREFIX = "playlist created by ";
+        private const string ORIGINAL_SONG_SEPARATOR = ", by ";
 
         private bool disposedValue;
         private TextReader reader;
@@ -70,6 +71,21 @@ namespace Album.Syntax {
             } else {
                 return null;
             }
+        }
+
+
+        private bool TryParseFromSpecialSongInfo(SpecialSongInfo info, string line, 
+                                                [NotNullWhen(true)] out string? result) {
+            result = null;
+            if (info.StartWith is string prefix && line.StartsWith(prefix)) {
+                result = line.Substring(prefix.Length);
+            }
+            if (info.EndWith is string suffix && line.EndsWith(suffix)) {
+                result = result ?? line;
+                result = result.Substring(0, result.Length - 1 - suffix.Length);
+            }
+            result = result?.Trim();
+            return result != null;
         }
 
         protected virtual void Dispose(bool disposing)
