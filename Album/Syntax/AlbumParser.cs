@@ -42,7 +42,9 @@ namespace Album.Syntax {
                 return list;
             }
 
-            // TODO: continue parsing
+            while (ReadNextLine() is string line) {
+                list.Add(ParseLine(line, playlistCreatorName));
+            }
 
             return list;
         }
@@ -73,6 +75,18 @@ namespace Album.Syntax {
             }
         }
 
+        private LineInfo ParseLine(string line, string playlistCreator) {
+            var fixedLineType = SongManifest.GetFixedLineType(line);
+            if (fixedLineType != LineType.Comment) {
+                return LineInfo.OfType(fixedLineType);
+            }
+            if (SongManifest.GetFixedPushAmount(line) is int pushAmount) {
+                return LineInfo.Push(pushAmount);
+            }
+
+
+            return LineInfo.OfType(LineType.Comment);
+        }
 
         private bool TryParseFromSpecialSongInfo(SpecialSongInfo info, string line, 
                                                 [NotNullWhen(true)] out string? result) {
