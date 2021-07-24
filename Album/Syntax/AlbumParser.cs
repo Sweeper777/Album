@@ -88,6 +88,21 @@ namespace Album.Syntax {
             return result != null;
         }
 
+        private bool TryParseOriginalSong(string line, string playlistCreator, 
+                                          [NotNullWhen(true)] out string? result) {
+            int index = line.IndexOf(ORIGINAL_SONG_SEPARATOR, 0);
+            while (index >= 0) {
+                var artistName = line.Substring(index + ORIGINAL_SONG_SEPARATOR.Length).TrimStart();
+                if (artistName == playlistCreator) {
+                    result = line.Substring(0, index);
+                    return true;
+                }
+                index = line.IndexOf(ORIGINAL_SONG_SEPARATOR, index);
+            }
+            result = null;
+            return false;
+        }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
