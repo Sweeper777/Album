@@ -3,11 +3,13 @@ using System.IO;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Album.Syntax {
     public class AlbumParser: IDisposable {
         private const string PLAYLIST_CREATOR_PREFIX = "playlist created by ";
         private const string ORIGINAL_SONG_SEPARATOR = ", by ";
+        private Regex lineTrimmingRegex = new Regex("^[\\s;.]+|[\\s;.]+$");
 
         private bool disposedValue;
         private TextReader reader;
@@ -21,7 +23,7 @@ namespace Album.Syntax {
             this.reader = new StreamReader(stream);
         }
 
-        public AlbumParser(SongManifest manifest, string text) {
+        public AlbumParser(ISongManifest manifest, string text) {
             SongManifest = manifest;
             this.reader = new StringReader(text);
         }
@@ -50,8 +52,9 @@ namespace Album.Syntax {
         }
 
         private string? ReadNextLine() {
-            var line = reader.ReadLine()?.Cleaned().ToLowerInvariant();
+            var line = reader.ReadLine();
             if (line != null) {
+                line = lineTrimmingRegex.Replace(line, "").ToLowerInvariant();
                 currentLine++;
             }
             return line;
@@ -142,7 +145,7 @@ namespace Album.Syntax {
                     result = line.Substring(0, index);
                     return true;
                 }
-                index = line.IndexOf(ORIGINAL_SONG_SEPARATOR, index);
+                index = line.IndexOf(ORIGINAL_SONG_SEPARATOR, index + 1);
             }
             result = null;
             return false;
@@ -165,9 +168,5 @@ namespace Album.Syntax {
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
-    }
-
-    static class StringCleaner {
-        public static string Cleaned(this string s) => s.Trim().Trim(';', '.');
     }
 }
