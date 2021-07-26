@@ -68,5 +68,18 @@ namespace Album.Tests {
             });
         }
 
+        [TestCase("branch to Somewhere", "somewhere")]
+        [TestCase("branch to      Somewhere.     ", "somewhere")]
+        [TestCase("branch to , by Sweeper", ", by sweeper")]
+        public void CanParseBranches(string line, string expectedDestination) {
+            string codeWithPlaylistCreatorAdded = "playlist created by Sweeper\n" + line;
+            using var parser = new AlbumParser(new DummySongManifest(), codeWithPlaylistCreatorAdded);
+            var lines = parser.Parse();
+            Assert.Multiple(() => {
+                CollectionAssert.IsEmpty(parser.Outputs);
+                CollectionAssert.AreEqual(lines, new[] { LineInfo.Branch(expectedDestination) });
+            });
+        }
+
     }
 }
