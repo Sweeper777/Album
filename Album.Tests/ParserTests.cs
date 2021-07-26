@@ -54,5 +54,19 @@ namespace Album.Tests {
             });
         }
 
+        [TestCase("    An Original: Song     , by Sweeper", CompilerMessage.InvalidOriginalSongName)]
+        [TestCase("100 pushes", CompilerMessage.PushXTooLarge)]
+        [TestCase("1 pushes", CompilerMessage.Push1)]
+        [TestCase("-1 pushes", CompilerMessage.PushXTooSmall)]
+        public void CannotParseLinesWithErrors(string line, CompilerMessage expectedMessage) {
+            string codeWithPlaylistCreatorAdded = "playlist created by Sweeper\n" + line;
+            using var parser = new AlbumParser(new DummySongManifest(), codeWithPlaylistCreatorAdded);
+            var lines = parser.Parse();
+            Assert.Multiple(() => {
+                Assert.That(parser.Outputs, Has.One.Matches<CompilerOutput>(x => x.Message == expectedMessage));
+                CollectionAssert.AreEqual(lines, new[] { LineInfo.OfType(LineType.Comment) });
+            });
+        }
+
     }
 }
