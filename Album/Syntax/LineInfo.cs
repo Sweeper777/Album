@@ -32,5 +32,17 @@ namespace Album.Syntax {
 
         public static LineInfo Branch(string originalSong)
             => new LineInfo(LineType.Branch, originalSong, null);
+
+        public override string ToString()
+        {
+            var lineTypeName = Enum.GetName<LineType>(type) ?? "Unknown";
+            if (stringValue is string paramStr) {
+                return $"{lineTypeName} {paramStr}";
+            } else if (intValue is int intParam) {
+                return $"{lineTypeName} {intParam}";
+            } else {
+                return lineTypeName;
+            }
+        }
     }
 }
