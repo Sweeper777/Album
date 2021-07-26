@@ -95,5 +95,16 @@ namespace Album.Tests {
             });
         }
 
+        [TestCase("an Original Song, by , by Sweeper", "an original song")]
+        [TestCase("       an Original Song         , by , by Sweeper", "an original song")]
+        public void CanParseOriginalSongs(string line, string expectedName) {
+            string codeWithPlaylistCreatorAdded = "playlist created by , by Sweeper\n" + line;
+            using var parser = new AlbumParser(new DummySongManifest(), codeWithPlaylistCreatorAdded);
+            var lines = parser.Parse();
+            Assert.Multiple(() => {
+                CollectionAssert.IsEmpty(parser.Outputs);
+                CollectionAssert.AreEqual(lines, new[] { LineInfo.OriginalSong(expectedName) });
+            });
+        }
     }
 }
