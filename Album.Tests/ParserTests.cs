@@ -32,5 +32,27 @@ namespace Album.Tests {
                 CollectionAssert.IsSubsetOf(lines, new[] { LineInfo.OfType(LineType.Comment) });
             });
         }
+
+        [TestCase("input", LineType.Input)]
+        [TestCase("; ; ; ; input . . . ", LineType.Input)]
+        [TestCase("This will get input", LineType.Comment)]
+        [TestCase("INPUT", LineType.Input)]
+        [TestCase("  . . . ; ; ;   ", LineType.Comment)]
+        [TestCase("50 non pushes", LineType.Comment)]
+        [TestCase("An Original Song, by Sweepers", LineType.Comment)]
+        [TestCase(" pushes", LineType.Comment)]
+        [TestCase("...    , by Sweeper", LineType.Comment)]
+        [TestCase("branch to ...", LineType.Comment)]
+        [TestCase("branch     to somewhere", LineType.Comment)]
+        public void CanParseLine(string line, LineType expectedType) {
+            string codeWithPlaylistCreatorAdded = "playlist created by Sweeper\n" + line;
+            using var parser = new AlbumParser(new DummySongManifest(), codeWithPlaylistCreatorAdded);
+            var lines = parser.Parse();
+            Assert.Multiple(() => {
+                CollectionAssert.IsEmpty(parser.Outputs);
+                CollectionAssert.AreEqual(lines, new[] { LineInfo.OfType(expectedType) });
+            });
+        }
+
     }
 }
