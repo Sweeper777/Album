@@ -3,6 +3,7 @@ using Album.Syntax;
 using System.Collections.Generic;
 
 namespace Album.Tests {
+    [Timeout(1000)]
     public class ParserTests {
 
         [TestCase("playlist created by Sweeper")]
@@ -26,9 +27,10 @@ namespace Album.Tests {
             string codeWithLabelAdded = code + "\noriginal song, by Sweeper";
             using var parser = new AlbumParser(new DummySongManifest(), codeWithLabelAdded);
             var lines = parser.Parse();
-            CollectionAssert.IsNotEmpty(parser.Outputs);
-            Assert.AreEqual(CompilerMessage.NoPlaylistCreatorDeclFound, parser.Outputs[0].Message);
-            CollectionAssert.IsSubsetOf(lines, new List<LineInfo> { LineInfo.OfType(LineType.Comment) });
+            Assert.Multiple(() => {
+                Assert.That(parser.Outputs, Has.One.Matches<CompilerOutput>(x => x.Message == CompilerMessage.NoPlaylistCreatorDeclFound));
+                CollectionAssert.IsSubsetOf(lines, new[] { LineInfo.OfType(LineType.Comment) });
+            });
         }
     }
 }
