@@ -81,5 +81,19 @@ namespace Album.Tests {
             });
         }
 
+        [TestCase("50 pushes", 50)]
+        [TestCase("            50       pushes", 50)]
+        [TestCase("1 push", 1)]
+        [TestCase("no pushes", 0)]
+        public void CanParsePush(string line, int expectedPush) {
+            string codeWithPlaylistCreatorAdded = "playlist created by Sweeper\n" + line;
+            using var parser = new AlbumParser(new DummySongManifest(), codeWithPlaylistCreatorAdded);
+            var lines = parser.Parse();
+            Assert.Multiple(() => {
+                CollectionAssert.IsEmpty(parser.Outputs);
+                CollectionAssert.AreEqual(lines, new[] { LineInfo.Push(expectedPush) });
+            });
+        }
+
     }
 }
