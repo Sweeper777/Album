@@ -1,0 +1,157 @@
+Playlist created by MMZK1526
+
+Input: A positive number
+
+Output: The transformation until 1 (as Collatz sequence), and the number of
+transformations.
+
+Example:
+Input: 
+26
+Output: 
+26 13 40 20 10 5 16 8 4 2 1 
+Transformations: 10
+
+Push count = 0
+	No Bottles of Beer on the Wall.
+
+Read a number and parse as decimal digit.
+	D4C, by AC/DC.
+	Read, by MMZK1526.
+	VORACITY, by Myth & Roid.
+	D4C, by AC/DC.
+	D4C, by AC/DC.
+	47 Bottles of Beer on the Wall.
+	Take It From Me, by The Weepies.
+	Nothing Compares 2U, by Sinead O'Connor.
+	Zenzenzensei, by RADWIMPS.
+	58 Bottles of Beer on the Wall.
+	Take It From Me, by The Weepies.
+	LOSER, by Kenshi Yonezu.
+	Hideaway, by The Weepies.
+	King Nothing, by Metallica.
+	Country Roads, Take Me Owatta.
+	48 Bottles of Beer on the Wall.
+	Take It From Me, by The Weepies.
+	Zenzenzensei, by RADWIMPS.
+	Man In The Mirror, by MJ.
+	D4C, by AC/DC.
+	Man In The Mirror, by MJ.
+	Man In The Mirror, by MJ.
+	Dear Maria, Count Me In, by All Time Low.
+	Dear Maria, Count Me In, by All Time Low.
+	Senbonzakura, by Kurousa-P.
+	Country Roads, Take Me Read.
+	Owatta, by MMZK1526.
+	Let It Go, By Idina Menzel
+
+The main loop
+	Gold Experience Requiem, by MMZK1526.
+	D4C, by AC/DC.
+	Gasoline, by Halsey.
+	D4C, by AC/DC.
+	1 Bottle of Beer on the Wall.
+	Take It From Me, by The Weepies.
+If x == 1 (x - 1 == 0), then break out the loop.
+	King Nothing, by Metallica.
+	Country Roads, Take Me Heaven's Door.
+Otherwise, count++
+	Roundabout, by YES.
+	1 Bottle of Beer on the Wall.
+	Dear Maria, Count Me In, by All Time Low.
+	Rolling in the Deep, by Adele.
+Check the parity of x
+	D4C, by AC/DC.
+	D4C, by AC/DC.
+	The Right Path, by Thomas Greenberg.
+	Man in the Mirror, by MJ.
+	Take It From Me, by The Weepies.
+If (x - 2 * (x / 2)) == 0, then x is even; otherwise odd
+	King Nothing, by Metallica.
+	King Nothing, by Metallica.
+	Country Roads, Take Me Oddball.
+When x is even, x = x / 2
+	The Right Path, by Thomas Greenberg.
+	1 Bottle of Beer on the Wall.
+	Country Roads, Take Me Gold Experience Requiem.
+When x is odd, x = 3 * x + 1
+	Oddball, by MMZK1526.
+	D4C, by AC/DC.
+	D4C, by AC/DC.
+	Dear Maria, Count Me In, by All Time Low.
+	Dear Maria, Count Me In, by All Time Low.
+	1 Bottle of Beer on the Wall.
+	Dear Maria, Count Me In, by All Time Low.
+	1 Bottle of Beer on the Wall.
+	Country Roads, Take Me Gold Experience Requiem.
+
+Break loop label
+	Heaven's Door, by MMZK1526.
+	Let It Go, by Idina Menzel.
+	10 Bottles of Beer on the Wall.
+	Do You Hear The People Sing? by Les Miserables.
+
+Sentinal character
+	No Bottles of Beer on the Wall.
+
+Initialise string "Transformations: "
+	32 Bottles of Beer on the Wall.
+	58 Bottles of Beer on the Wall.
+	99 Bottles of Beer on the Wall.
+	16 Bottles of Beer on the Wall.
+	Dear Maria, Count Me In, by All Time Low.
+	99 Bottles of Beer on the Wall.
+	11 Bottles of Beer on the Wall.
+	Dear Maria, Count Me In, by All Time Low.
+	99 Bottles of Beer on the Wall.
+	12 Bottles of Beer on the Wall.
+	Dear Maria, Count Me In, by All Time Low.
+	99 Bottles of Beer on the Wall.
+	6 Bottles of Beer on the Wall.
+	Dear Maria, Count Me In, by All Time Low.
+	99 Bottles of Beer on the Wall.
+	17 Bottles of Beer on the Wall.
+	Dear Maria, Count Me In, by All Time Low.
+	97 Bottles of Beer on the Wall.
+	99 Bottles of Beer on the Wall.
+	10 Bottles of Beer on the Wall.
+	Dear Maria, Count Me In, by All Time Low.
+	99 Bottles of Beer on the Wall.
+	15 Bottles of Beer on the Wall.
+	Dear Maria, Count Me In, by All Time Low.
+	99 Bottles of Beer on the Wall.
+	12 Bottles of Beer on the Wall.
+	Dear Maria, Count Me In, by All Time Low.
+	99 Bottles of Beer on the Wall.
+	3 Bottles of Beer on the Wall.
+	Dear Maria, Count Me In, by All Time Low.
+	99 Bottles of Beer on the Wall.
+	16 Bottles of Beer on the Wall.
+	Dear Maria, Count Me In, by All Time Low.
+	99 Bottles of Beer on the Wall.
+	11 Bottles of Beer on the Wall.
+	Dear Maria, Count Me In, by All Time Low.
+	97 Bottles of Beer on the Wall.
+	99 Bottles of Beer on the Wall.
+	15 Bottles of Beer on the Wall.
+	Dear Maria, Count Me In, by All Time Low.
+	84 Bottles of Beer on the Wall.
+
+Print string
+	Smalltalk, by MMZK1526.
+	D4C, by AC/DC.
+	King Nothing, by Metallica.
+	Country Roads, Take Me Speechless.
+	Do You Hear The People Sing? by Les Miserables.
+	Senbonzakura, by Kurousa-P.
+	Country Roads, Take Me Smalltalk.
+	Speechless, by MMZK1526.
+	Let It Go, by Idina Menzel.
+
+Print count
+	Gasoline, by Halsey.
+	10 Bottles of Beer on the Wall.
+	Do You Hear The People Sing? by Les Miserables.
+
+End
+	I'm So Tired, by Lauv & Troye Sivan.

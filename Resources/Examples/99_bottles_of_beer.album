@@ -1,0 +1,762 @@
+Playlist created by Sweeper
+
+Start with 99 on the stack:
+
+99 bottles of beer on the wall
+
+To the start, by Sweeper
+
+Printing "N bottles of beer on the wall, ":
+
+    Dirty Deeds Done Dirt Cheap, by AC/DC
+    Gasoline, by Halsey
+
+    No bottles of beer on the wall
+    32 bottles of beer on the wall
+    44 bottles of beer on the wall
+    54 bottles of beer on the wall
+    54 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    54 bottles of beer on the wall
+    54 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    97 bottles of beer on the wall
+    59 bottles of beer on the wall
+    60 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    52 bottles of beer on the wall
+    52 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    55 bottles of beer on the wall
+    55 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    57 bottles of beer on the wall
+    57 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    98 bottles of beer on the wall
+    32 bottles of beer on the wall
+    51 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    57 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    
+    Here we are deciding whether to pop the "s"
+    
+        Roundabout, by YES
+        Dirty Deeds Done Dirt Cheap, by AC/DC
+        Rolling in the Deep, by Adele
+        1 bottle of beer on the wall
+        Take it from me, by The Weepies
+        Country Roads, Take Me to not popping the first S
+        Let it go, by Idina Menzel
+            
+    To not popping the first S, by Sweeper
+    
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    54 bottles of beer on the wall
+    54 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    98 bottles of beer on the wall
+    
+    To where we start printing 1, by Sweeper
+    Dirty Deeds Done Dirt Cheap, by AC/DC
+    King Nothing, by Metallica
+    Country Roads, Take Me to where we stop printing 1
+    Dirty Deeds Done Dirt Cheap, by AC/DC
+    Do you hear the people sing? by Les Miserables
+    Country Roads, Take Me to where we start printing 1
+    To where we stop printing 1, by Sweeper
+    Let it go, by Idina Menzel
+
+Printing "N bottles of beer":
+
+    Dirty Deeds Done Dirt Cheap, by AC/DC
+    Gasoline, by Halsey
+
+    No bottles of beer on the wall
+    32 bottles of beer on the wall
+    44 bottles of beer on the wall
+    50 bottles of beer on the wall
+    50 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    55 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    59 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    57 bottles of beer on the wall
+    57 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    97 bottles of beer on the wall
+    32 bottles of beer on the wall
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    52 bottles of beer on the wall
+    53 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    57 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    57 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    97 bottles of beer on the wall
+    56 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    50 bottles of beer on the wall
+    50 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    55 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    97 bottles of beer on the wall
+    32 bottles of beer on the wall
+    55 bottles of beer on the wall
+    55 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    59 bottles of beer on the wall
+    60 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    50 bottles of beer on the wall
+    50 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    55 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    53 bottles of beer on the wall
+    54 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    97 bottles of beer on the wall
+    84 bottles of beer on the wall
+    10 bottles of beer on the wall
+    46 bottles of beer on the wall
+    57 bottles of beer on the wall
+    57 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    98 bottles of beer on the wall
+    32 bottles of beer on the wall
+    51 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    57 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    
+    Here we are deciding whether to pop the "s"
+    
+        Roundabout, by YES
+        Dirty Deeds Done Dirt Cheap, by AC/DC
+        Rolling in the Deep, by Adele
+        1 bottle of beer on the wall
+        Take it from me, by The Weepies
+        Country Roads, Take Me to not popping the second S
+        Let it go, by Idina Menzel
+            
+    To not popping the second S, by Sweeper
+    
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    54 bottles of beer on the wall
+    54 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    98 bottles of beer on the wall
+
+    To where we start printing 2, by Sweeper
+    Dirty Deeds Done Dirt Cheap, by AC/DC
+    King Nothing, by Metallica
+    Country Roads, Take Me to where we stop printing 2
+    Dirty Deeds Done Dirt Cheap, by AC/DC
+    Do you hear the people sing? by Les Miserables
+    Country Roads, Take Me to where we start printing 2
+    To where we stop printing 2, by Sweeper
+    Let it go, by Idina Menzel
+
+Subtract 1
+
+    1 bottle of beer on the wall
+    Take it from me, by The Weepies
+
+If it becomes 0, go to the end
+
+    Dirty Deeds Done Dirt Cheap, by AC/DC
+    King Nothing, by Metallica
+    Country Roads, Take Me to the end
+
+Prints "(N - 1) bottles of beer on the wall." with a new line:
+
+    Dirty Deeds Done Dirt Cheap, by AC/DC
+    Gasoline, by Halsey
+    
+    No bottles of beer on the wall
+    10 bottles of beer on the wall
+    46 bottles of beer on the wall
+    54 bottles of beer on the wall
+    54 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    54 bottles of beer on the wall
+    54 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    97 bottles of beer on the wall
+    59 bottles of beer on the wall
+    60 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    52 bottles of beer on the wall
+    52 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    55 bottles of beer on the wall
+    55 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    57 bottles of beer on the wall
+    57 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    98 bottles of beer on the wall
+    32 bottles of beer on the wall
+    51 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    57 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    
+    Here we are deciding whether to pop the "s"
+    
+        Roundabout, by YES
+        Dirty Deeds Done Dirt Cheap, by AC/DC
+        Rolling in the Deep, by Adele
+        1 bottle of beer on the wall
+        Take it from me, by The Weepies
+        Country Roads, Take Me to not popping the third S
+        Let it go, by Idina Menzel
+            
+    To not popping the third S, by Sweeper
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    54 bottles of beer on the wall
+    54 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    98 bottles of beer on the wall
+    
+    To where we start printing 3, by Sweeper
+    Dirty Deeds Done Dirt Cheap, by AC/DC
+    King Nothing, by Metallica
+    Country Roads, Take Me to where we stop printing 3
+    Dirty Deeds Done Dirt Cheap, by AC/DC
+    Do you hear the people sing? by Les Miserables
+    Country Roads, Take Me to where we start printing 3
+    To where we stop printing 3, by Sweeper
+    Let it go, by Idina Menzel
+
+Go back to the start
+
+    Dirty Deeds Done Dirt Cheap, by AC/DC
+    Country Roads, Take Me to the start
+
+Now we print the last part of the lyrics:
+
+    To the end, by Sweeper
+    
+    No bottles of beer on the wall
+    10 bottles of beer on the wall
+    46 bottles of beer on the wall
+    54 bottles of beer on the wall
+    54 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    54 bottles of beer on the wall
+    54 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    97 bottles of beer on the wall
+    59 bottles of beer on the wall
+    60 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    52 bottles of beer on the wall
+    52 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    55 bottles of beer on the wall
+    55 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    57 bottles of beer on the wall
+    57 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    98 bottles of beer on the wall
+    32 bottles of beer on the wall
+    51 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    57 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    54 bottles of beer on the wall
+    54 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    98 bottles of beer on the wall
+    32 bottles of beer on the wall
+    57 bottles of beer on the wall
+    57 bottles of beer on the wall
+    32 bottles of beer on the wall
+    44 bottles of beer on the wall
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    57 bottles of beer on the wall
+    57 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    54 bottles of beer on the wall
+    55 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    54 bottles of beer on the wall
+    55 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    57 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    60 bottles of beer on the wall
+    61 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    59 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    98 bottles of beer on the wall
+    32 bottles of beer on the wall
+    50 bottles of beer on the wall
+    50 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    55 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    97 bottles of beer on the wall
+    32 bottles of beer on the wall
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    57 bottles of beer on the wall
+    57 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    57 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    52 bottles of beer on the wall
+    52 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    71 bottles of beer on the wall
+    10 bottles of beer on the wall
+    32 bottles of beer on the wall
+    46 bottles of beer on the wall
+    57 bottles of beer on the wall
+    57 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    98 bottles of beer on the wall
+    32 bottles of beer on the wall
+    51 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    57 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    54 bottles of beer on the wall
+    54 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    98 bottles of beer on the wall
+    32 bottles of beer on the wall
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    57 bottles of beer on the wall
+    57 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    54 bottles of beer on the wall
+    55 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    55 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    44 bottles of beer on the wall
+    54 bottles of beer on the wall
+    54 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    54 bottles of beer on the wall
+    54 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    97 bottles of beer on the wall
+    59 bottles of beer on the wall
+    60 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    52 bottles of beer on the wall
+    52 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    55 bottles of beer on the wall
+    55 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    57 bottles of beer on the wall
+    57 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    98 bottles of beer on the wall
+    32 bottles of beer on the wall
+    51 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    57 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    54 bottles of beer on the wall
+    54 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    98 bottles of beer on the wall
+    32 bottles of beer on the wall
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    57 bottles of beer on the wall
+    57 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    54 bottles of beer on the wall
+    55 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    78 bottles of beer on the wall
+    10 bottles of beer on the wall
+    46 bottles of beer on the wall
+    54 bottles of beer on the wall
+    54 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    54 bottles of beer on the wall
+    54 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    97 bottles of beer on the wall
+    59 bottles of beer on the wall
+    60 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    52 bottles of beer on the wall
+    52 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    55 bottles of beer on the wall
+    55 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    57 bottles of beer on the wall
+    57 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    98 bottles of beer on the wall
+    32 bottles of beer on the wall
+    51 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    57 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    54 bottles of beer on the wall
+    54 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    58 bottles of beer on the wall
+    58 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    98 bottles of beer on the wall
+    32 bottles of beer on the wall
+    50 bottles of beer on the wall
+    51 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    57 bottles of beer on the wall
+    57 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    54 bottles of beer on the wall
+    55 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    32 bottles of beer on the wall
+    55 bottles of beer on the wall
+    56 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    55 bottles of beer on the wall
+    55 bottles of beer on the wall
+    Dear Maria, Count Me In, by All Time Low
+    
+    To where we start printing the last bit, by Sweeper
+    Dirty Deeds Done Dirt Cheap, by AC/DC
+    King Nothing, by Metallica
+    Country Roads, Take Me to where we stop printing the last bit
+    Dirty Deeds Done Dirt Cheap, by AC/DC
+    Do you hear the people sing? by Les Miserables
+    Country Roads, Take Me to where we start printing the last bit
+    To where we stop printing the last bit, by Sweeper
+    Let it go, by Idina Menzel
+
+I'm so tired, by Lauv & Troye Sivan

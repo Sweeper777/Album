@@ -1,0 +1,36 @@
+Playlist created by Sweeper
+
+This is a playlist that reverses strings separated by spaces.
+
+To the start of the playlist, by Sweeper
+
+First push a zero to indicate where the printing should stop
+No bottles of beer on the wall
+
+The new line that should be printed last:
+10 bottles of beer on the wall
+
+Input Loop:
+To where we get input, by Sweeper
+    VORACITY, by Myth & Roid
+    Dirty Deeds Done Dirt Cheap, by AC/DC
+    32 bottles of beer on the wall
+    Take it from me, by the weepies
+Country Roads, Take Me to where we get input
+
+Pop the space
+Let it go, by Idina Menzel
+
+Print the string in reverse
+To where we start printing the reversed string, by Sweeper
+Dirty Deeds Done Dirt Cheap, by AC/DC
+King Nothing, by Metallica
+Country Roads, Take Me to where we stop printing the reversed string
+Dirty Deeds Done Dirt Cheap, by AC/DC
+Do you hear the people sing? by Les Miserables
+Country Roads, Take Me to where we start printing the reversed string
+To where we stop printing the reversed string, by Sweeper
+Let it go, by Idina Menzel
+
+1 bottle of beer on the wall
+Country Roads, take me to the start of the playlist
