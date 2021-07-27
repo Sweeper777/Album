@@ -107,5 +107,42 @@ namespace Album.Tests {
                 CollectionAssert.AreEqual(lines, new[] { OriginalSong(expectedName) });
             });
         }
+
+        [Test]
+        public void CanParseExampleProgram() {
+            using var sourceCodeStream = typeof(ParserTests).Assembly.GetManifestResourceStream("Album.Tests.reverse_string.album");
+            Assert.NotNull(sourceCodeStream);
+            using var manifestStream = typeof(AlbumParser).Assembly.GetManifestResourceStream("Album.songManifest.json");
+            Assert.NotNull(manifestStream);
+            var manifest = SongManifest.FromStream(manifestStream!);
+            using var parser = new AlbumParser(manifest!, sourceCodeStream!);
+            var lines = parser.Parse().Where(x => !x.Equals(OfType(LineType.Comment)));
+            Assert.Multiple(() => {
+                CollectionAssert.IsEmpty(parser.Outputs);
+                CollectionAssert.AreEqual(lines, new[] {
+                    OriginalSong("to the start of the playlist"),
+                    Push(0),
+                    Push(10),
+                    OriginalSong("to where we get input"),
+                    OfType(LineType.Input),
+                    OfType(LineType.Dup),
+                    Push(32),
+                    OfType(LineType.Sub),
+                    Branch("to where we get input"),
+                    OfType(LineType.Pop),
+                    OriginalSong("to where we start printing the reversed string"),
+                    OfType(LineType.Dup),
+                    OfType(LineType.TopZero),
+                    Branch("to where we stop printing the reversed string"),
+                    OfType(LineType.Dup),
+                    OfType(LineType.OutputChar),
+                    Branch("to where we start printing the reversed string"),
+                    OriginalSong("to where we stop printing the reversed string"),
+                    OfType(LineType.Pop),
+                    Push(1),
+                    Branch("to the start of the playlist")
+                 });
+            });
+        }
     }
 }
