@@ -130,7 +130,7 @@ namespace Album.Syntax {
             }
             if (info.EndWith is string suffix && line.EndsWith(suffix)) {
                 result = result ?? line;
-                result = result.Substring(0, result.Length - 1 - suffix.Length);
+                result = result.Substring(0, result.Length - suffix.Length);
             }
             result = result?.Trim();
             return result != null;
@@ -142,7 +142,7 @@ namespace Album.Syntax {
             while (index >= 0) {
                 var artistName = line.Substring(index + ORIGINAL_SONG_SEPARATOR.Length).TrimStart();
                 if (artistName == playlistCreator) {
-                    result = line.Substring(0, index);
+                    result = line.Substring(0, index).TrimEnd();
                     return true;
                 }
                 index = line.IndexOf(ORIGINAL_SONG_SEPARATOR, index + 1);
