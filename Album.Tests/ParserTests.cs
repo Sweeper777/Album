@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using Album.Syntax;
-using System.Collections.Generic;
+using System.Linq;
+using static Album.Syntax.LineInfo;
 
 namespace Album.Tests {
     [Timeout(1000)]
@@ -16,7 +17,7 @@ namespace Album.Tests {
             var lines = parser.Parse();
             Assert.Multiple(() => {
                 CollectionAssert.IsEmpty(parser.Outputs);
-                CollectionAssert.Contains(lines, LineInfo.OriginalSong("original song"));
+                CollectionAssert.Contains(lines, OriginalSong("original song"));
             });
         }
 
@@ -29,7 +30,7 @@ namespace Album.Tests {
             var lines = parser.Parse();
             Assert.Multiple(() => {
                 Assert.That(parser.Outputs, Has.One.Matches<CompilerOutput>(x => x.Message == CompilerMessage.NoPlaylistCreatorDeclFound));
-                CollectionAssert.IsSubsetOf(lines, new[] { LineInfo.OfType(LineType.Comment) });
+                CollectionAssert.IsSubsetOf(lines, new[] { OfType(LineType.Comment) });
             });
         }
 
@@ -50,7 +51,7 @@ namespace Album.Tests {
             var lines = parser.Parse();
             Assert.Multiple(() => {
                 CollectionAssert.IsEmpty(parser.Outputs);
-                CollectionAssert.AreEqual(lines, new[] { LineInfo.OfType(expectedType) });
+                CollectionAssert.AreEqual(lines, new[] { OfType(expectedType) });
             });
         }
 
@@ -64,7 +65,7 @@ namespace Album.Tests {
             var lines = parser.Parse();
             Assert.Multiple(() => {
                 Assert.That(parser.Outputs, Has.One.Matches<CompilerOutput>(x => x.Message == expectedMessage));
-                CollectionAssert.AreEqual(lines, new[] { LineInfo.OfType(LineType.Comment) });
+                CollectionAssert.AreEqual(lines, new[] { OfType(LineType.Comment) });
             });
         }
 
@@ -77,7 +78,7 @@ namespace Album.Tests {
             var lines = parser.Parse();
             Assert.Multiple(() => {
                 CollectionAssert.IsEmpty(parser.Outputs);
-                CollectionAssert.AreEqual(lines, new[] { LineInfo.Branch(expectedDestination) });
+                CollectionAssert.AreEqual(lines, new[] { Branch(expectedDestination) });
             });
         }
 
@@ -91,7 +92,7 @@ namespace Album.Tests {
             var lines = parser.Parse();
             Assert.Multiple(() => {
                 CollectionAssert.IsEmpty(parser.Outputs);
-                CollectionAssert.AreEqual(lines, new[] { LineInfo.Push(expectedPush) });
+                CollectionAssert.AreEqual(lines, new[] { Push(expectedPush) });
             });
         }
 
@@ -103,7 +104,7 @@ namespace Album.Tests {
             var lines = parser.Parse();
             Assert.Multiple(() => {
                 CollectionAssert.IsEmpty(parser.Outputs);
-                CollectionAssert.AreEqual(lines, new[] { LineInfo.OriginalSong(expectedName) });
+                CollectionAssert.AreEqual(lines, new[] { OriginalSong(expectedName) });
             });
         }
     }
