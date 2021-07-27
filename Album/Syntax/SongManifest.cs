@@ -2,14 +2,18 @@ using System;
 using Newtonsoft.Json;
 using System.IO;
 using System.Collections.Generic;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Linq;
 
 namespace Album.Syntax {
     public class SongManifest : ISongManifest{
 
         [JsonProperty("SongNames")]
+        [JsonConverter(typeof(CaseInsensitiveDictionaryConverter<LineType>))]
         public Dictionary<string, LineType> SongNames { get; }
 
         [JsonProperty("SpecialPushes")]
+        [JsonConverter(typeof(CaseInsensitiveDictionaryConverter<int>))]
         public Dictionary<string, int> SpecialPushes { get; }
         
         [JsonProperty("SpecialSongs")]
@@ -107,5 +111,30 @@ namespace Album.Syntax {
         {
             return HashCode.Combine(StartWith, EndWith);
         }
+    }
+
+    public class CaseInsensitiveDictionaryConverter<TValue> : JsonConverter {
+        public override bool CanConvert(Type objectType)
+        {
+            return true;
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+        {
+            JToken obj = JToken.ReadFrom(reader);                
+            if (objectType == typeof(Dictionary<string, TValue>))
+            {
+                var comparer = obj.Value<string>("Comparer");
+                Dictionary<string, TValue> result = new Dictionary<string, TValue>(StringComparer.InvariantCultureIgnoreCase);
+                serializer.Populate(obj.CreateReader(), result);
+                return result;
+            }
+            return obj.ToObject(objectType) ?? throw new JsonReaderException();
+        }
+
+        public override bool CanWrite => false;
+
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
+            => throw new NotImplementedException();
     }
 }
