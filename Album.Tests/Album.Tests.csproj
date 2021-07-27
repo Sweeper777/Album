@@ -22,4 +22,7 @@
     <EmbeddedResource Include="../Resources/Examples/reverse_string.album" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
 </Project>
