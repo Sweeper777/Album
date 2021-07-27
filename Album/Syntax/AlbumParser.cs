@@ -125,12 +125,12 @@ namespace Album.Syntax {
         private bool TryParseFromSpecialSongInfo(SpecialSongInfo info, string line, 
                                                 [NotNullWhen(true)] out string? result) {
             result = null;
-            if (info.StartWith is string prefix && line.StartsWith(prefix)) {
-                result = line.Substring(prefix.Length);
+            if (info.StartWith is string prefix && line.StartsWith(prefix.ToLowerInvariant())) {
+                result = line.Substring(prefix.ToLowerInvariant().Length);
             }
-            if (info.EndWith is string suffix && line.EndsWith(suffix)) {
+            if (info.EndWith is string suffix && line.EndsWith(suffix.ToLowerInvariant())) {
                 result = result ?? line;
-                result = result.Substring(0, result.Length - suffix.Length);
+                result = result.Substring(0, result.Length - suffix.ToLowerInvariant().Length);
             }
             result = result?.Trim();
             return result != null;
