@@ -9,9 +9,9 @@ namespace Album
     {
         static void Main(string[] args)
         {
-            using var s = typeof(Program).Assembly.GetManifestResourceStream("Album.Resources.songManifest.json");
-            var manifest = SongManifest.FromFile("/Users/mulangsu/Documents/Album/Resources/songManifest.json");
-            System.Console.WriteLine(manifest?.SpecialSongs.Branch.StartWith);
+            // using var s = typeof(Program).Assembly.GetManifestResourceStream("Album.Resources.songManifest.json");
+            // var manifest = SongManifest.FromStream(s);
+            // System.Console.WriteLine(manifest?.SpecialSongs.Branch.StartWith);
         }
     }
 }
