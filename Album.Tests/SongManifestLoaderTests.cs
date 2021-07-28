@@ -85,5 +85,15 @@ namespace Album.Tests {
 }
         ";
 
+        [TestCase(MANIFEST_WTIH_DUPLICATE_SONGS)]
+        [TestCase(MANIFEST_WTIH_MISSING_KEYS)]
+        [TestCase(MANIFEST_WTIH_NO_SPECIAL_SONGS)]
+        [TestCase(MANIFEST_WITH_INVALID_SONGS1)]
+        [TestCase(MANIFEST_WITH_INVALID_SONGS2)]
+        public void CanIdentifyInvalidSongManifests(string manifestJSON) {
+            var manifest = SongManifest.FromText(manifestJSON);
+            Assert.IsNull(manifest);
+
+        }
     }
 }
