@@ -52,6 +52,18 @@ namespace Album.Syntax {
             return FromStream(fileStream);
         }
 
+        public static SongManifest? FromText(string text) {
+            try {
+                var result = JsonConvert.DeserializeObject<SongManifest>(text);
+                if (result?.IsValid() == true) {
+                    return result;
+                } else {
+                    return null;
+                }
+            } catch (JsonSerializationException) {
+                return null;
+            }
+        }
 
         public bool IsValid()
             => !SongNames.Values.Contains(LineType.Push) &&
