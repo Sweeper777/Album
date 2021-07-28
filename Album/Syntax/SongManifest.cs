@@ -2,7 +2,7 @@ using System;
 using Newtonsoft.Json;
 using System.IO;
 using System.Collections.Generic;
-using Newtonsoft.Json.Converters;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 
 namespace Album.Syntax {
@@ -10,13 +10,16 @@ namespace Album.Syntax {
 
         [JsonProperty("SongNames")]
         [JsonConverter(typeof(CaseInsensitiveDictionaryConverter<LineType>))]
+        [JsonRequired]
         public Dictionary<string, LineType> SongNames { get; }
 
         [JsonProperty("SpecialPushes")]
         [JsonConverter(typeof(CaseInsensitiveDictionaryConverter<int>))]
+        [JsonRequired]
         public Dictionary<string, int> SpecialPushes { get; }
         
         [JsonProperty("SpecialSongs")]
+        [JsonRequired]
         public SpecialSongs SpecialSongs { get; }
 
         public SpecialSongInfo PushXSyntax => SpecialSongs.PushX;
@@ -92,9 +95,11 @@ namespace Album.Syntax {
 
     public class SpecialSongs {
         [JsonProperty("PushX")]
+        [JsonRequired]
         public SpecialSongInfo PushX { get; }
 
         [JsonProperty("Branch")]
+        [JsonRequired]
         public SpecialSongInfo Branch { get; }
 
         public SpecialSongs(SpecialSongInfo pushX, SpecialSongInfo branch) {
