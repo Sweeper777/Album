@@ -35,13 +35,28 @@ namespace Album.Syntax {
             var reader = new StreamReader(stream);
             var serializer = new JsonSerializer();
             var jsonTextReader = new JsonTextReader(reader);
-            return serializer.Deserialize<SongManifest>(jsonTextReader);
+            try {
+                var result = serializer.Deserialize<SongManifest>(jsonTextReader);
+                if (result?.IsValid() == true) {
+                    return result;
+                } else {
+                    return null;
+                }
+            } catch (JsonSerializationException) {
+                return null;
+            }
         }
 
         public static SongManifest? FromFile(string path) {
             using var fileStream = File.OpenRead(path);
             return FromStream(fileStream);
         }
+
+
+        public bool IsValid()
+            => !SongNames.Values.Contains(LineType.Push) &&
+                !SongNames.Values.Contains(LineType.Branch) &&
+                !SongNames.Values.Contains(LineType.OriginalSong);
 
         public override int GetHashCode()
         {
