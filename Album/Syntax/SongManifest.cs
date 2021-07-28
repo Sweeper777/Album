@@ -148,7 +148,7 @@ namespace Album.Syntax {
     public class CaseInsensitiveDictionaryConverter<TValue> : JsonConverter {
         public override bool CanConvert(Type objectType)
         {
-            return true;
+            return objectType == typeof(Dictionary<string, TValue>);
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
@@ -156,12 +156,20 @@ namespace Album.Syntax {
             JToken obj = JToken.ReadFrom(reader);                
             if (objectType == typeof(Dictionary<string, TValue>))
             {
-                var comparer = obj.Value<string>("Comparer");
                 Dictionary<string, TValue> result = new Dictionary<string, TValue>(StringComparer.InvariantCultureIgnoreCase);
-                serializer.Populate(obj.CreateReader(), result);
+                foreach (var property in ((JObject)obj).Properties()) {
+                    if (result.ContainsKey(property.Name)) {
+                        throw new JsonSerializationException();
+                    } else {
+                        result.Add(property.Name, 
+                                    serializer.Deserialize<TValue>(property.Value.CreateReader()) ??
+                                    throw new JsonSerializationException()
+                                    );
+                    }
+                }
                 return result;
             }
-            return obj.ToObject(objectType) ?? throw new JsonReaderException();
+            return obj.ToObject(objectType) ?? throw new JsonSerializationException();
         }
 
         public override bool CanWrite => false;
