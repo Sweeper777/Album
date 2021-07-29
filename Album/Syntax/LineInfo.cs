@@ -7,13 +7,16 @@ namespace Album.Syntax {
         private string? stringValue;
         private int? intValue;
 
-        private LineInfo(LineType type, string? stringValue, int? intValue) {
+        public int LineNumber { get; }
+
+        private LineInfo(LineType type, string? stringValue, int? intValue, int lineNo) {
+            LineNumber = lineNo;
             this.type = type;
             this.stringValue = stringValue;
             this.intValue = intValue;
         }
 
-        public static LineInfo OfType(LineType type) {
+        public static LineInfo OfType(LineType type, int lineNo = 0) {
             if (type == LineType.Push ||
                 type == LineType.OriginalSong ||
                 type == LineType.Branch) {
@@ -22,17 +25,17 @@ namespace Album.Syntax {
                     nameof(type)
                     );
             }
-            return new LineInfo(type, null, null);
+            return new LineInfo(type, null, null, lineNo);
         }
 
-        public static LineInfo Push(int number)
-            => new LineInfo(LineType.Push, null, number);
+        public static LineInfo Push(int number, int lineNo = 0)
+            => new LineInfo(LineType.Push, null, number, lineNo);
 
-        public static LineInfo OriginalSong(string name)
-            => new LineInfo(LineType.OriginalSong, name, null);
+        public static LineInfo OriginalSong(string name, int lineNo = 0)
+            => new LineInfo(LineType.OriginalSong, name, null, lineNo);
 
-        public static LineInfo Branch(string originalSong)
-            => new LineInfo(LineType.Branch, originalSong, null);
+        public static LineInfo Branch(string originalSong, int lineNo = 0)
+            => new LineInfo(LineType.Branch, originalSong, null, lineNo);
 
         public bool IsPush([NotNullWhen(true)] out int? x) {
             if (type == LineType.Push) {

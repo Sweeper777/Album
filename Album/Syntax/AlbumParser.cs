@@ -81,45 +81,45 @@ namespace Album.Syntax {
         private LineInfo ParseLine(string line, string playlistCreator) {
             var fixedLineType = SongManifest.GetFixedLineType(line);
             if (fixedLineType != LineType.Comment) {
-                return LineInfo.OfType(fixedLineType);
+                return LineInfo.OfType(fixedLineType, currentLine);
             }
             if (SongManifest.GetFixedPushAmount(line) is int pushAmount) {
-                return LineInfo.Push(pushAmount);
+                return LineInfo.Push(pushAmount, currentLine);
             }
 
             if (TryParseFromSpecialSongInfo(SongManifest.PushXSyntax, line, out var pushAmountString) &&
                 int.TryParse(pushAmountString, out pushAmount)) {
                 if (pushAmount < 0) {
                     OutputError(CompilerMessage.PushXTooSmall);
-                    return LineInfo.OfType(LineType.Comment);
+                    return LineInfo.OfType(LineType.Comment, currentLine);
                 }
                 if (pushAmount > 99) {
                     OutputError(CompilerMessage.PushXTooLarge);
-                    return LineInfo.OfType(LineType.Comment);
+                    return LineInfo.OfType(LineType.Comment, currentLine);
                 }
                 if (pushAmount == 1) {
                     OutputError(CompilerMessage.Push1);
-                    return LineInfo.OfType(LineType.Comment);
+                    return LineInfo.OfType(LineType.Comment, currentLine);
                 }
-                return LineInfo.Push(pushAmount);
+                return LineInfo.Push(pushAmount, currentLine);
             }
 
             if (TryParseFromSpecialSongInfo(SongManifest.BranchSyntax, line, out var originalSong) &&
                 originalSong != "") {
-                return LineInfo.Branch(originalSong);
+                return LineInfo.Branch(originalSong, currentLine);
             }
 
             if (TryParseOriginalSong(line, playlistCreator, out originalSong) && 
                 originalSong != "") {
                 if (originalSong.Any(":;.".Contains)) {
                     OutputError(CompilerMessage.InvalidOriginalSongName);
-                    return LineInfo.OfType(LineType.Comment);
+                    return LineInfo.OfType(LineType.Comment, currentLine);
                 } else {
-                    return LineInfo.OriginalSong(originalSong);
+                    return LineInfo.OriginalSong(originalSong, currentLine);
                 }
             }
 
-            return LineInfo.OfType(LineType.Comment);
+            return LineInfo.OfType(LineType.Comment, currentLine);
         }
 
         private bool TryParseFromSpecialSongInfo(SpecialSongInfo info, string line, 
