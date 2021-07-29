@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Album.Syntax {
     public struct LineInfo {
@@ -32,6 +33,33 @@ namespace Album.Syntax {
 
         public static LineInfo Branch(string originalSong)
             => new LineInfo(LineType.Branch, originalSong, null);
+
+        public bool IsPush([NotNullWhen(true)] out int? x) {
+            if (type == LineType.Push) {
+                x = intValue!;
+            } else {
+                x = null;
+            }
+            return x != null;
+        }
+
+        public bool IsOriginalSong([NotNullWhen(true)] out string? name) {
+            if (type == LineType.OriginalSong) {
+                name = stringValue!;
+            } else {
+                name = null;
+            }
+            return name != null;
+        }
+
+        public bool IsBranch([NotNullWhen(true)] out string? originalSong) {
+            if (type == LineType.Branch) {
+                originalSong = stringValue!;
+            } else {
+                originalSong = null;
+            }
+            return originalSong != null;
+        }
 
         public override string ToString()
         {
