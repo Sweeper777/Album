@@ -8,6 +8,9 @@ namespace Album {
         PushXTooSmall,
         PushXTooLarge,
         Push1,
-        InvalidOriginalSongName
+        InvalidOriginalSongName,
+        DuplicateOriginalSong,
+        UnknownOriginalSong,
+        UnusedOriginalSong
     }
 }
