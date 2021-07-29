@@ -75,5 +75,18 @@ namespace Album.Syntax {
                 return lineTypeName;
             }
         }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is LineInfo info &&
+                   type == info.type &&
+                   stringValue == info.stringValue &&
+                   intValue == info.intValue;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(type, stringValue, intValue);
+        }
     }
 }
