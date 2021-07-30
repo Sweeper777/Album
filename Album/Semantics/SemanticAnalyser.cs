@@ -15,5 +15,21 @@ namespace Album.Semantics {
             this.lines = lines;
         }
 
+        public void Analyse() {
+            foreach (var line in lines) {
+                if (line.IsOriginalSong(out _)) {
+                    if (!originalSongLines.Add(line)) {
+                        Outputs.Add(new CompilerOutput(
+                            CompilerMessage.DuplicateOriginalSong,
+                            CompilerOutputType.Error,
+                            line.LineNumber
+                        ));
+                    }
+                } else if (line.IsBranch(out _)) {
+                    branchLines.Add(line);
+                }
+            }
+
+        }
     }
 }
