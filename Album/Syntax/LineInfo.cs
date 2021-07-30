@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
 
 namespace Album.Syntax {
     public struct LineInfo {
@@ -87,6 +88,17 @@ namespace Album.Syntax {
         public override int GetHashCode()
         {
             return HashCode.Combine(type, stringValue, intValue);
+        }
+
+        public static readonly IEqualityComparer<LineInfo> OriginalSongEquality = new OriginalSongEqualityComparer();
+
+        private class OriginalSongEqualityComparer : IEqualityComparer<LineInfo>
+        {
+            public bool Equals(LineInfo x, LineInfo y)
+                => EqualityComparer<string>.Default.Equals(x.stringValue, y.stringValue);
+
+            public int GetHashCode([DisallowNull] LineInfo obj)
+                => EqualityComparer<string>.Default.GetHashCode(obj.stringValue ?? "");
         }
     }
 }
