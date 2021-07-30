@@ -30,6 +30,23 @@ namespace Album.Semantics {
                 }
             }
 
+            HashSet<LineInfo> diff = new(originalSongLines, LineInfo.OriginalSongEquality);
+            diff.SymmetricExceptWith(branchLines);
+            foreach (var line in diff) {
+                if (line.IsOriginalSong(out _)) {
+                    Outputs.Add(new CompilerOutput(
+                        CompilerMessage.UnusedOriginalSong,
+                        CompilerOutputType.Warning,
+                        line.LineNumber
+                    ));
+                } else if (line.IsBranch(out _)) {
+                    Outputs.Add(new CompilerOutput(
+                        CompilerMessage.UnknownOriginalSong,
+                        CompilerOutputType.Error,
+                        line.LineNumber
+                    ));
+                }
+            }
         }
     }
 }
