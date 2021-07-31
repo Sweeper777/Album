@@ -40,5 +40,24 @@ namespace Album.Tests {
             );
         }
 
+        [Test]
+        public void FindsDuplicateOriginalSongs() {
+            SemanticAnalyser analyser = new(new[] {
+                OriginalSong("foo", 1),
+                Push(1, 2),
+                OfType(Dup, 3),
+                OriginalSong("foo", 4),
+                OfType(OutputChar, 5),
+                Branch("foo", 7),
+            });
+            analyser.Analyse();
+            CollectionAssert.AreEquivalent(
+                new[] { 
+                    new CompilerOutput(CompilerMessage.DuplicateOriginalSong, CompilerOutputType.Error, 4)
+                },
+                analyser.Outputs
+            );
+        }
+
     }
 }
