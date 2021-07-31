@@ -59,5 +59,21 @@ namespace Album.Tests {
             );
         }
 
+        [Test]
+        public void FindsUnusedOriginalSongs() {
+            SemanticAnalyser analyser = new(new[] {
+                OriginalSong("foo", 1),
+                Push(1, 2),
+                OfType(Dup, 3),
+                OfType(OutputChar, 5),
+            });
+            analyser.Analyse();
+            CollectionAssert.AreEquivalent(
+                new[] { 
+                    new CompilerOutput(CompilerMessage.UnusedOriginalSong, CompilerOutputType.Warning, 1)
+                },
+                analyser.Outputs
+            );
+        }
     }
 }
