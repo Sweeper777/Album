@@ -10,6 +10,8 @@ namespace Album.Syntax {
 
         public int LineNumber { get; }
 
+        public LineType Type => type;
+
         private LineInfo(LineType type, string? stringValue, int? intValue, int lineNo) {
             LineNumber = lineNo;
             this.type = type;
