@@ -5,11 +5,11 @@ namespace Album.CodeGen.Cecil
 {
     internal abstract class CecilCodeGenerationStrategy : ICodeGenerationStrategy
     {
-        protected IMethodReferenceProvider methods;
+        protected MethodReferenceProvider methods;
 
         public ILProcessor ILProcessor { get; set; }
 
-        public CecilCodeGenerationStrategy(IMethodReferenceProvider methods, ILProcessor ilProcessor)
+        public CecilCodeGenerationStrategy(MethodReferenceProvider methods, ILProcessor ilProcessor)
         {
             this.methods = methods;
             ILProcessor = ilProcessor;

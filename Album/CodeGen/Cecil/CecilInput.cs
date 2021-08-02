@@ -6,7 +6,7 @@ namespace Album.CodeGen.Cecil
     internal partial class CecilCodeGenerationStrategies {
         public class Input : CecilCodeGenerationStrategy
         {
-            public Input(IMethodReferenceProvider methods, ILProcessor ilProcessor) 
+            public Input(MethodReferenceProvider methods, ILProcessor ilProcessor) 
                 : base(methods, ilProcessor) {
             }
 
