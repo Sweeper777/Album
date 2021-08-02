@@ -12,8 +12,11 @@ namespace Album.CodeGen
         }
 
         protected abstract ICodeGenerationStrategy? GetCodeGenerationStrategyForSong(LineType type);
+        protected virtual void WillGenerateLines() { }
+        protected virtual void DidGenerateLines() { }
 
         public void GenerateCode() {
+            WillGenerateLines();
             foreach (var line in lines) {
                 var strategy = GetCodeGenerationStrategyForSong(line.Type);
                 if (strategy is null) {
@@ -25,6 +28,7 @@ namespace Album.CodeGen
                     throw new InvalidOperationException($"Code Generation Strategy {strategy} Does Not Support Line Type {line.Type}!");
                 }
             }
+            DidGenerateLines();
         }
     }
 }
