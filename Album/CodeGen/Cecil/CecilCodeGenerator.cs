@@ -10,8 +10,20 @@ namespace Album.CodeGen.Cecil
 {
     public class CecilCodeGenerator : CodeGenerator
     {
-        public AssemblyDefinition? GeneratedAssembly { get; private set; }
-        public ModuleDefinition? GeneratedModule => GeneratedAssembly?.MainModule;
+        private AssemblyDefinition? generatedAssembly;
+        
+            
+        [DisallowNull]
+        public AssemblyDefinition? GeneratedAssembly { 
+            get => generatedAssembly;
+            [MemberNotNull(nameof(GeneratedModule))]
+            private set {
+                generatedAssembly = value;
+                GeneratedModule = value.MainModule;
+            }
+         }
+
+        public ModuleDefinition? GeneratedModule { get; private set; }
 
         private ILProcessor? il;
 
@@ -29,40 +41,40 @@ namespace Album.CodeGen.Cecil
                 new AssemblyNameDefinition("AlbumPlaylist", new Version(1, 0, 0, 0)), "AlbumPlaylist", ModuleKind.Console);
 
             var programType = new TypeDefinition("AlbumPlaylist", "Program",
-                Mono.Cecil.TypeAttributes.Class | Mono.Cecil.TypeAttributes.Public, GeneratedModule?.TypeSystem.Object);
+                Mono.Cecil.TypeAttributes.Class | Mono.Cecil.TypeAttributes.Public, GeneratedModule.TypeSystem.Object);
 
-            GeneratedModule?.Types.Add(programType);
+            GeneratedModule.Types.Add(programType);
 
             var mainMethod = new MethodDefinition("Main",
-                Mono.Cecil.MethodAttributes.Public | Mono.Cecil.MethodAttributes.Static, GeneratedModule?.TypeSystem.Void);
+                Mono.Cecil.MethodAttributes.Public | Mono.Cecil.MethodAttributes.Static, GeneratedModule.TypeSystem.Void);
 
-            var stackVar = new VariableDefinition(GeneratedModule?.TypeSystem.Int32);
+            var stackVar = new VariableDefinition(GeneratedModule.TypeSystem.Int32);
             mainMethod.Body.Variables.Add(stackVar);
             programType.Methods.Add(mainMethod);
 
             var argsParameter = new ParameterDefinition("args",
-                Mono.Cecil.ParameterAttributes.None, GeneratedModule?.ImportReference(typeof(string[])));
+                Mono.Cecil.ParameterAttributes.None, GeneratedModule.ImportReference(typeof(string[])));
 
             mainMethod.Parameters.Add(argsParameter);
 
             il = mainMethod.Body.GetILProcessor();
-            il.Emit(OpCodes.Newobj, GeneratedModule?.ImportReference(typeof(LinkedList<int>).GetConstructor(new Type[] {})));
+            il.Emit(OpCodes.Newobj, GeneratedModule.ImportReference(typeof(LinkedList<int>).GetConstructor(new Type[] {})));
 
             GeneratedAssembly.EntryPoint = mainMethod;
 
-            InitialiseMethodReferences();
+            InitialiseMethodReferences(GeneratedModule);
             InitialiseCodeGenStrategies(methodReferences, il);
         }
 
         [MemberNotNull(nameof(methodReferences))]
-        private void InitialiseMethodReferences() {
+        private void InitialiseMethodReferences(ModuleDefinition module) {
             methodReferences = new() {
-                ConsoleWrite = GeneratedModule?.ImportReference(typeof(Console).GetMethod("WriteLine", new[] { typeof(string) })),
-                LinkedListAddLast = GeneratedModule?.ImportReference(typeof(LinkedList<int>).GetMethod("AddLast", new[] { typeof(int) })),
-                ConsoleRead = GeneratedModule?.ImportReference(typeof(Console).GetMethod("Read", new Type[] { })),
-                LinkedListNodeValue = GeneratedModule?.ImportReference(typeof(LinkedListNode<int>).GetProperty("Value")?.GetGetMethod()),
-                LinkedListLast = GeneratedModule?.ImportReference(typeof(LinkedList<int>).GetProperty("Last")?.GetGetMethod()),
-                LinkedListRemoveLast = GeneratedModule?.ImportReference(typeof(LinkedList<int>).GetMethod("RemoveLast", new Type[] { })),
+                ConsoleWrite = module.ImportReference(typeof(Console).GetMethod("WriteLine", new[] { typeof(string) })),
+                LinkedListAddLast = module.ImportReference(typeof(LinkedList<int>).GetMethod("AddLast", new[] { typeof(int) })),
+                ConsoleRead = module.ImportReference(typeof(Console).GetMethod("Read", new Type[] { })),
+                LinkedListNodeValue = module.ImportReference(typeof(LinkedListNode<int>).GetProperty("Value")?.GetGetMethod()),
+                LinkedListLast = module.ImportReference(typeof(LinkedList<int>).GetProperty("Last")?.GetGetMethod()),
+                LinkedListRemoveLast = module.ImportReference(typeof(LinkedList<int>).GetMethod("RemoveLast", new Type[] { })),
             };
         }
 
