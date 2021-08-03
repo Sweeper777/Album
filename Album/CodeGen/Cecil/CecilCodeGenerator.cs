@@ -27,9 +27,6 @@ namespace Album.CodeGen.Cecil
 
         private ILProcessor? il;
 
-        public CecilCodeGenerator(IEnumerable<LineInfo> lines) : base(lines) {
-        }
-
         private Dictionary<LineType, CecilCodeGenerationStrategy>? strategies;
         private MethodReferenceProvider? methodReferences;
 
@@ -81,7 +78,18 @@ namespace Album.CodeGen.Cecil
 
         private void InitialiseCodeGenStrategies(MethodReferenceProvider methodReferences, ILProcessor il) {
             strategies = new() {
-                { LineType.Input, new Input(methodReferences, il) }
+                { LineType.Input, new Input(methodReferences, il) },
+                { LineType.Branch, new BranchOriginalSong(methodReferences, il) },
+                { LineType.OriginalSong, new BranchOriginalSong(methodReferences, il) },
+                { LineType.TopPositive, new Conditionals(methodReferences, il) },
+                { LineType.TopNegative, new Conditionals(methodReferences, il) },
+                { LineType.TopZero, new Conditionals(methodReferences, il) },
+                { LineType.Dup, new Dup(methodReferences, il) },
+                { LineType.OutputChar, new Output(methodReferences, il) },
+                { LineType.OutputInt, new Output(methodReferences, il) },
+                { LineType.Pop, new Pop(methodReferences, il) },
+                { LineType.Push, new Push(methodReferences, il) },
+                { LineType.Sub, new Sub(methodReferences, il) },
             };
         }
         protected override void DidGenerateLines()

@@ -1,21 +1,19 @@
 using System;
 using System.Collections.Generic;
 using Album.Syntax;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Album.CodeGen
 {
     public abstract class CodeGenerator {
-        protected IEnumerable<LineInfo> lines;
-
-        public CodeGenerator(IEnumerable<LineInfo> lines) {
-            this.lines = lines;
-        }
-
+        [DisallowNull]
+        protected IEnumerable<LineInfo>? lines;
         protected abstract ICodeGenerationStrategy? GetCodeGenerationStrategyForSong(LineType type);
         protected virtual void WillGenerateLines() { }
         protected virtual void DidGenerateLines() { }
 
-        public void GenerateCode() {
+        public void GenerateCode(IEnumerable<LineInfo> lines) {
+            this.lines = lines;
             WillGenerateLines();
             foreach (var line in lines) {
                 var strategy = GetCodeGenerationStrategyForSong(line.Type);
