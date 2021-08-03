@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
-using Newtonsoft.Json;
-using Album.Syntax;
+using Album.CodeGen.Cecil;
 
 namespace Album
 {
@@ -9,9 +8,15 @@ namespace Album
     {
         static void Main(string[] args)
         {
-            // using var s = typeof(Program).Assembly.GetManifestResourceStream("Album.Resources.songManifest.json");
-            // var manifest = SongManifest.FromStream(s);
-            // System.Console.WriteLine(manifest?.SpecialSongs.Branch.StartWith);
+            using var file = File.OpenRead(args[0]);
+            CecilCodeGenerator codegen = new();
+            AlbumCompiler compiler = new(codegen);
+            compiler.Compile(file);
+            if (codegen.GeneratedAssembly != null && codegen.GeneratedModule != null) {
+                codegen.GeneratedAssembly.Name = new Mono.Cecil.AssemblyNameDefinition("Program", new(1, 0));
+                codegen.GeneratedModule.Name = "Program";
+                codegen.GeneratedAssembly.Write("Program.exe");
+            }
         }
     }
 }
