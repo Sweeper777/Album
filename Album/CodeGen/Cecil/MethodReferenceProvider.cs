@@ -16,6 +16,8 @@ namespace Album.CodeGen.Cecil
         [DisallowNull]
         public MethodReference? ConsoleRead { get; init; }
         [DisallowNull]
-        public MethodReference? ConsoleWrite { get; init; }
+        public MethodReference? ConsoleWriteChar { get; init; }
+        [DisallowNull]
+        public MethodReference? ConsoleWriteInt { get; init; }
     }
 }

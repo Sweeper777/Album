@@ -21,7 +21,7 @@ namespace Album.CodeGen.Cecil
                 generatedAssembly = value;
                 GeneratedModule = value.MainModule;
             }
-         }
+        }
 
         public ModuleDefinition? GeneratedModule { get; private set; }
 
@@ -69,7 +69,8 @@ namespace Album.CodeGen.Cecil
         [MemberNotNull(nameof(methodReferences))]
         private void InitialiseMethodReferences(ModuleDefinition module) {
             methodReferences = new() {
-                ConsoleWrite = module.ImportReference(typeof(Console).GetMethod("WriteLine", new[] { typeof(string) })),
+                ConsoleWriteChar = module.ImportReference(typeof(Console).GetMethod("Write", new[] { typeof(char) })),
+                ConsoleWriteInt = module.ImportReference(typeof(Console).GetMethod("Write", new[] { typeof(int) })),
                 LinkedListAddLast = module.ImportReference(typeof(LinkedList<int>).GetMethod("AddLast", new[] { typeof(int) })),
                 ConsoleRead = module.ImportReference(typeof(Console).GetMethod("Read", new Type[] { })),
                 LinkedListNodeValue = module.ImportReference(typeof(LinkedListNode<int>).GetProperty("Value")?.GetGetMethod()),
