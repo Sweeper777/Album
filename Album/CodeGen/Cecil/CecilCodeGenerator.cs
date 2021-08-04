@@ -84,7 +84,7 @@ namespace Album.CodeGen.Cecil
             Output outputStrategy = new(methodReferences, il);
             Pop popStrategy = new(methodReferences, il);
             Push pushStrategy = new(methodReferences, il);
-            Sub subStrategy = new(methodReferences, il);
+            BinaryOperation binOpStrategy = new(methodReferences, il);
             strategies = new() {
                 { LineType.Input, inputStrategy},
                 { LineType.Branch, branchStrategy },
@@ -97,7 +97,11 @@ namespace Album.CodeGen.Cecil
                 { LineType.OutputInt, outputStrategy },
                 { LineType.Pop, popStrategy },
                 { LineType.Push, pushStrategy },
-                { LineType.Sub, subStrategy },
+                { LineType.Sub, binOpStrategy },
+                { LineType.Add, binOpStrategy },
+                { LineType.And, binOpStrategy },
+                { LineType.Or, binOpStrategy },
+                { LineType.Eor, binOpStrategy },
             };
         }
         protected override void DidGenerateLines()
