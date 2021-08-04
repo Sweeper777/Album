@@ -1,14 +1,15 @@
 using Album.Syntax;
 using Mono.Cecil.Cil;
 using System;
+using System.Linq;
 
 namespace Album.CodeGen.Cecil
 {
     internal partial class CecilCodeGenerationStrategies {
-        public class Conditionals : CecilCodeGenerationStrategy
+        public class UnaryOperation : CecilCodeGenerationStrategy
         {
 
-            public Conditionals(MethodReferenceProvider methods, ILProcessor ilProcessor) 
+            public UnaryOperation(MethodReferenceProvider methods, ILProcessor ilProcessor) 
                 : base(methods, ilProcessor) {
             }
 
@@ -33,6 +34,12 @@ namespace Album.CodeGen.Cecil
                 case LineType.TopNegative:
                     ILProcessor.Emit(OpCodes.Clt);
                     break;
+                case LineType.Double:
+                    ILProcessor.Emit(OpCodes.Shl);
+                    break;
+                case LineType.Halve:
+                    ILProcessor.Emit(OpCodes.Shr);
+                    break;
                 default:
                     throw new InvalidOperationException("Unsupported Line Type!");
                 }
@@ -40,8 +47,12 @@ namespace Album.CodeGen.Cecil
                 ILProcessor.Emit(OpCodes.Pop);
             }
 
+            private static readonly LineType[] supportedLineTypes = new[] {
+                LineType.TopNegative, LineType.TopPositive, LineType.TopZero, LineType.Double, LineType.Halve
+            };
+
             public override bool SupportsLineType(LineType type)
-                => type == LineType.TopNegative || type == LineType.TopPositive || type == LineType.TopZero;
+                => supportedLineTypes.Contains(type);
         }
     }
 }
