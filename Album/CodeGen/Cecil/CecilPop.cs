@@ -13,7 +13,7 @@ namespace Album.CodeGen.Cecil
             public override void GenerateCodeForSong(LineInfo line)
             {
                 ILProcessor.Emit(OpCodes.Dup);
-                ILProcessor.Emit(OpCodes.Call, methods.LinkedListRemoveLast);
+                ILProcessor.Emit(OpCodes.Callvirt, methods.LinkedListRemoveLast);
             }
 
             public override bool SupportsLineType(LineType type)
