@@ -77,19 +77,27 @@ namespace Album.CodeGen.Cecil
         }
 
         private void InitialiseCodeGenStrategies(MethodReferenceProvider methodReferences, ILProcessor il) {
+            Input inputStrategy = new(methodReferences, il);
+            BranchOriginalSong branchStrategy = new(methodReferences, il);
+            Conditionals conditionalsStrategy = new(methodReferences, il);
+            Dup dupStrategy = new(methodReferences, il);
+            Output outputStrategy = new(methodReferences, il);
+            Pop popStrategy = new(methodReferences, il);
+            Push pushStrategy = new(methodReferences, il);
+            Sub subStrategy = new(methodReferences, il);
             strategies = new() {
-                { LineType.Input, new Input(methodReferences, il) },
-                { LineType.Branch, new BranchOriginalSong(methodReferences, il) },
-                { LineType.OriginalSong, new BranchOriginalSong(methodReferences, il) },
-                { LineType.TopPositive, new Conditionals(methodReferences, il) },
-                { LineType.TopNegative, new Conditionals(methodReferences, il) },
-                { LineType.TopZero, new Conditionals(methodReferences, il) },
-                { LineType.Dup, new Dup(methodReferences, il) },
-                { LineType.OutputChar, new Output(methodReferences, il) },
-                { LineType.OutputInt, new Output(methodReferences, il) },
-                { LineType.Pop, new Pop(methodReferences, il) },
-                { LineType.Push, new Push(methodReferences, il) },
-                { LineType.Sub, new Sub(methodReferences, il) },
+                { LineType.Input, inputStrategy},
+                { LineType.Branch, branchStrategy },
+                { LineType.OriginalSong, branchStrategy },
+                { LineType.TopPositive, conditionalsStrategy },
+                { LineType.TopNegative, conditionalsStrategy },
+                { LineType.TopZero, conditionalsStrategy },
+                { LineType.Dup, dupStrategy },
+                { LineType.OutputChar, outputStrategy },
+                { LineType.OutputInt, outputStrategy },
+                { LineType.Pop, popStrategy },
+                { LineType.Push, pushStrategy },
+                { LineType.Sub, subStrategy },
             };
         }
         protected override void DidGenerateLines()
