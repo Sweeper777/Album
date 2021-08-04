@@ -8,9 +8,17 @@ namespace Album.CodeGen.Cecil
         [DisallowNull]
         public MethodReference? LinkedListAddLast { get; init; }
         [DisallowNull]
+        public MethodReference? LinkedListAddFirst { get; init; }
+        [DisallowNull]
         public MethodReference? LinkedListRemoveLast { get; init; }
         [DisallowNull]
+        public MethodReference? LinkedListRemoveFirst { get; init; }
+        [DisallowNull]
+        public MethodReference? LinkedListClear { get; init; }
+        [DisallowNull]
         public MethodReference? LinkedListLast { get; init; }
+        [DisallowNull]
+        public MethodReference? LinkedListFirst { get; init; }
         [DisallowNull]
         public MethodReference? LinkedListNodeValue { get; init; }
         [DisallowNull]

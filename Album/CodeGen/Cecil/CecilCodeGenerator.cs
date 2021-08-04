@@ -69,10 +69,14 @@ namespace Album.CodeGen.Cecil
                 ConsoleWriteChar = module.ImportReference(typeof(Console).GetMethod("Write", new[] { typeof(char) })),
                 ConsoleWriteInt = module.ImportReference(typeof(Console).GetMethod("Write", new[] { typeof(int) })),
                 LinkedListAddLast = module.ImportReference(typeof(LinkedList<int>).GetMethod("AddLast", new[] { typeof(int) })),
+                LinkedListAddFirst = module.ImportReference(typeof(LinkedList<int>).GetMethod("AddFirst", new[] { typeof(int) })),
                 ConsoleRead = module.ImportReference(typeof(Console).GetMethod("Read", new Type[] { })),
                 LinkedListNodeValue = module.ImportReference(typeof(LinkedListNode<int>).GetProperty("Value")?.GetGetMethod()),
                 LinkedListLast = module.ImportReference(typeof(LinkedList<int>).GetProperty("Last")?.GetGetMethod()),
+                LinkedListFirst = module.ImportReference(typeof(LinkedList<int>).GetProperty("First")?.GetGetMethod()),
                 LinkedListRemoveLast = module.ImportReference(typeof(LinkedList<int>).GetMethod("RemoveLast", new Type[] { })),
+                LinkedListRemoveFirst = module.ImportReference(typeof(LinkedList<int>).GetMethod("RemoveFirst", new Type[] { })),
+                LinkedListClear = module.ImportReference(typeof(LinkedList<int>).GetMethod("Clear", new Type[] { })),
             };
         }
 
