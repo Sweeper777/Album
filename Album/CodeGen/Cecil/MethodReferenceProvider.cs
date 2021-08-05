@@ -10,6 +10,8 @@ namespace Album.CodeGen.Cecil
         [DisallowNull]
         public MethodReference? LinkedListAddFirst { get; init; }
         [DisallowNull]
+        public MethodReference? LinkedListAddBefore { get; init; }
+        [DisallowNull]
         public MethodReference? LinkedListRemoveLast { get; init; }
         [DisallowNull]
         public MethodReference? LinkedListRemoveFirst { get; init; }
@@ -27,5 +29,7 @@ namespace Album.CodeGen.Cecil
         public MethodReference? ConsoleWriteChar { get; init; }
         [DisallowNull]
         public MethodReference? ConsoleWriteInt { get; init; }
+        [DisallowNull]
+        public MethodReference? EnvironmentExit { get; init; }
     }
 }

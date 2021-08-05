@@ -5,6 +5,7 @@ using Mono.Cecil;
 using static Album.CodeGen.Cecil.CecilCodeGenerationStrategies;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Album.CodeGen.Cecil
 {
@@ -77,6 +78,8 @@ namespace Album.CodeGen.Cecil
                 LinkedListRemoveLast = module.ImportReference(typeof(LinkedList<int>).GetMethod("RemoveLast", new Type[] { })),
                 LinkedListRemoveFirst = module.ImportReference(typeof(LinkedList<int>).GetMethod("RemoveFirst", new Type[] { })),
                 LinkedListClear = module.ImportReference(typeof(LinkedList<int>).GetMethod("Clear", new Type[] { })),
+                LinkedListAddBefore = module.ImportReference(typeof(LinkedList<int>).GetMethod("AddBefore", new[] { typeof(LinkedListNode<int>), typeof(int) })),
+                EnvironmentExit = module.ImportReference(typeof(Environment).GetMethod("Exit", new[] { typeof(int) })),
             };
         }
 
@@ -91,6 +94,9 @@ namespace Album.CodeGen.Cecil
             BinaryOperation binOpStrategy = new(methodReferences, il);
             Clear clearStrategy = new(methodReferences, il);
             Cycle cycleStrategy = new(methodReferences, il);
+            Swap swapStrategy = new(methodReferences, il);
+            InfiniteLoop infiniteLoopStrategy = new(methodReferences, il);
+            Quit quitStrategy = new(methodReferences, il);
             strategies = new() {
                 { LineType.Input, inputStrategy},
                 { LineType.Branch, branchStrategy },
@@ -113,12 +119,31 @@ namespace Album.CodeGen.Cecil
                 { LineType.Clear, clearStrategy },
                 { LineType.Cycle, cycleStrategy },
                 { LineType.RCycle, cycleStrategy },
+                { LineType.Swap, swapStrategy },
+                { LineType.Quit, quitStrategy },
+                { LineType.InfiniteLoop, infiniteLoopStrategy }
             };
         }
         protected override void DidGenerateLines()
         {
+            var catchEnd = il?.Create(OpCodes.Ret);
             il?.Emit(OpCodes.Pop);
-            il?.Emit(OpCodes.Ret);
+            // il?.Emit(OpCodes.Leave, catchEnd);
+            // var tryEnd = il?.Create(OpCodes.Pop);
+            // il?.Append(tryEnd);
+            // il?.Emit(OpCodes.Ldc_I4_1);
+            // il?.Emit(OpCodes.Call, methodReferences?.EnvironmentExit);
+            il?.Append(catchEnd);
+
+            // ExceptionHandler handler = new ExceptionHandler(ExceptionHandlerType.Catch) {
+            //     TryStart = il?.Body.Instructions.First (),
+            //     TryEnd = tryEnd,
+            //     HandlerStart = tryEnd,
+            //     HandlerEnd = catchEnd,
+            //     CatchType = GeneratedModule?.TypeSystem.Object,
+            // };
+
+            // il?.Body.ExceptionHandlers.Add(handler);
         }
     }
 }
