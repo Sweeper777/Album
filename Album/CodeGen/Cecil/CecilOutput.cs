@@ -24,6 +24,8 @@ namespace Album.CodeGen.Cecil
                     ILProcessor.Emit(OpCodes.Call, methods.ConsoleWriteChar);
                 } else if (line.Type == LineType.OutputInt) {
                     ILProcessor.Emit(OpCodes.Call, methods.ConsoleWriteInt);
+                    ILProcessor.Emit(OpCodes.Ldc_I4_S, (sbyte)' ');
+                    ILProcessor.Emit(OpCodes.Call, methods.ConsoleWriteChar);
                 } else {
                     throw new InvalidOperationException("Unsupported Line Type!");
                 }
