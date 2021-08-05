@@ -14,7 +14,11 @@ namespace Album.CodeGen.Cecil
             {
                 if (line.IsPush(out int? push)) {
                     ILProcessor.Emit(OpCodes.Dup);
-                    ILProcessor.Emit(OpCodes.Ldc_I4, push.Value);
+                    if (push.Value <= sbyte.MaxValue && push.Value >= sbyte.MinValue) {
+                        ILProcessor.Emit(OpCodes.Ldc_I4_S, (sbyte)push.Value);
+                    } else {
+                        ILProcessor.Emit(OpCodes.Ldc_I4, push.Value);
+                    }
                     ILProcessor.Emit(OpCodes.Callvirt, methods.LinkedListAddLast);
                     ILProcessor.Emit(OpCodes.Pop);
                 }
