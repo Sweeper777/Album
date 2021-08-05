@@ -83,19 +83,23 @@ namespace Album.CodeGen.Cecil
         private void InitialiseCodeGenStrategies(MethodReferenceProvider methodReferences, ILProcessor il) {
             Input inputStrategy = new(methodReferences, il);
             BranchOriginalSong branchStrategy = new(methodReferences, il);
-            Conditionals conditionalsStrategy = new(methodReferences, il);
+            UnaryOperation unaryOpStrategy = new(methodReferences, il);
             Dup dupStrategy = new(methodReferences, il);
             Output outputStrategy = new(methodReferences, il);
             Pop popStrategy = new(methodReferences, il);
             Push pushStrategy = new(methodReferences, il);
             BinaryOperation binOpStrategy = new(methodReferences, il);
+            Clear clearStrategy = new(methodReferences, il);
+            Cycle cycleStrategy = new(methodReferences, il);
             strategies = new() {
                 { LineType.Input, inputStrategy},
                 { LineType.Branch, branchStrategy },
                 { LineType.OriginalSong, branchStrategy },
-                { LineType.TopPositive, conditionalsStrategy },
-                { LineType.TopNegative, conditionalsStrategy },
-                { LineType.TopZero, conditionalsStrategy },
+                { LineType.TopPositive, unaryOpStrategy },
+                { LineType.TopNegative, unaryOpStrategy },
+                { LineType.TopZero, unaryOpStrategy },
+                { LineType.Halve, unaryOpStrategy },
+                { LineType.Double, unaryOpStrategy },
                 { LineType.Dup, dupStrategy },
                 { LineType.OutputChar, outputStrategy },
                 { LineType.OutputInt, outputStrategy },
@@ -106,6 +110,9 @@ namespace Album.CodeGen.Cecil
                 { LineType.And, binOpStrategy },
                 { LineType.Or, binOpStrategy },
                 { LineType.Eor, binOpStrategy },
+                { LineType.Clear, clearStrategy },
+                { LineType.Cycle, cycleStrategy },
+                { LineType.RCycle, cycleStrategy },
             };
         }
         protected override void DidGenerateLines()
