@@ -50,11 +50,6 @@ namespace Album.CodeGen.Cecil
             mainMethod.Body.Variables.Add(stackVar);
             programType.Methods.Add(mainMethod);
 
-            var argsParameter = new ParameterDefinition("args",
-                Mono.Cecil.ParameterAttributes.None, GeneratedModule.ImportReference(typeof(string[])));
-
-            mainMethod.Parameters.Add(argsParameter);
-
             il = mainMethod.Body.GetILProcessor();
             il.Emit(OpCodes.Newobj, GeneratedModule.ImportReference(typeof(LinkedList<int>).GetConstructor(new Type[] {})));
 
