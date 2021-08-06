@@ -128,22 +128,23 @@ namespace Album.CodeGen.Cecil
         {
             var catchEnd = il?.Create(OpCodes.Ret);
             il?.Emit(OpCodes.Pop);
-            // il?.Emit(OpCodes.Leave, catchEnd);
-            // var tryEnd = il?.Create(OpCodes.Pop);
-            // il?.Append(tryEnd);
-            // il?.Emit(OpCodes.Ldc_I4_1);
-            // il?.Emit(OpCodes.Call, methodReferences?.EnvironmentExit);
+            il?.Emit(OpCodes.Leave, catchEnd);
+            var tryEnd = il?.Create(OpCodes.Pop);
+            il?.Append(tryEnd);
+            il?.Emit(OpCodes.Ldc_I4_1);
+            il?.Emit(OpCodes.Call, methodReferences?.EnvironmentExit);
+            il?.Emit(OpCodes.Leave, catchEnd);
             il?.Append(catchEnd);
 
-            // ExceptionHandler handler = new ExceptionHandler(ExceptionHandlerType.Catch) {
-            //     TryStart = il?.Body.Instructions.First (),
-            //     TryEnd = tryEnd,
-            //     HandlerStart = tryEnd,
-            //     HandlerEnd = catchEnd,
-            //     CatchType = GeneratedModule?.TypeSystem.Object,
-            // };
+            ExceptionHandler handler = new ExceptionHandler(ExceptionHandlerType.Catch) {
+                TryStart = il?.Body.Instructions.First (),
+                TryEnd = tryEnd,
+                HandlerStart = tryEnd,
+                HandlerEnd = catchEnd,
+                CatchType = GeneratedModule?.ImportReference(typeof(Exception)),
+            };
 
-            // il?.Body.ExceptionHandlers.Add(handler);
+            il?.Body.ExceptionHandlers.Add(handler);
         }
     }
 }
