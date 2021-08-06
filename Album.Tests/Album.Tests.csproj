@@ -17,9 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="../Resources/Examples/99_bottles_of_beer.album" />
-    <EmbeddedResource Include="../Resources/Examples/collatz.album" />
-    <EmbeddedResource Include="../Resources/Examples/reverse_string.album" />
+    <EmbeddedResource Include="../Resources/Examples/*.album" />
   </ItemGroup>
 
   <PropertyGroup>

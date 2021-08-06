@@ -1,0 +1,62 @@
+Playlist created by MMZK1526
+
+Collatz Sequence starting from x = 26, should print the number of
+transformations until 1
+Namely 26 -> 13 -> 40 -> 20 -> 10 -> 5 -> 16 -> 8 -> 4 -> 2 -> 1
+10 transformations.
+
+Push count = 0
+	1 Bottle of Beer on the Wall.
+	1 Bottle of Beer on the Wall.
+	Take It From Me, by The Weepies.
+
+Push x = 26
+	26 Bottles of Beer on the Wall.
+
+The main loop
+	Gold Experience Requiem, by MMZK1526.
+	D4C, by AC/DC.
+	1 Bottle of Beer on the Wall.
+	Take It From Me, by The Weepies.
+If x == 1 (x - 1 == 0), then break out the loop.
+	King Nothing, by Metallica.
+	Country Roads, Take Me Heaven's Door.
+Otherwise, count++
+	Roundabout, by YES.
+	1 Bottle of Beer on the Wall.
+	Dear Maria, Count Me In, by All Time Low.
+	Rolling in the Deep, by Adele.
+Check the parity of x
+	D4C, by AC/DC.
+	D4C, by AC/DC.
+	The Right Path, by Thomas Greenberg.
+	Man in the Mirror, by MJ.
+	Take It From Me, by The Weepies.
+If (x - 2 * (x / 2)) == 0, then x is even; otherwise odd
+	King Nothing, by Metallica.
+	King Nothing, by Metallica.
+	Country Roads, Take Me Oddball.
+When x is even, x = x / 2
+	The Right Path, by Thomas Greenberg.
+	1 Bottle of Beer on the Wall.
+	Country Roads, Take Me Gold Experience Requiem.
+When x is odd, x = 3 * x + 1
+	Oddball, by MMZK1526.
+	D4C, by AC/DC.
+	D4C, by AC/DC.
+	Dear Maria, Count Me In, by All Time Low.
+	Dear Maria, Count Me In, by All Time Low.
+	1 Bottle of Beer on the Wall.
+	Dear Maria, Count Me In, by All Time Low.
+	1 Bottle of Beer on the Wall.
+	Country Roads, Take Me Gold Experience Requiem.
+
+Break loop label
+	Heaven's Door, by MMZK1526.
+	Let It Go, by Idina Menzel.
+
+Print
+	Gasoline, by Halsey.
+
+End
+	I'm So Tired, by Lauv & Troye Sivan.
