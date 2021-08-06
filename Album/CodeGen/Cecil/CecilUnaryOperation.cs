@@ -23,21 +23,25 @@ namespace Album.CodeGen.Cecil
                 ILProcessor.Emit(OpCodes.Callvirt, methods.LinkedListRemoveLast);
                 ILProcessor.Emit(OpCodes.Dup);
                 ILProcessor.Emit(OpCodes.Ldloc_0);
-                ILProcessor.Emit(OpCodes.Ldc_I4_0);
                 switch (line.Type) {
                 case LineType.TopZero:
+                    ILProcessor.Emit(OpCodes.Ldc_I4_0);
                     ILProcessor.Emit(OpCodes.Ceq);
                     break;
                 case LineType.TopPositive:
+                    ILProcessor.Emit(OpCodes.Ldc_I4_0);
                     ILProcessor.Emit(OpCodes.Cgt);
                     break;
                 case LineType.TopNegative:
+                    ILProcessor.Emit(OpCodes.Ldc_I4_0);
                     ILProcessor.Emit(OpCodes.Clt);
                     break;
                 case LineType.Double:
+                    ILProcessor.Emit(OpCodes.Ldc_I4_1);
                     ILProcessor.Emit(OpCodes.Shl);
                     break;
                 case LineType.Halve:
+                    ILProcessor.Emit(OpCodes.Ldc_I4_1);
                     ILProcessor.Emit(OpCodes.Shr);
                     break;
                 default:
