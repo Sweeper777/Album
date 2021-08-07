@@ -10,6 +10,9 @@ namespace Album.Tests {
         
 
         [TestCase("Album.Tests.50plus1000minus7.album", "1043")]
+        [TestCase("Album.Tests.arithmetic.album", "23")]
+        [TestCase("Album.Tests.branching.album", "10")]
+        [TestCase("Album.Tests.stack.album", "1 3 2 4")]
         public void ProgramProducesCorrectOutput(string programResourceName, string expectedOutput) {
             using var stream = typeof(CecilCodeGeneratorTests).Assembly.GetManifestResourceStream(programResourceName);
             Assert.IsNotNull(stream);
