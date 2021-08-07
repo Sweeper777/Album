@@ -17,10 +17,10 @@ namespace Album.Tests {
             AlbumCompiler compiler = new(codegen);
             compiler.Compile(stream!);
             Assert.NotNull(codegen.GeneratedAssembly);
-            Assert.AreEqual(expectedOutput, RunAssembly(codegen.GeneratedAssembly!).Trim());
+            Assert.AreEqual(expectedOutput, RunAssembly(codegen.GeneratedAssembly!, 0).Trim());
         }
 
-        private string RunAssembly(AssemblyDefinition asmDef) {
+        private string RunAssembly(AssemblyDefinition asmDef, int expectedExitCode) {
             asmDef.Write("TestOutput.exe");
             using var proc = new Process
             {
@@ -38,7 +38,7 @@ namespace Album.Tests {
             proc.Start();
             proc.WaitForExit();
             string output = proc.StandardOutput.ReadToEnd();
-            Assert.AreEqual(0, proc.ExitCode);
+            Assert.AreEqual(expectedExitCode, proc.ExitCode);
             return output;
         }
     }
