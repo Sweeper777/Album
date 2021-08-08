@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="../Resources/songManifest.json" />
+    <EmbeddedResource Include="../Resources/runtimeconfig_template.json" />
   </ItemGroup>
 
   <PropertyGroup>
