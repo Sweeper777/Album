@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using Album.CodeGen.Cecil;
+using CommandLine;
+using CommandLine.Text;
 
 namespace Album
 {
@@ -8,14 +10,11 @@ namespace Album
     {
         static void Main(string[] args)
         {
-            using var file = File.OpenRead(args[0]);
+            ParserResult<CompilerOptions> parserResult = 
+                Parser.Default.ParseArguments<CompilerOptions>(args);
+            parserResult
+                .WithParsed(RunWithOptions);
             CecilCodeGenerator codegen = new();
-            AlbumCompiler compiler = new(codegen);
-            compiler.Compile(file);
-            if (codegen.GeneratedAssembly != null && codegen.GeneratedModule != null) {
-                codegen.GeneratedAssembly.Name = new Mono.Cecil.AssemblyNameDefinition("Program", new(1, 0));
-                codegen.GeneratedModule.Name = "Program";
-                codegen.GeneratedAssembly.Write("Program.exe");
             }
         }
     }
