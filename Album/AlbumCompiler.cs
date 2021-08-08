@@ -26,19 +26,19 @@ namespace Album {
             AlbumParser parser = new(SongManifest, source);
             IList<LineInfo> lines = parser.Parse();
             foreach (var output in parser.Outputs) {
-                DisplayOutput(output);
+                DisplayOutput?.Invoke(output);
             }
             SemanticAnalyser analyser = new(lines);
             foreach (var output in analyser.Outputs) {
-                DisplayOutput(output);
+                DisplayOutput?.Invoke(output);
             }
             if (!parser.Outputs.Union(analyser.Outputs).Any(x => x.Type == CompilerOutputType.Error)) {
                 CodeGenerator.GenerateCode(lines);
             }
         }
 
-        private void DisplayOutput(CompilerOutput output) {
-
-        }
+        public event CompilerOutputHandler? DisplayOutput;
     }
+
+    public delegate void CompilerOutputHandler(CompilerOutput output);
 }
