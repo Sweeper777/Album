@@ -11,6 +11,8 @@ namespace Album {
 
         public CodeGenerator CodeGenerator { get; set;}
         public SongManifest SongManifest { get; set; }
+
+        public IEnumerable<CompilerOutput> Outputs { get; set; } = Enumerable.Empty<CompilerOutput>();
         
         public AlbumCompiler(CodeGenerator codeGenerator)
         {
@@ -39,6 +41,7 @@ namespace Album {
                 }
             }
             
+            Outputs = allOutputs;
 
             if (!allOutputs.Any(x => x.Type == CompilerOutputType.Error)) {
                 CodeGenerator.GenerateCode(lines);
