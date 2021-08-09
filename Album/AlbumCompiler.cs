@@ -20,25 +20,29 @@ namespace Album {
             SongManifest = SongManifest.FromStream(s) ?? throw new IOException("Unable to read default song manifest");
         }
 
-        // TODO: compiler options
+        public WarningLevel WarningLevel { get; set; } = WarningLevel.Warning;
 
         public void Compile(Stream source) {
             AlbumParser parser = new(SongManifest, source);
             IList<LineInfo> lines = parser.Parse();
-            foreach (var output in parser.Outputs) {
-                DisplayOutput?.Invoke(output);
-            }
             SemanticAnalyser analyser = new(lines);
-            foreach (var output in analyser.Outputs) {
-                DisplayOutput?.Invoke(output);
+
+            IEnumerable<CompilerOutput> allOutputs = 
+                parser.Outputs.Union(analyser.Outputs)
+                    .Where(x => WarningLevel == WarningLevel.None && x.Type == CompilerOutputType.Warning)
+                    .ToList();
+            if (WarningLevel == WarningLevel.Error) {
+                foreach (var output in allOutputs) {
+                    if (output.Type == CompilerOutputType.Warning) {
+                        output.Type = CompilerOutputType.Error;
+                    }
+                }
             }
-            if (!parser.Outputs.Union(analyser.Outputs).Any(x => x.Type == CompilerOutputType.Error)) {
+            
+
+            if (!allOutputs.Any(x => x.Type == CompilerOutputType.Error)) {
                 CodeGenerator.GenerateCode(lines);
             }
         }
-
-        public event CompilerOutputHandler? DisplayOutput;
     }
-
-    public delegate void CompilerOutputHandler(CompilerOutput output);
 }
