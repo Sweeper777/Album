@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using Album.CodeGen.Cecil;
+using Album.Syntax;
 using CommandLine;
 using CommandLine.Text;
 
@@ -43,9 +44,20 @@ namespace Album
             }
             
             CecilCodeGenerator codegen = new();
-            using (var file = File.OpenRead(options.InputPath!)) {
+            using (var sourceFile = File.OpenRead(options.InputPath!)) {
                 AlbumCompiler compiler = new(codegen);
-                compiler.Compile(file);
+                compiler.WarningLevel = options.WarningLevel;
+
+                if (options.SongManifestPath != null) {
+                    if (SongManifest.FromFile(options.SongManifestPath) is SongManifest manifest) {
+                        compiler.SongManifest = manifest;
+                    } else {
+                        Console.WriteLine("Invalid Song Manifest!");
+                        return;
+                    }
+                }
+
+                compiler.Compile(sourceFile);
             }
 
             try {
@@ -68,6 +80,10 @@ namespace Album
         private static bool ValidateOptions(CompilerOptions options) {
             if (!File.Exists(options.InputPath)) {
                 Console.WriteLine($"Input file '{options.InputPath}' not found!");
+                return false;
+            }
+            if (options.SongManifestPath != null && !File.Exists(options.SongManifestPath)) {
+                Console.WriteLine($"Song manifest file '{options.SongManifestPath}' not found!");
                 return false;
             }
             if (Directory.Exists(options.OutputPath ?? "Program.exe") 
