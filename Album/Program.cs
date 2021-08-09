@@ -10,10 +10,23 @@ namespace Album
     {
         static void Main(string[] args)
         {
-            ParserResult<CompilerOptions> parserResult = 
-                Parser.Default.ParseArguments<CompilerOptions>(args);
+            ParserResult<CompilerOptions> parserResult = new Parser(settings => {
+                settings.AutoVersion = false;
+                settings.CaseInsensitiveEnumValues = true;
+                settings.HelpWriter = null;
+            }).ParseArguments<CompilerOptions>(args);
             parserResult
-                .WithParsed(RunWithOptions);
+                .WithParsed(RunWithOptions)
+                .WithNotParsed(x => {
+                    HelpText text = HelpText.AutoBuild(parserResult, h => {
+                        h.AutoVersion = false;
+                        h.Copyright = "";
+                        h.Heading = "";
+                        h.AddEnumValuesToHelpText = true;
+                        return HelpText.DefaultParsingErrorsHandler(parserResult, h);;
+                    }, e => e);
+                    Console.WriteLine(text);
+                });
         }
 
         private static void RunWithOptions(CompilerOptions options) {
