@@ -19,7 +19,10 @@ namespace Album {
         public bool DoesOptimise { get; set; }
 
         [Option('w', "warn", Required = false, Default = WarningLevel.Warning,
-        HelpText = "Warning level, 0: no warning, 1: normal warnings, 2: treat warnings as errors")]
+        HelpText = "What warnings should be output as")]
         public WarningLevel WarningLevel { get; set; }
+
+        [Option('s', "manifest", Required = false, HelpText = "Path to custom song manifest file")]
+        public string? SongManifestPath { get; set; }
     }
 }
