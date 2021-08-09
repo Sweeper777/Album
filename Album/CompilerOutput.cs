@@ -2,9 +2,9 @@ using System;
 
 namespace Album {
     public class CompilerOutput {
-        public CompilerMessage Message { get; }
-        public CompilerOutputType Type { get; }
-        public int LineNumber { get; }
+        public CompilerMessage Message { get; set; }
+        public CompilerOutputType Type { get; set; }
+        public int LineNumber { get; set; }
 
         public CompilerOutput(CompilerMessage message, CompilerOutputType type, int line) {
             Message = message;
