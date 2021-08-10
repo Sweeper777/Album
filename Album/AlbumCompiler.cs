@@ -10,7 +10,7 @@ namespace Album {
     public class AlbumCompiler {
 
         public CodeGenerator CodeGenerator { get; set;}
-        public SongManifest SongManifest { get; set; }
+        public ISongManifest SongManifest { get; set; }
 
         public IEnumerable<CompilerOutput> Outputs { get; set; } = Enumerable.Empty<CompilerOutput>();
         
@@ -19,7 +19,8 @@ namespace Album {
             CodeGenerator = codeGenerator;
             using var s = typeof(Program).Assembly.GetManifestResourceStream("Album.songManifest.json") ??
                 throw new FileNotFoundException("Unable to read default song manifest");
-            SongManifest = SongManifest.FromStream(s) ?? throw new IOException("Unable to read default song manifest");
+            SongManifest = Album.Syntax.SongManifest.FromStream(s) ?? 
+                            throw new IOException("Unable to read default song manifest");
         }
 
         public WarningLevel WarningLevel { get; set; } = WarningLevel.Warning;
