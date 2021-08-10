@@ -30,6 +30,20 @@ namespace Album.Tests {
                 new CompilerOutput(UnusedOriginalSong, Warning, 7)
             }, compiler.Outputs);
 
+            compiler.WarningLevel = WarningLevel.None;
+            compiler.Compile(source);
+            Assert.IsTrue(mockCodeGen.HasGenerated);
+            mockCodeGen.HasGenerated = false;
+            CollectionAssert.IsEmpty(compiler.Outputs);
+
+            compiler.WarningLevel = WarningLevel.Error;
+            compiler.Compile(source);
+            Assert.IsFalse(mockCodeGen.HasGenerated);
+            mockCodeGen.HasGenerated = false;
+            CollectionAssert.AreEquivalent(new[] {
+                new CompilerOutput(UnusedOriginalSong, Error, 4),
+                new CompilerOutput(UnusedOriginalSong, Error, 7)
+            }, compiler.Outputs);
         }
     }
 }
