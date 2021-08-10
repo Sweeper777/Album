@@ -29,10 +29,11 @@ namespace Album {
             AlbumParser parser = new(SongManifest, source);
             IList<LineInfo> lines = parser.Parse();
             SemanticAnalyser analyser = new(lines);
+            analyser.Analyse();
 
             IEnumerable<CompilerOutput> allOutputs = 
                 parser.Outputs.Union(analyser.Outputs)
-                    .Where(x => WarningLevel == WarningLevel.None && x.Type == CompilerOutputType.Warning)
+                    .Where(x => !(WarningLevel == WarningLevel.None && x.Type == CompilerOutputType.Warning))
                     .ToList();
             if (WarningLevel == WarningLevel.Error) {
                 foreach (var output in allOutputs) {
