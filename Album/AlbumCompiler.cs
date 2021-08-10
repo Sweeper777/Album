@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using Album.CodeGen;
-using Album.CodeGen.Cecil;
+using System.Text;
 using Album.Syntax;
 using Album.Semantics;
 
@@ -46,6 +46,12 @@ namespace Album {
             if (!allOutputs.Any(x => x.Type == CompilerOutputType.Error)) {
                 CodeGenerator.GenerateCode(lines);
             }
+        }
+
+        public void Compile(string source) {
+            using var stream = new MemoryStream(Encoding.UTF8.GetBytes(source));
+            stream.Position = 0;
+            Compile(stream);
         }
     }
 }
