@@ -32,12 +32,13 @@ namespace Album
         }
 
         private static void RunWithOptions(CompilerOptions options) {
+            options.SetDefaultOutputPathIfNeeded();
             if (!ValidateOptions(options)) {
                 return;
             }
 
             try {
-                string absolutePath = Path.GetFullPath(options.OutputPath ?? "Program.exe");
+                string absolutePath = Path.GetFullPath(options.OutputPath);
                 if (!(Path.GetDirectoryName(absolutePath) is string directory) ||
                     !(Path.ChangeExtension(absolutePath, "runtimeconfig.json") is string configPath)) {
                     Console.WriteLine($"Output file '{options.OutputPath}' is a directory!");
@@ -45,6 +46,7 @@ namespace Album
                 }
                 
                 CecilCodeGenerator codegen = new();
+                ParserOutputGenerator parserOutputGen = new();
                 SongManifest? inputManifest = null;
                 if (options.SongManifestPath != null) {
                     if (SongManifest.FromFile(options.SongManifestPath) is SongManifest manifest) {
@@ -55,7 +57,7 @@ namespace Album
                     }
                 }
                 using (var sourceFile = File.OpenRead(options.InputPath!)) {
-                    AlbumCompiler compiler = new(codegen);
+                    AlbumCompiler compiler = new(options.ParseOnly ? parserOutputGen : codegen);
                     compiler.WarningLevel = options.WarningLevel;
                     compiler.Compile(sourceFile);
                     if (inputManifest != null) {
@@ -68,7 +70,7 @@ namespace Album
                     Directory.CreateDirectory(directory);
                     codegen.GeneratedAssembly.Name = new Mono.Cecil.AssemblyNameDefinition("Program", new(1, 0));
                     codegen.GeneratedModule.Name = "Program";
-                    codegen.GeneratedAssembly.Write(options.OutputPath ?? "Program.exe");
+                    codegen.GeneratedAssembly.Write(options.OutputPath);
                     string runtimeConfigContents;
                     using (var stream = new StreamReader(typeof(Program).Assembly.GetManifestResourceStream("Album.runtimeconfig_template.json")!)) {
                         runtimeConfigContents = stream.ReadToEnd();
@@ -76,6 +78,12 @@ namespace Album
                     File.WriteAllText(configPath, runtimeConfigContents);
                     Environment.Exit(0);
                 }
+
+                if (parserOutputGen.Output != null) {
+                    File.WriteAllText(options.OutputPath, parserOutputGen.Output.ToString());
+                    Environment.Exit(0);
+                }
+                
             } catch (IOException ex) {
                 Console.WriteLine($"IO Error: {ex.Message}");
                 Environment.Exit(1);
@@ -92,8 +100,7 @@ namespace Album
                 Console.WriteLine($"Song manifest file '{options.SongManifestPath}' not found!");
                 return false;
             }
-            if (Directory.Exists(options.OutputPath ?? "Program.exe") 
-                || Directory.Exists(Path.ChangeExtension(options.OutputPath ?? "Program.exe", "runtimeconfig.json"))) {
+            if (Directory.Exists(options.OutputPath)) {
                 Console.WriteLine($"Output file '{options.OutputPath}' is a directory!");
                 return false;
             }
