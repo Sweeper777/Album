@@ -45,7 +45,8 @@ namespace Album {
             
             Outputs = allOutputs;
 
-            if (!allOutputs.Any(x => x.Type == CompilerOutputType.Error)) {
+            if (!allOutputs.Any(x => x.Type == CompilerOutputType.Error) &&
+                !CodeGenerator.AllowsSemanticErrors) {
                 CodeGenerator.GenerateCode(lines);
             }
         }
