@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 using Album.CodeGen.Cecil;
 using Album.Syntax;
 using CommandLine;
@@ -44,20 +45,23 @@ namespace Album
                 }
                 
                 CecilCodeGenerator codegen = new();
+                SongManifest? inputManifest = null;
+                if (options.SongManifestPath != null) {
+                    if (SongManifest.FromFile(options.SongManifestPath) is SongManifest manifest) {
+                        inputManifest = manifest;
+                    } else {
+                        Console.WriteLine("Invalid Song Manifest!");
+                        return;
+                    }
+                }
                 using (var sourceFile = File.OpenRead(options.InputPath!)) {
                     AlbumCompiler compiler = new(codegen);
                     compiler.WarningLevel = options.WarningLevel;
-
-                    if (options.SongManifestPath != null) {
-                        if (SongManifest.FromFile(options.SongManifestPath) is SongManifest manifest) {
-                            compiler.SongManifest = manifest;
-                        } else {
-                            Console.WriteLine("Invalid Song Manifest!");
-                            return;
-                        }
-                    }
-
                     compiler.Compile(sourceFile);
+                    if (inputManifest != null) {
+                        compiler.SongManifest = inputManifest;
+                    }
+                    PrintErrorsAndWarnings(compiler.Outputs);
                 }
 
                 if (codegen.GeneratedAssembly != null && codegen.GeneratedModule != null) {
@@ -70,10 +74,13 @@ namespace Album
                         runtimeConfigContents = stream.ReadToEnd();
                     }
                     File.WriteAllText(configPath, runtimeConfigContents);
+                    Environment.Exit(0);
                 }
             } catch (IOException ex) {
                 Console.WriteLine($"IO Error: {ex.Message}");
+                Environment.Exit(1);
             }
+            Environment.Exit(1);
         }
 
         private static bool ValidateOptions(CompilerOptions options) {
@@ -95,6 +102,10 @@ namespace Album
                 return false;
             }
             return true;
+        }
+
+        private static void PrintErrorsAndWarnings(IEnumerable<CompilerOutput> outputs) {
+            // TODO
         }
     }
 }
