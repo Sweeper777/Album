@@ -35,32 +35,31 @@ namespace Album
                 return;
             }
 
-            
-            string absolutePath = Path.GetFullPath(options.OutputPath ?? "Program.exe");
-            if (!(Path.GetDirectoryName(absolutePath) is string directory) ||
-                !(Path.ChangeExtension(absolutePath, "runtimeconfig.json") is string configPath)) {
-                Console.WriteLine($"Output file '{options.OutputPath}' is a directory!");
-                return;
-            }
-            
-            CecilCodeGenerator codegen = new();
-            using (var sourceFile = File.OpenRead(options.InputPath!)) {
-                AlbumCompiler compiler = new(codegen);
-                compiler.WarningLevel = options.WarningLevel;
+            try {
+                string absolutePath = Path.GetFullPath(options.OutputPath ?? "Program.exe");
+                if (!(Path.GetDirectoryName(absolutePath) is string directory) ||
+                    !(Path.ChangeExtension(absolutePath, "runtimeconfig.json") is string configPath)) {
+                    Console.WriteLine($"Output file '{options.OutputPath}' is a directory!");
+                    return;
+                }
+                
+                CecilCodeGenerator codegen = new();
+                using (var sourceFile = File.OpenRead(options.InputPath!)) {
+                    AlbumCompiler compiler = new(codegen);
+                    compiler.WarningLevel = options.WarningLevel;
 
-                if (options.SongManifestPath != null) {
-                    if (SongManifest.FromFile(options.SongManifestPath) is SongManifest manifest) {
-                        compiler.SongManifest = manifest;
-                    } else {
-                        Console.WriteLine("Invalid Song Manifest!");
-                        return;
+                    if (options.SongManifestPath != null) {
+                        if (SongManifest.FromFile(options.SongManifestPath) is SongManifest manifest) {
+                            compiler.SongManifest = manifest;
+                        } else {
+                            Console.WriteLine("Invalid Song Manifest!");
+                            return;
+                        }
                     }
+
+                    compiler.Compile(sourceFile);
                 }
 
-                compiler.Compile(sourceFile);
-            }
-
-            try {
                 if (codegen.GeneratedAssembly != null && codegen.GeneratedModule != null) {
                     Directory.CreateDirectory(directory);
                     codegen.GeneratedAssembly.Name = new Mono.Cecil.AssemblyNameDefinition("Program", new(1, 0));
