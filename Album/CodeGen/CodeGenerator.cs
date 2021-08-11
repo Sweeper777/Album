@@ -28,7 +28,5 @@ namespace Album.CodeGen
             }
             DidGenerateLines();
         }
-
-        public virtual bool AllowsSemanticErrors => false;
     }
 }
