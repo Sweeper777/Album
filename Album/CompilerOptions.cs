@@ -1,4 +1,4 @@
-using System;
+using System.Diagnostics.CodeAnalysis;
 using CommandLine;
 
 namespace Album {
@@ -24,5 +24,16 @@ namespace Album {
 
         [Option('s', "manifest", Required = false, HelpText = "Path to custom song manifest file")]
         public string? SongManifestPath { get; set; }
+
+        [MemberNotNull(nameof(OutputPath))]
+        public void SetDefaultOutputPathIfNeeded() {
+            if (OutputPath == null) {
+                if (ParseOnly) {
+                    OutputPath = "ParserOutput.txt";
+                } else {
+                    OutputPath = "Program.exe";
+                }
+            }
+        }
     }
 }
