@@ -1,4 +1,4 @@
-using System;
+using System.Linq;
 using System.Collections.Generic;
 using Album.Syntax;
 
@@ -6,7 +6,7 @@ namespace Album.Semantics {
     public class CodeOptimiser {
         private LinkedList<LineInfo> seenLines = new();
 
-        public OptimisationOptions Options { get; set; }
+        public IEnumerable<OptimisationRule> Rules { get; set; } = Enumerable.Empty<OptimisationRule>();
 
         public IList<LineInfo> Optimise(IEnumerable<LineInfo> lines) {
             seenLines.Clear();
@@ -19,4 +19,5 @@ namespace Album.Semantics {
         }
     }
 
+    public delegate OptimisationResult OptimisationRule(IOptimisationContext context);
 }
