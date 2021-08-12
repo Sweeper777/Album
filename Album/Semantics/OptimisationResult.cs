@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Album.Syntax;
+using System.Linq;
 
 namespace Album.Semantics {
     public struct OptimisationResult {
@@ -15,6 +16,6 @@ namespace Album.Semantics {
 
         public static OptimisationResult None => new OptimisationResult();
 
-        
+        public bool IsNone => NumberOfLinesPruned == 0 && !ReplacementLines.Any();
     }
 }
