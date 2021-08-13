@@ -29,19 +29,19 @@ namespace Album.Semantics {
         }
 
         private void OptimiseLine(LineInfo line) {
-            var result = Rules.Select(x => x.Invoke(this)).FirstOrDefault(x => !x.IsNone);
-            if (result.IsNone) {
+            var result = Rules.Select(x => x.Invoke(this, line)).FirstOrDefault(x => x != null);
+            if (result == null) {
                 seenLines.AddLast(line);
                 return;
             }
-            for (int i = 0 ; i < result.NumberOfLinesPruned ; i++) {
+            for (int i = 0 ; i < result.Value.NumberOfLinesPruned ; i++) {
                 seenLines.RemoveLast();
             }
-            foreach (var newLine in result.ReplacementLines) {
+            foreach (var newLine in result.Value.ReplacementLines) {
                 OptimiseLine(newLine);
             }
         }
     }
 
-    public delegate OptimisationResult OptimisationRule(IOptimisationContext context);
+    public delegate OptimisationResult? OptimisationRule(IOptimisationContext context, LineInfo newLine);
 }
