@@ -13,9 +13,5 @@ namespace Album.Semantics {
         public int NumberOfLinesPruned { get; set; }
 
         public IEnumerable<LineInfo> ReplacementLines { get; set; }
-
-        public static OptimisationResult None => new OptimisationResult();
-
-        public bool IsNone => NumberOfLinesPruned == 0 && !ReplacementLines.Any();
     }
 }
