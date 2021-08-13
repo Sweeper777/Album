@@ -23,11 +23,23 @@ namespace Album.Semantics {
         public IList<LineInfo> Optimise(IEnumerable<LineInfo> lines) {
             seenLines.Clear();
             foreach (var line in lines) {
-                if (!(seenLines.Last?.Value is LineInfo lastLine)) {
-                    continue;
-                }
+                OptimiseLine(line);
             }
-            return null;
+            return seenLines.ToList();
+        }
+
+        private void OptimiseLine(LineInfo line) {
+            var result = Rules.Select(x => x.Invoke(this)).FirstOrDefault(x => !x.IsNone);
+            if (result.IsNone) {
+                seenLines.AddLast(line);
+                return;
+            }
+            for (int i = 0 ; i < result.NumberOfLinesPruned ; i++) {
+                seenLines.RemoveLast();
+            }
+            foreach (var newLine in result.ReplacementLines) {
+                OptimiseLine(newLine);
+            }
         }
     }
 
