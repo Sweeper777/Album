@@ -89,3 +89,14 @@ namespace Album.Semantics {
             return null;
         };
 
+        public static readonly OptimisationRule RemoveComments = (ctx, newLine) => {
+            if (newLine.Type == LineType.Comment) {
+                return new OptimisationResult(
+                    0,
+                    Enumerable.Empty<LineInfo>()
+                );
+            }
+            return null;
+        };
+    }
+}
