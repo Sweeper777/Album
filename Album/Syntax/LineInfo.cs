@@ -40,6 +40,9 @@ namespace Album.Syntax {
         public static LineInfo Branch(string originalSong, int lineNo = 0)
             => new LineInfo(LineType.Branch, originalSong, null, lineNo);
 
+        public static LineInfo UnconditionalBranch(string originalSong, int lineNo = 0)
+            => new LineInfo(LineType.UnconditionalBranch, originalSong, null, lineNo);
+
         public bool IsPush([NotNullWhen(true)] out int? x) {
             if (type == LineType.Push) {
                 x = intValue!;
@@ -60,6 +63,24 @@ namespace Album.Syntax {
 
         public bool IsBranch([NotNullWhen(true)] out string? originalSong) {
             if (type == LineType.Branch) {
+                originalSong = stringValue!;
+            } else {
+                originalSong = null;
+            }
+            return originalSong != null;
+        }
+
+        public bool IsUnconditionalBranch([NotNullWhen(true)] out string? originalSong) {
+            if (type == LineType.UnconditionalBranch) {
+                originalSong = stringValue!;
+            } else {
+                originalSong = null;
+            }
+            return originalSong != null;
+        }
+
+        public bool IsAnyBranch([NotNullWhen(true)] out string? originalSong) {
+            if (type == LineType.Branch || type == LineType.UnconditionalBranch) {
                 originalSong = stringValue!;
             } else {
                 originalSong = null;

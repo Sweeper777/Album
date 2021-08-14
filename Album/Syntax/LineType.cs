@@ -30,5 +30,7 @@ namespace Album.Syntax {
         TopNegative,
         TopZero,
         InfiniteLoop,
+
+        UnconditionalBranch
     }
 }

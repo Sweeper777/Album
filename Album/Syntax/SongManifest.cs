@@ -71,7 +71,8 @@ namespace Album.Syntax {
         public bool IsValid()
             => !SongNames.Values.Contains(LineType.Push) &&
                 !SongNames.Values.Contains(LineType.Branch) &&
-                !SongNames.Values.Contains(LineType.OriginalSong);
+                !SongNames.Values.Contains(LineType.OriginalSong) &&
+                !SongNames.Values.Contains(LineType.UnconditionalBranch);
 
         public override int GetHashCode()
         {
