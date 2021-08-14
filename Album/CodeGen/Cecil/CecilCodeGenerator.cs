@@ -95,6 +95,7 @@ namespace Album.CodeGen.Cecil
             strategies = new() {
                 { LineType.Input, inputStrategy},
                 { LineType.Branch, branchStrategy },
+                { LineType.UnconditionalBranch, branchStrategy },
                 { LineType.OriginalSong, branchStrategy },
                 { LineType.TopPositive, unaryOpStrategy },
                 { LineType.TopNegative, unaryOpStrategy },
