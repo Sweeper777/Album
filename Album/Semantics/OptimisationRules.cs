@@ -101,6 +101,20 @@ namespace Album.Semantics {
             return null;
         };
 
+        public static readonly OptimisationRule DetectUnconditionalBranches = (ctx, newLine) => {
+            if (ctx.CurrentLineCount < 1) {
+                return null;
+            }
+            var prevLine = ctx.PreviousLine();
+            if (newLine.IsBranch(out var originalSong) && prevLine.IsPush(out var top) && top != 0) {
+                return new OptimisationResult(
+                    1,
+                    LineInfo.UnconditionalBranch(originalSong, newLine.LineNumber).AsSingleEnumerable()
+                );
+            }
+            return null;
+        };
+
         public static readonly OptimisationRule RemoveComments = (ctx, newLine) => {
             if (newLine.Type == LineType.Comment) {
                 return new OptimisationResult(
