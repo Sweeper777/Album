@@ -34,6 +34,15 @@ namespace Album.Semantics {
                     );
                 }
 
+                if (newLine.Type == LineType.Swap) {
+                    return new OptimisationResult(
+                        2,
+                        new[] {
+                            LineInfo.Push(top.Value, newLine.LineNumber),
+                            LineInfo.Push(second.Value, newLine.LineNumber),
+                        }
+                    );
+                }
             }
             return null;
         };
@@ -70,6 +79,9 @@ namespace Album.Semantics {
                         1, 
                         LineInfo.Push(result.Value, newLine.LineNumber).AsSingleEnumerable()
                     );
+                }
+                if (newLine.Type == LineType.Pop) {
+                    return new OptimisationResult(1, Enumerable.Empty<LineInfo>());
                 }
             }
             return null;
