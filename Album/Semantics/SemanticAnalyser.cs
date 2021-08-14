@@ -25,7 +25,7 @@ namespace Album.Semantics {
                             line.LineNumber
                         ));
                     }
-                } else if (line.IsBranch(out _)) {
+                } else if (line.IsAnyBranch(out _)) {
                     branchLines.Add(line);
                 }
             }
@@ -39,7 +39,7 @@ namespace Album.Semantics {
                         CompilerOutputType.Warning,
                         line.LineNumber
                     ));
-                } else if (line.IsBranch(out _)) {
+                } else if (line.IsAnyBranch(out _)) {
                     Outputs.Add(new CompilerOutput(
                         CompilerMessage.UnknownOriginalSong,
                         CompilerOutputType.Error,
