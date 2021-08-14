@@ -92,7 +92,7 @@ namespace Album.Semantics {
                 return null;
             }
             var prevLine = ctx.PreviousLine();
-            if (prevLine.IsPush(out var top) && top == 0) {
+            if (newLine.IsBranch(out _) && prevLine.IsPush(out var top) && top == 0) {
                 return new OptimisationResult(
                     1,
                     Enumerable.Empty<LineInfo>()
