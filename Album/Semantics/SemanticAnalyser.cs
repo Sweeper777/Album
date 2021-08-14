@@ -6,16 +6,10 @@ namespace Album.Semantics {
     public class SemanticAnalyser {
         public IList<CompilerOutput> Outputs { get; } = new List<CompilerOutput>();
 
-        private IEnumerable<LineInfo> lines;
-
-        private HashSet<LineInfo> originalSongLines = new();
-        private HashSet<LineInfo> branchLines = new();
-
-        public SemanticAnalyser(IEnumerable<LineInfo> lines) {
-            this.lines = lines;
-        }
-
-        public void Analyse() {
+        public void Analyse(IEnumerable<LineInfo> lines) {
+            Outputs.Clear();
+            HashSet<LineInfo> originalSongLines = new();
+            HashSet<LineInfo> branchLines = new();
             foreach (var line in lines) {
                 if (line.IsOriginalSong(out _)) {
                     if (!originalSongLines.Add(line)) {
