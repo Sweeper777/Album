@@ -10,7 +10,7 @@ namespace Album {
         [Option('o', "output", Required = false, HelpText = "Path to output file.")]
         public string? OutputPath { get; set; }
 
-        [Option('p', "parse-only", Required = false, 
+        [Option('P', "parse-only", Required = false, 
         HelpText = "Generates the parser output, with optimisations applied, if any")]
         public bool ParseOnly { get; set; }
 
