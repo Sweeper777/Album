@@ -1,12 +1,19 @@
 using System.Linq;
 using System.Collections.Generic;
 using Album.Syntax;
+using static Album.Semantics.OptimisationRules;
 
 namespace Album.Semantics {
     public class CodeOptimiser : IOptimisationContext {
         private LinkedList<LineInfo> seenLines = new();
 
-        public IEnumerable<OptimisationRule> Rules { get; set; } = Enumerable.Empty<OptimisationRule>();
+        public IList<OptimisationRule> Rules { get; set; } = new List<OptimisationRule> {
+            RemoveComments,
+            EvaluateBinaryOperators, 
+            EvaluateUnaryOperators, 
+            RemoveUselessBranches, 
+            DetectUnconditionalBranches
+        };
 
         int IOptimisationContext.CurrentLineCount => seenLines.Count;
 
