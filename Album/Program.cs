@@ -59,6 +59,7 @@ namespace Album
                 using (var sourceFile = File.OpenRead(options.InputPath!)) {
                     AlbumCompiler compiler = new(options.ParseOnly ? parserOutputGen : codegen);
                     compiler.WarningLevel = options.WarningLevel;
+                    compiler.EnableOptimisation = options.DoesOptimise;
                     compiler.Compile(sourceFile);
                     if (inputManifest != null) {
                         compiler.SongManifest = inputManifest;
