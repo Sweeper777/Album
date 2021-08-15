@@ -10,7 +10,15 @@ namespace Album {
     public class AlbumCompiler {
 
         public CodeGenerator CodeGenerator { get; set;}
+
+
+        public SemanticAnalyser Analyser { get; set; } = new();
+
+        public CodeOptimiser Optimiser { get; set; } = new();
+
         public ISongManifest SongManifest { get; set; }
+
+        public bool EnableOptimisation { get; set; } = false;
 
         public IEnumerable<CompilerOutput> Outputs { get; set; } = Enumerable.Empty<CompilerOutput>();
         
@@ -28,11 +36,10 @@ namespace Album {
         public void Compile(Stream source) {
             AlbumParser parser = new(SongManifest, source);
             IList<LineInfo> lines = parser.Parse();
-            SemanticAnalyser analyser = new(lines);
-            analyser.Analyse();
+            Analyser.Analyse(lines);
 
             IEnumerable<CompilerOutput> allOutputs = 
-                parser.Outputs.Union(analyser.Outputs)
+                parser.Outputs.Union(Analyser.Outputs)
                     .Where(x => !(WarningLevel == WarningLevel.None && x.Type == CompilerOutputType.Warning))
                     .ToList();
             if (WarningLevel == WarningLevel.Error) {
@@ -46,6 +53,9 @@ namespace Album {
             Outputs = allOutputs;
 
             if (!allOutputs.Any(x => x.Type == CompilerOutputType.Error)) {
+                if (EnableOptimisation) {
+                    lines = Optimiser.Optimise(lines);
+                }
                 CodeGenerator.GenerateCode(lines);
             }
         }
