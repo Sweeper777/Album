@@ -8,7 +8,8 @@ namespace Album.Tests {
     public class SemanticsTests {
         [Test]
         public void NoErrorsWhenEveryOriginalSongIsUsed() {
-            SemanticAnalyser analyser = new(new[] {
+            SemanticAnalyser analyser = new();
+            analyser.Analyse(new[] {
                 OriginalSong("foo", 1),
                 Push(1, 2),
                 OfType(Dup, 3),
@@ -17,20 +18,19 @@ namespace Album.Tests {
                 Branch("foo", 6),
                 Branch("bar", 7)
             });
-            analyser.Analyse();
             CollectionAssert.IsEmpty(analyser.Outputs);
         }
 
         [Test]
         public void FindsUnknownOriginalSongs() {
-            SemanticAnalyser analyser = new(new[] {
+            SemanticAnalyser analyser = new();
+            analyser.Analyse(new[] {
                 Push(1, 2),
                 OfType(Dup, 3),
                 OfType(OutputChar, 5),
                 Branch("foo", 6),
                 Branch("bar", 7)
             });
-            analyser.Analyse();
             CollectionAssert.AreEquivalent(
                 new[] { 
                     new CompilerOutput(CompilerMessage.UnknownOriginalSong, CompilerOutputType.Error, 6),
@@ -42,7 +42,8 @@ namespace Album.Tests {
 
         [Test]
         public void FindsDuplicateOriginalSongs() {
-            SemanticAnalyser analyser = new(new[] {
+            SemanticAnalyser analyser = new();
+            analyser.Analyse(new[] {
                 OriginalSong("foo", 1),
                 Push(1, 2),
                 OfType(Dup, 3),
@@ -50,7 +51,6 @@ namespace Album.Tests {
                 OfType(OutputChar, 5),
                 Branch("foo", 7),
             });
-            analyser.Analyse();
             CollectionAssert.AreEquivalent(
                 new[] { 
                     new CompilerOutput(CompilerMessage.DuplicateOriginalSong, CompilerOutputType.Error, 4)
@@ -61,13 +61,13 @@ namespace Album.Tests {
 
         [Test]
         public void FindsUnusedOriginalSongs() {
-            SemanticAnalyser analyser = new(new[] {
+            SemanticAnalyser analyser = new();
+            analyser.Analyse(new[] {
                 OriginalSong("foo", 1),
                 Push(1, 2),
                 OfType(Dup, 3),
                 OfType(OutputChar, 5),
             });
-            analyser.Analyse();
             CollectionAssert.AreEquivalent(
                 new[] { 
                     new CompilerOutput(CompilerMessage.UnusedOriginalSong, CompilerOutputType.Warning, 1)
