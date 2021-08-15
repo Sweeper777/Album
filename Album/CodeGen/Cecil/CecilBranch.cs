@@ -59,7 +59,7 @@ namespace Album.CodeGen.Cecil
             }
 
             public override bool SupportsLineType(LineType type)
-                => type == LineType.Branch || type == LineType.OriginalSong;
+                => type == LineType.Branch || type == LineType.OriginalSong || type == LineType.UnconditionalBranch;
         }
     }
 }
