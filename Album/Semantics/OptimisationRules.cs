@@ -8,7 +8,7 @@ namespace Album.Semantics {
                 return null;
             }
             var (prevLine, secondPrevLine) = ctx.PreviousTwoLines();
-            if (prevLine.IsPush(out var top) && prevLine.IsPush(out var second)) {
+            if (prevLine.IsPush(out var top) && secondPrevLine.IsPush(out var second)) {
                 int? result = null;
                 switch (newLine.Type) {
                     case LineType.Add:
