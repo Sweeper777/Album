@@ -24,7 +24,7 @@ namespace Album.Semantics {
                         result = top | second;
                         break;
                     case LineType.Sub:
-                        result = top - second;
+                        result = second - top;
                         break;
                 }
                 if (result != null) {
