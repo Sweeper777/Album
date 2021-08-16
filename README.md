@@ -25,3 +25,22 @@ This creates an `Album.dll` executable at the `Album/bin/Debug/net5.0` directory
 You can also choose to deploy the Album compiler using [`dotnet publish`](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish).
 
 ### Compiler Options
+
+```none
+-o, --output        Path to output file.
+
+-P, --parse-only    Generates the parser output, with optimisations applied,
+                    if any
+
+-O, --optimise      Smaller output code size, longer compile time
+
+-w, --warn          (Default: Warning) What warnings should be output as 
+                    Valid values: None, Warning, Error
+
+-s, --manifest      Path to custom song manifest file
+
+--help              Display this help screen.
+```
+
+If `-o` is not specified, the default output file path is `./Program.exe`, or `./ParserOutput.txt` in the case of `-P`. In case an executable is generated, an additional `.runtimeconfig.json` file with the same name as the executable will be generated in the same directory.
+
