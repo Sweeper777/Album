@@ -14,6 +14,14 @@ This repo implements an Album compiler that outputs CIL, written in C# 9 and .NE
 
     dotnet test
 
-### Running
+### Building From Source
 
-(The compiler has not been completed yet...)
+    dotnet build
+
+This creates an `Album.dll` executable at the `Album/bin/Debug/net5.0` directory. For more options, see the [documentation](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-build). To run it, use the `dotnet` command:
+
+    dotnet Album/bin/Debug/net5.0/Album.dll <INPUT SOURCE FILE> [options]
+
+You can also choose to deploy the Album compiler using [`dotnet publish`](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish).
+
+### Compiler Options
