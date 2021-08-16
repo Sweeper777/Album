@@ -44,3 +44,6 @@ You can also choose to deploy the Album compiler using [`dotnet publish`](https:
 
 If `-o` is not specified, the default output file path is `./Program.exe`, or `./ParserOutput.txt` in the case of `-P`. In case an executable is generated, an additional `.runtimeconfig.json` file with the same name as the executable will be generated in the same directory.
 
+## Song Manifests
+
+In case you don't like my choice of songs, you can make up your own songs, write them in a JSON file, and pass that to the compiler when compiling your code. This is known as a song manifest. The default song manifest is located in `Resources/`. You can use that as an example when creating your own song manifests.
