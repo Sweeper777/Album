@@ -9,27 +9,35 @@ namespace Album.Tests {
     public class CecilCodeGeneratorTests {
         
 
-        [TestCase("Album.Tests.50plus1000minus7.album", "1043")]
-        [TestCase("Album.Tests.arithmetic.album", "23")]
-        [TestCase("Album.Tests.branching.album", "10")]
-        [TestCase("Album.Tests.stack.album", "1 3 2 4")]
-        public void ProgramProducesCorrectOutput(string programResourceName, string expectedOutput) {
+        [TestCase("Album.Tests.50plus1000minus7.album", "1043", false)]
+        [TestCase("Album.Tests.arithmetic.album", "23", false)]
+        [TestCase("Album.Tests.branching.album", "10", false)]
+        [TestCase("Album.Tests.stack.album", "1 3 2 4", false)]
+        [TestCase("Album.Tests.50plus1000minus7.album", "1043", true)]
+        [TestCase("Album.Tests.arithmetic.album", "23", true)]
+        [TestCase("Album.Tests.branching.album", "10", true)]
+        [TestCase("Album.Tests.stack.album", "1 3 2 4", true)]
+        public void ProgramProducesCorrectOutput(string programResourceName, string expectedOutput, bool optimised) {
             using var stream = typeof(CecilCodeGeneratorTests).Assembly.GetManifestResourceStream(programResourceName);
             Assert.IsNotNull(stream);
             CecilCodeGenerator codegen = new();
             AlbumCompiler compiler = new(codegen);
+            compiler.EnableOptimisation = optimised;
             compiler.Compile(stream!);
             Assert.NotNull(codegen.GeneratedAssembly);
             Assert.AreEqual(expectedOutput, RunAssembly(codegen.GeneratedAssembly!, 0).Trim());
         }
 
-        [TestCase("Album.Tests.pop_empty.album")]
-        [TestCase("Album.Tests.clear.album")]
-        public void ProgramTerminatesWhenPoppingEmptyStack(string programResourceName) {
+        [TestCase("Album.Tests.pop_empty.album", false)]
+        [TestCase("Album.Tests.clear.album", false)]
+        [TestCase("Album.Tests.pop_empty.album", true)]
+        [TestCase("Album.Tests.clear.album", true)]
+        public void ProgramTerminatesWhenPoppingEmptyStack(string programResourceName, bool optimised) {
             using var stream = typeof(CecilCodeGeneratorTests).Assembly.GetManifestResourceStream(programResourceName);
             Assert.IsNotNull(stream);
             CecilCodeGenerator codegen = new();
             AlbumCompiler compiler = new(codegen);
+            compiler.EnableOptimisation = optimised;
             compiler.Compile(stream!);
             Assert.NotNull(codegen.GeneratedAssembly);
             RunAssembly(codegen.GeneratedAssembly!, 1);
