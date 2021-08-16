@@ -61,9 +61,6 @@ namespace Album.Semantics {
                     case LineType.Halve:
                         result = top >> 1;
                         break;
-                    case LineType.Dup:
-                        result = top;
-                        break;
                     case LineType.TopNegative:
                         result = top < 0 ? 1 : 0;
                         break;
@@ -82,6 +79,11 @@ namespace Album.Semantics {
                 }
                 if (newLine.Type == LineType.Pop) {
                     return new OptimisationResult(1, Enumerable.Empty<LineInfo>());
+                } else if (newLine.Type == LineType.Dup) {
+                    return new OptimisationResult(
+                        0,
+                        LineInfo.Push(top.Value, newLine.LineNumber).AsSingleEnumerable()
+                    );
                 }
             }
             return null;
