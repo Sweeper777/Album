@@ -1,17 +1,26 @@
 using System;
 using System.Collections.Generic;
 using Album.Syntax;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Album.Semantics {
     public class SemanticAnalyser {
         public IList<CompilerOutput> Outputs { get; } = new List<CompilerOutput>();
 
+        [DisallowNull]
+        public HashSet<string>? UnusedOriginalSongs { get; set; }
+        
+        [DisallowNull]
+        public HashSet<string>? UsedOriginalSongs { get; set; } 
+
         public void Analyse(IEnumerable<LineInfo> lines) {
             Outputs.Clear();
             HashSet<LineInfo> originalSongLines = new();
             HashSet<LineInfo> branchLines = new();
+            UnusedOriginalSongs = new();
+            UsedOriginalSongs = new();
             foreach (var line in lines) {
-                if (line.IsOriginalSong(out _)) {
+                if (line.IsOriginalSong(out var name)) {
                     if (!originalSongLines.Add(line)) {
                         Outputs.Add(new CompilerOutput(
                             CompilerMessage.DuplicateOriginalSong,
@@ -19,6 +28,7 @@ namespace Album.Semantics {
                             line.LineNumber
                         ));
                     }
+                    UsedOriginalSongs.Add(name);
                 } else if (line.IsAnyBranch(out _)) {
                     branchLines.Add(line);
                 }
@@ -27,12 +37,14 @@ namespace Album.Semantics {
             HashSet<LineInfo> diff = new(originalSongLines, LineInfo.OriginalSongEquality);
             diff.SymmetricExceptWith(branchLines);
             foreach (var line in diff) {
-                if (line.IsOriginalSong(out _)) {
+                if (line.IsOriginalSong(out var name)) {
                     Outputs.Add(new CompilerOutput(
                         CompilerMessage.UnusedOriginalSong,
                         CompilerOutputType.Warning,
                         line.LineNumber
                     ));
+                    UnusedOriginalSongs.Add(name);
+                    UsedOriginalSongs.Remove(name);
                 } else if (line.IsAnyBranch(out _)) {
                     Outputs.Add(new CompilerOutput(
                         CompilerMessage.UnknownOriginalSong,
