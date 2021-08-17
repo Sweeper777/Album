@@ -17,6 +17,7 @@ namespace Album.Semantics {
             SourceCode = sourceCode;
         }
 
+        public BasicBlockBuilder BuildBasicBlock(int startIndex) => new BasicBlockBuilder(this, startIndex);
 
         public class BasicBlockBuilder {
             private ControlFlowGraph controlFlowGraph;
