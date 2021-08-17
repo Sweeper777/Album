@@ -23,5 +23,15 @@ namespace Album.Semantics {
 
         public ControlFlowGraph ControlFlowGraph { get; }
 
+        public IEnumerable<LineInfo> Lines 
+            => ControlFlowGraph.SourceCode.Skip(StartIndex).Take(EndIndexExclusive - StartIndex);
+
+        public bool IsEmpty => StartIndex == EndIndexExclusive;
+
+        public LineInfo? FirstLine
+            => IsEmpty ? null : ControlFlowGraph.SourceCode[StartIndex];
+
+        public LineInfo? LastLine
+            => IsEmpty ? null : ControlFlowGraph.SourceCode[EndIndexExclusive - 1];
     }
 }
