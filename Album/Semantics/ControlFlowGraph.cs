@@ -35,5 +35,21 @@ namespace Album.Semantics {
                 endIndexExclusive = start;
             }
 
+            public BasicBlockBuilder AddLine() {
+                endIndexExclusive++;
+                if (endIndexExclusive > controlFlowGraph.SourceCode.Count) {
+                    throw new IndexOutOfRangeException("There are no more lines in the source code to add to the basic block!");
+                }
+                return this;
+            }
+
+            public void AddToCFG() {
+                if (added) {
+                    throw new InvalidOperationException("This basic block has already been added to the CFG!");
+                }
+                controlFlowGraph.basicBlocks.Add(new BasicBlock(startIndex, endIndexExclusive, controlFlowGraph));
+                added = true;
+            }
+        }
     }
 }
