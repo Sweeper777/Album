@@ -2,16 +2,19 @@ using System;
 using System.Collections.Generic;
 using Album.Syntax;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Album.Semantics {
     public class SemanticAnalyser {
         public IList<CompilerOutput> Outputs { get; } = new List<CompilerOutput>();
 
         [DisallowNull]
-        public HashSet<string>? UnusedOriginalSongs { get; set; }
+        public HashSet<string>? UnusedOriginalSongs { get; private set; }
         
         [DisallowNull]
-        public HashSet<string>? UsedOriginalSongs { get; set; } 
+        public HashSet<string>? UsedOriginalSongs { get; private set; } 
+
+        public ControlFlowGraph? CFG { get; private set; } 
 
         public void Analyse(IEnumerable<LineInfo> lines) {
             Outputs.Clear();
@@ -53,6 +56,24 @@ namespace Album.Semantics {
                     ));
                 }
             }
+            if (lines.Any()) {
+                CFG = GenerateCFG(lines.ToList());
+            } else {
+                CFG = null;
+            }
+        }
+
+        private ControlFlowGraph GenerateCFG(IReadOnlyList<LineInfo> lines) {
+            if (UnusedOriginalSongs == null || UsedOriginalSongs == null) {
+                throw new InvalidOperationException("GenerateCFG must be called after Analyse!");
+            }
+
+            ControlFlowGraph cfg = new(lines);
+            BuildBasicBlocks(cfg, UsedOriginalSongs);
+            return cfg;
+        }
+
+        private void BuildBasicBlocks(ControlFlowGraph cfg, HashSet<string> usedOriginalSongs) {
         }
     }
 }
