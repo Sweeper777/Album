@@ -2,6 +2,7 @@ using Album.Syntax;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Album.Semantics {
     public class BasicBlock {
@@ -26,6 +27,7 @@ namespace Album.Semantics {
         public IEnumerable<LineInfo> Lines 
             => ControlFlowGraph.SourceCode.Skip(StartIndex).Take(EndIndexExclusive - StartIndex);
 
+        [MemberNotNullWhen(false, nameof(FirstLine), nameof(LastLine))]
         public bool IsEmpty => StartIndex == EndIndexExclusive;
 
         public LineInfo? FirstLine
