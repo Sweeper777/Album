@@ -11,7 +11,7 @@ namespace Album.Semantics {
 
         public IReadOnlyList<LineInfo> SourceCode { get; }
 
-        public Dictionary<BasicBlock, IEnumerable<BasicBlock>> Successors = new();
+        public Dictionary<BasicBlock, List<BasicBlock>> Successors = new();
 
         public ControlFlowGraph(IReadOnlyList<LineInfo> sourceCode)
         {
@@ -57,7 +57,9 @@ namespace Album.Semantics {
                 if (added) {
                     throw new InvalidOperationException("This basic block has already been added to the CFG!");
                 }
-                controlFlowGraph.basicBlocks.Add(new BasicBlock(startIndex, endIndexExclusive, controlFlowGraph));
+                BasicBlock block = new BasicBlock(startIndex, endIndexExclusive, controlFlowGraph);
+                controlFlowGraph.basicBlocks.Add(block);
+                controlFlowGraph.Successors.Add(block, new());
                 added = true;
             }
         }
