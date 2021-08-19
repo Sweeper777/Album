@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System;
 using Album.Syntax;
+using System.Linq;
 
 namespace Album.Semantics {
     public class ControlFlowGraph {
@@ -15,6 +16,14 @@ namespace Album.Semantics {
         public ControlFlowGraph(IReadOnlyList<LineInfo> sourceCode)
         {
             SourceCode = sourceCode;
+        }
+
+        public void SortBasicBlocks() {
+            basicBlocks.RemoveAll(b => 
+                b.Lines.All(l => l.Type == LineType.Comment || l.Type == LineType.OriginalSong) ||
+                b.IsEmpty
+            );
+            basicBlocks.Sort((b1, b2) => b1.StartIndex.CompareTo(b2.StartIndex));
         }
 
         public BasicBlockBuilder BuildBasicBlock(int startIndex) => new BasicBlockBuilder(this, startIndex);
