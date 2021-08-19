@@ -74,6 +74,21 @@ namespace Album.Semantics {
         }
 
         private void BuildBasicBlocks(ControlFlowGraph cfg, HashSet<string> usedOriginalSongs) {
+            ControlFlowGraph.BasicBlockBuilder currentBlockBuilder = cfg.BuildBasicBlock(0).AddLine();
+            for (int i = 1 ; i < cfg.SourceCode.Count ; i++) {
+                if (cfg.SourceCode[i].IsOriginalSong(out var name) && usedOriginalSongs.Contains(name)) {
+                    currentBlockBuilder.AddToCFG();
+                    currentBlockBuilder = cfg.BuildBasicBlock(i).AddLine();
+                } else if (cfg.SourceCode[i].IsAnyBranch(out _) || 
+                    cfg.SourceCode[i].Type == LineType.Quit ||
+                    cfg.SourceCode[i].Type == LineType.InfiniteLoop) {
+                    currentBlockBuilder.AddLine().AddToCFG();
+                    currentBlockBuilder = cfg.BuildBasicBlock(i);
+                } else {
+                    currentBlockBuilder.AddLine();
+                }
+            }
+            currentBlockBuilder.AddToCFG();
         }
     }
 }
