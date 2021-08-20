@@ -143,5 +143,40 @@ namespace Album.Tests {
             });
         }
 
+        [Test]
+        public void GeneratesCFGForIfThenElse() {
+            SemanticAnalyser analyser = new();
+            analyser.Analyse(new[] {
+                Push(1), Push(2), Branch("foo"), Push(3), Push(4), 
+                UnconditionalBranch("bar"), OriginalSong("foo"),
+                Push(5), Push(6), OriginalSong("bar")
+            });
+            var cfg = analyser.CFG;
+            Assert.NotNull(cfg);
+            Assert.AreEqual(4, cfg!.BasicBlocks.Count);
+            Assert.Multiple(() => {
+                Assert.AreEqual(0, cfg.BasicBlocks[0].StartIndex);
+                Assert.AreEqual(3, cfg.BasicBlocks[0].EndIndexExclusive);
+                Assert.AreEqual(3, cfg.BasicBlocks[1].StartIndex);
+                Assert.AreEqual(6, cfg.BasicBlocks[1].EndIndexExclusive);
+                Assert.AreEqual(6, cfg.BasicBlocks[2].StartIndex);
+                Assert.AreEqual(9, cfg.BasicBlocks[2].EndIndexExclusive);
+                Assert.AreEqual(9, cfg.BasicBlocks[3].StartIndex);
+                Assert.AreEqual(10, cfg.BasicBlocks[3].EndIndexExclusive);
+                CollectionAssert.AreEquivalent(
+                    new[] { cfg.BasicBlocks[1], cfg.BasicBlocks[2] },
+                    cfg.Successors[cfg.BasicBlocks[0]]
+                );
+                CollectionAssert.AreEquivalent(
+                    new[] { cfg.BasicBlocks[3] },
+                    cfg.Successors[cfg.BasicBlocks[1]]
+                );
+                CollectionAssert.AreEquivalent(
+                    new[] { cfg.BasicBlocks[3] },
+                    cfg.Successors[cfg.BasicBlocks[2]]
+                );
+                CollectionAssert.IsEmpty(cfg.Successors[cfg.BasicBlocks[3]]);
+            });
+        }
     }
 }
