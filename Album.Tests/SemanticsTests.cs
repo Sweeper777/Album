@@ -98,5 +98,21 @@ namespace Album.Tests {
             });
         }
 
+        [Test]
+        public void RemovesBasicBlockWithAllComments() {
+            SemanticAnalyser analyser = new();
+            analyser.Analyse(Enumerable.Repeat(OfType(Comment), 10));
+            var cfg = analyser.CFG;
+            Assert.NotNull(cfg);
+            Assert.Multiple(() => {
+                Assert.AreEqual(0, cfg!.BasicBlocks.Count);
+                Assert.That(cfg.Successors, Is.All
+                    .Matches<KeyValuePair<BasicBlock, HashSet<BasicBlock>>>(
+                        x => !x.Value.Any()
+                    )
+                );
+            });
+        }
+
     }
 }
