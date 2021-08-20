@@ -114,5 +114,34 @@ namespace Album.Tests {
             });
         }
 
+        [Test]
+        public void GeneratesCFGForConditionalBranch() {
+            SemanticAnalyser analyser = new();
+            analyser.Analyse(new[] {
+                Push(1), Push(2), Branch("foo"), Push(3), Push(4), OriginalSong("foo"),
+                Push(5), Push(6)
+            });
+            var cfg = analyser.CFG;
+            Assert.NotNull(cfg);
+            Assert.AreEqual(3, cfg!.BasicBlocks.Count);
+            Assert.Multiple(() => {
+                Assert.AreEqual(0, cfg.BasicBlocks[0].StartIndex);
+                Assert.AreEqual(3, cfg.BasicBlocks[0].EndIndexExclusive);
+                Assert.AreEqual(3, cfg.BasicBlocks[1].StartIndex);
+                Assert.AreEqual(5, cfg.BasicBlocks[1].EndIndexExclusive);
+                Assert.AreEqual(5, cfg.BasicBlocks[2].StartIndex);
+                Assert.AreEqual(8, cfg.BasicBlocks[2].EndIndexExclusive);
+                CollectionAssert.AreEquivalent(
+                    new[] { cfg.BasicBlocks[1], cfg.BasicBlocks[2] },
+                    cfg.Successors[cfg.BasicBlocks[0]]
+                );
+                CollectionAssert.AreEquivalent(
+                    new[] { cfg.BasicBlocks[2] },
+                    cfg.Successors[cfg.BasicBlocks[1]]
+                );
+                CollectionAssert.IsEmpty(cfg.Successors[cfg.BasicBlocks[2]]);
+            });
+        }
+
     }
 }
