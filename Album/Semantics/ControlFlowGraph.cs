@@ -11,11 +11,11 @@ namespace Album.Semantics {
 
         public IReadOnlyList<LineInfo> SourceCode { get; }
 
-        public Dictionary<BasicBlock, List<BasicBlock>> Successors = new();
+        public Dictionary<BasicBlock, HashSet<BasicBlock>> Successors = new();
 
-        public ControlFlowGraph(IReadOnlyList<LineInfo> sourceCode)
+        public ControlFlowGraph(IEnumerable<LineInfo> sourceCode)
         {
-            SourceCode = sourceCode;
+            SourceCode = sourceCode.ToList();
         }
 
         public void SortBasicBlocks() {
