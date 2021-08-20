@@ -57,13 +57,13 @@ namespace Album.Semantics {
                 }
             }
             if (lines.Any()) {
-                CFG = GenerateCFG(lines.ToList());
+                CFG = GenerateCFG(lines);
             } else {
                 CFG = null;
             }
         }
 
-        private ControlFlowGraph GenerateCFG(IReadOnlyList<LineInfo> lines) {
+        private ControlFlowGraph GenerateCFG(IEnumerable<LineInfo> lines) {
             if (UnusedOriginalSongs == null || UsedOriginalSongs == null) {
                 throw new InvalidOperationException("GenerateCFG must be called after Analyse!");
             }
