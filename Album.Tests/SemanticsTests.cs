@@ -249,7 +249,6 @@ namespace Album.Tests {
                     new[] { cfg.BasicBlocks[0] },
                     cfg.Successors[cfg.BasicBlocks[4]]
                 );
-                CollectionAssert.IsEmpty(cfg.Successors[cfg.BasicBlocks[2]]);
             });
         }
 
