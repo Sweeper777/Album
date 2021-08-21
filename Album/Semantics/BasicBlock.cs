@@ -35,5 +35,8 @@ namespace Album.Semantics {
 
         public LineInfo? LastLine
             => IsEmpty ? null : ControlFlowGraph.SourceCode[EndIndexExclusive - 1];
+
+        public override string ToString()
+            => $"Basic Block from index {StartIndex} ({FirstLine?.ToString() ?? "null"}) to {EndIndexExclusive} ({LastLine?.ToString() ?? "null"})";
     }
 }
