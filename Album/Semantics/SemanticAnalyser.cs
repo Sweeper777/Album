@@ -76,8 +76,8 @@ namespace Album.Semantics {
         }
 
         private void BuildBasicBlocks(ControlFlowGraph cfg, HashSet<string> usedOriginalSongs) {
-            ControlFlowGraph.BasicBlockBuilder currentBlockBuilder = cfg.BuildBasicBlock(0).AddLine();
-            for (int i = 1 ; i < cfg.SourceCode.Count ; i++) {
+            ControlFlowGraph.BasicBlockBuilder currentBlockBuilder = cfg.BuildBasicBlock(0);
+            for (int i = 0 ; i < cfg.SourceCode.Count ; i++) {
                 if (cfg.SourceCode[i].IsOriginalSong(out var name) && usedOriginalSongs.Contains(name)) {
                     currentBlockBuilder.AddToCFG();
                     currentBlockBuilder = cfg.BuildBasicBlock(i).AddLine();
