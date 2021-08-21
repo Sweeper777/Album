@@ -208,5 +208,50 @@ namespace Album.Tests {
             });
         }
 
+        [Test]
+        public void GeneratesCFGWithManyOriginalSongsAndBranches() {
+            SemanticAnalyser analyser = new();
+            analyser.Analyse(new[] {
+                OriginalSong("1"), OriginalSong("2"), OriginalSong("3"),
+                Branch("3"), Branch("2"), Branch("1")
+            });
+            var cfg = analyser.CFG;
+            Assert.NotNull(cfg);
+            Assert.AreEqual(5, cfg!.BasicBlocks.Count);
+            Assert.Multiple(() => {
+                Assert.AreEqual(0, cfg.BasicBlocks[0].StartIndex);
+                Assert.AreEqual(1, cfg.BasicBlocks[0].EndIndexExclusive);
+                Assert.AreEqual(1, cfg.BasicBlocks[1].StartIndex);
+                Assert.AreEqual(2, cfg.BasicBlocks[1].EndIndexExclusive);
+                Assert.AreEqual(2, cfg.BasicBlocks[2].StartIndex);
+                Assert.AreEqual(4, cfg.BasicBlocks[2].EndIndexExclusive);
+                Assert.AreEqual(4, cfg.BasicBlocks[3].StartIndex);
+                Assert.AreEqual(5, cfg.BasicBlocks[3].EndIndexExclusive);
+                Assert.AreEqual(5, cfg.BasicBlocks[4].StartIndex);
+                Assert.AreEqual(6, cfg.BasicBlocks[4].EndIndexExclusive);
+                CollectionAssert.AreEquivalent(
+                    new[] { cfg.BasicBlocks[1] },
+                    cfg.Successors[cfg.BasicBlocks[0]]
+                );
+                CollectionAssert.AreEquivalent(
+                    new[] { cfg.BasicBlocks[2] },
+                    cfg.Successors[cfg.BasicBlocks[1]]
+                );
+                CollectionAssert.AreEquivalent(
+                    new[] { cfg.BasicBlocks[3], cfg.BasicBlocks[2] },
+                    cfg.Successors[cfg.BasicBlocks[2]]
+                );
+                CollectionAssert.AreEquivalent(
+                    new[] { cfg.BasicBlocks[4], cfg.BasicBlocks[1] },
+                    cfg.Successors[cfg.BasicBlocks[3]]
+                );
+                CollectionAssert.AreEquivalent(
+                    new[] { cfg.BasicBlocks[0] },
+                    cfg.Successors[cfg.BasicBlocks[4]]
+                );
+                CollectionAssert.IsEmpty(cfg.Successors[cfg.BasicBlocks[2]]);
+            });
+        }
+
     }
 }
