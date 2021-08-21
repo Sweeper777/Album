@@ -253,5 +253,26 @@ namespace Album.Tests {
             });
         }
 
+        [Test]
+        public void GeneratesCFGForLinesThatTerminate() {
+            SemanticAnalyser analyser = new();
+            analyser.Analyse(new[] {
+                OfType(Quit), OfType(InfiniteLoop)
+            });
+            var cfg = analyser.CFG;
+            Assert.NotNull(cfg);
+            Assert.AreEqual(2, cfg!.BasicBlocks.Count);
+            Assert.Multiple(() => {
+                Assert.AreEqual(0, cfg.BasicBlocks[0].StartIndex);
+                Assert.AreEqual(1, cfg.BasicBlocks[0].EndIndexExclusive);
+                Assert.AreEqual(1, cfg.BasicBlocks[1].StartIndex);
+                Assert.AreEqual(2, cfg.BasicBlocks[1].EndIndexExclusive);
+                Assert.That(cfg.Successors, Is.All
+                    .Matches<KeyValuePair<BasicBlock, HashSet<BasicBlock>>>(
+                        x => !x.Value.Any()
+                    )
+                );
+            });
+        }
     }
 }
