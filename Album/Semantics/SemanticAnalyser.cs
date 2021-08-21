@@ -85,7 +85,7 @@ namespace Album.Semantics {
                     cfg.SourceCode[i].Type == LineType.Quit ||
                     cfg.SourceCode[i].Type == LineType.InfiniteLoop) {
                     currentBlockBuilder.AddLine().AddToCFG();
-                    currentBlockBuilder = cfg.BuildBasicBlock(i);
+                    currentBlockBuilder = cfg.BuildBasicBlock(i + 1);
                 } else {
                     currentBlockBuilder.AddLine();
                 }
