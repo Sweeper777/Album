@@ -123,15 +123,13 @@ namespace Album.Tests {
                 Assert.AreEqual(5, cfg.BasicBlocks[1].EndIndexExclusive);
                 Assert.AreEqual(5, cfg.BasicBlocks[2].StartIndex);
                 Assert.AreEqual(8, cfg.BasicBlocks[2].EndIndexExclusive);
-                CollectionAssert.AreEquivalent(
-                    new[] { cfg.BasicBlocks[1], cfg.BasicBlocks[2] },
-                    cfg.Successors[cfg.BasicBlocks[0]]
-                );
-                CollectionAssert.AreEquivalent(
-                    new[] { cfg.BasicBlocks[2] },
-                    cfg.Successors[cfg.BasicBlocks[1]]
-                );
-                CollectionAssert.IsEmpty(cfg.Successors[cfg.BasicBlocks[2]]);
+                Assert.That(cfg.Successors, Is.EquivalentTo(
+                    new Dictionary<BasicBlock, List<BasicBlock>> {
+                        { cfg.BasicBlocks[0], new() { cfg.BasicBlocks[1], cfg.BasicBlocks[2] } },
+                        { cfg.BasicBlocks[1], new() { cfg.BasicBlocks[2] } },
+                        { cfg.BasicBlocks[2], new() {  } },
+                    }
+                ));
             });
         }
 
@@ -155,19 +153,14 @@ namespace Album.Tests {
                 Assert.AreEqual(9, cfg.BasicBlocks[2].EndIndexExclusive);
                 Assert.AreEqual(9, cfg.BasicBlocks[3].StartIndex);
                 Assert.AreEqual(10, cfg.BasicBlocks[3].EndIndexExclusive);
-                CollectionAssert.AreEquivalent(
-                    new[] { cfg.BasicBlocks[1], cfg.BasicBlocks[2] },
-                    cfg.Successors[cfg.BasicBlocks[0]]
-                );
-                CollectionAssert.AreEquivalent(
-                    new[] { cfg.BasicBlocks[3] },
-                    cfg.Successors[cfg.BasicBlocks[1]]
-                );
-                CollectionAssert.AreEquivalent(
-                    new[] { cfg.BasicBlocks[3] },
-                    cfg.Successors[cfg.BasicBlocks[2]]
-                );
-                CollectionAssert.IsEmpty(cfg.Successors[cfg.BasicBlocks[3]]);
+                Assert.That(cfg.Successors, Is.EquivalentTo(
+                    new Dictionary<BasicBlock, List<BasicBlock>> {
+                        { cfg.BasicBlocks[0], new() { cfg.BasicBlocks[1], cfg.BasicBlocks[2] } },
+                        { cfg.BasicBlocks[1], new() { cfg.BasicBlocks[3] } },
+                        { cfg.BasicBlocks[2], new() { cfg.BasicBlocks[3] } },
+                        { cfg.BasicBlocks[3], new() {  } },
+                    }
+                ));
             });
         }
 
@@ -188,15 +181,13 @@ namespace Album.Tests {
                 Assert.AreEqual(6, cfg.BasicBlocks[1].EndIndexExclusive);
                 Assert.AreEqual(6, cfg.BasicBlocks[2].StartIndex);
                 Assert.AreEqual(7, cfg.BasicBlocks[2].EndIndexExclusive);
-                CollectionAssert.AreEquivalent(
-                    new[] { cfg.BasicBlocks[1], cfg.BasicBlocks[2] },
-                    cfg.Successors[cfg.BasicBlocks[0]]
-                );
-                CollectionAssert.AreEquivalent(
-                    new[] { cfg.BasicBlocks[0] },
-                    cfg.Successors[cfg.BasicBlocks[1]]
-                );
-                CollectionAssert.IsEmpty(cfg.Successors[cfg.BasicBlocks[2]]);
+                Assert.That(cfg.Successors, Is.EquivalentTo(
+                    new Dictionary<BasicBlock, List<BasicBlock>> {
+                        { cfg.BasicBlocks[0], new() { cfg.BasicBlocks[1], cfg.BasicBlocks[2] } },
+                        { cfg.BasicBlocks[1], new() { cfg.BasicBlocks[0] } },
+                        { cfg.BasicBlocks[2], new() {  } },
+                    }
+                ));
             });
         }
 
@@ -221,26 +212,14 @@ namespace Album.Tests {
                 Assert.AreEqual(5, cfg.BasicBlocks[3].EndIndexExclusive);
                 Assert.AreEqual(5, cfg.BasicBlocks[4].StartIndex);
                 Assert.AreEqual(6, cfg.BasicBlocks[4].EndIndexExclusive);
-                CollectionAssert.AreEquivalent(
-                    new[] { cfg.BasicBlocks[1] },
-                    cfg.Successors[cfg.BasicBlocks[0]]
-                );
-                CollectionAssert.AreEquivalent(
-                    new[] { cfg.BasicBlocks[2] },
-                    cfg.Successors[cfg.BasicBlocks[1]]
-                );
-                CollectionAssert.AreEquivalent(
-                    new[] { cfg.BasicBlocks[3], cfg.BasicBlocks[2] },
-                    cfg.Successors[cfg.BasicBlocks[2]]
-                );
-                CollectionAssert.AreEquivalent(
-                    new[] { cfg.BasicBlocks[4], cfg.BasicBlocks[1] },
-                    cfg.Successors[cfg.BasicBlocks[3]]
-                );
-                CollectionAssert.AreEquivalent(
-                    new[] { cfg.BasicBlocks[0] },
-                    cfg.Successors[cfg.BasicBlocks[4]]
-                );
+                Assert.That(cfg.Successors, Is.EquivalentTo(
+                    new Dictionary<BasicBlock, List<BasicBlock>> {
+                        { cfg.BasicBlocks[0], new() { cfg.BasicBlocks[1], cfg.BasicBlocks[2] } },
+                        { cfg.BasicBlocks[1], new() { cfg.BasicBlocks[2], cfg.BasicBlocks[3] } },
+                        { cfg.BasicBlocks[2], new() { cfg.BasicBlocks[1], cfg.BasicBlocks[4] } },
+                        { cfg.BasicBlocks[4], new() { cfg.BasicBlocks[0] } },
+                    }
+                ));
             });
         }
 
