@@ -11,7 +11,7 @@ namespace Album.Semantics {
 
         public IReadOnlyList<LineInfo> SourceCode { get; }
 
-        public Dictionary<BasicBlock, ISet<BasicBlock>> Successors = new();
+        public Dictionary<BasicBlock, HashSet<BasicBlock>> Successors = new();
 
         public ControlFlowGraph(IEnumerable<LineInfo> sourceCode)
         {
@@ -61,7 +61,7 @@ namespace Album.Semantics {
                 }
                 BasicBlock block = new BasicBlock(startIndex, endIndexExclusive, controlFlowGraph);
                 controlFlowGraph.basicBlocks.Add(block);
-                controlFlowGraph.Successors.Add(block, new SortedSet<BasicBlock>(BasicBlock.StartIndexComparer));
+                controlFlowGraph.Successors.Add(block, new HashSet<BasicBlock>());
                 added = true;
             }
         }
