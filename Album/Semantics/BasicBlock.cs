@@ -38,5 +38,13 @@ namespace Album.Semantics {
 
         public override string ToString()
             => $"Basic Block from index {StartIndex} ({FirstLine?.ToString() ?? "null"}) to {EndIndexExclusive} ({LastLine?.ToString() ?? "null"})";
+
+        private class Comparer : IComparer<BasicBlock>
+        {
+            public int Compare(BasicBlock? x, BasicBlock? y)
+                => Comparer<int?>.Default.Compare(x?.StartIndex, y?.StartIndex);
+        }
+
+        public static readonly IComparer<BasicBlock> StartIndexComparer = new Comparer();
     }
 }
