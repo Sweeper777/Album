@@ -216,11 +216,12 @@ namespace Album.Tests {
                 Assert.AreEqual(5, cfg.BasicBlocks[3].EndIndexExclusive);
                 Assert.AreEqual(5, cfg.BasicBlocks[4].StartIndex);
                 Assert.AreEqual(6, cfg.BasicBlocks[4].EndIndexExclusive);
-                Assert.That(cfg.Successors, Is.EquivalentTo(
-                    new Dictionary<BasicBlock, List<BasicBlock>> {
-                        { cfg.BasicBlocks[0], new() { cfg.BasicBlocks[1], cfg.BasicBlocks[2] } },
-                        { cfg.BasicBlocks[1], new() { cfg.BasicBlocks[2], cfg.BasicBlocks[3] } },
-                        { cfg.BasicBlocks[2], new() { cfg.BasicBlocks[1], cfg.BasicBlocks[4] } },
+                Assert.That(cfg.Successors, Is.EqualTo(
+                    new Dictionary<BasicBlock, HashSet<BasicBlock>> {
+                        { cfg.BasicBlocks[0], new() { cfg.BasicBlocks[1] } },
+                        { cfg.BasicBlocks[1], new() { cfg.BasicBlocks[2] } },
+                        { cfg.BasicBlocks[2], new() { cfg.BasicBlocks[2], cfg.BasicBlocks[3] } },
+                        { cfg.BasicBlocks[3], new() { cfg.BasicBlocks[1], cfg.BasicBlocks[4] } },
                         { cfg.BasicBlocks[4], new() { cfg.BasicBlocks[0] } },
                     }
                 ).Using(setEqualityComparer));
