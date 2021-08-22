@@ -8,6 +8,10 @@ using System.Collections.Generic;
 namespace Album.Tests {
     [Timeout(1000)]
     public class SemanticsTests {
+
+        private static readonly IEqualityComparer<HashSet<BasicBlock>> setEqualityComparer 
+            = HashSet<BasicBlock>.CreateSetComparer();
+
         [Test]
         public void NoErrorsWhenEveryOriginalSongIsUsed() {
             SemanticAnalyser analyser = new();
@@ -123,13 +127,13 @@ namespace Album.Tests {
                 Assert.AreEqual(5, cfg.BasicBlocks[1].EndIndexExclusive);
                 Assert.AreEqual(5, cfg.BasicBlocks[2].StartIndex);
                 Assert.AreEqual(8, cfg.BasicBlocks[2].EndIndexExclusive);
-                Assert.That(cfg.Successors, Is.EquivalentTo(
-                    new Dictionary<BasicBlock, List<BasicBlock>> {
+                Assert.That(cfg.Successors, Is.EqualTo(
+                    new Dictionary<BasicBlock, HashSet<BasicBlock>> {
                         { cfg.BasicBlocks[0], new() { cfg.BasicBlocks[1], cfg.BasicBlocks[2] } },
                         { cfg.BasicBlocks[1], new() { cfg.BasicBlocks[2] } },
                         { cfg.BasicBlocks[2], new() {  } },
                     }
-                ));
+                ).Using(setEqualityComparer));
             });
         }
 
@@ -153,14 +157,14 @@ namespace Album.Tests {
                 Assert.AreEqual(9, cfg.BasicBlocks[2].EndIndexExclusive);
                 Assert.AreEqual(9, cfg.BasicBlocks[3].StartIndex);
                 Assert.AreEqual(10, cfg.BasicBlocks[3].EndIndexExclusive);
-                Assert.That(cfg.Successors, Is.EquivalentTo(
-                    new Dictionary<BasicBlock, List<BasicBlock>> {
+                Assert.That(cfg.Successors, Is.EqualTo(
+                    new Dictionary<BasicBlock, HashSet<BasicBlock>> {
                         { cfg.BasicBlocks[0], new() { cfg.BasicBlocks[1], cfg.BasicBlocks[2] } },
                         { cfg.BasicBlocks[1], new() { cfg.BasicBlocks[3] } },
                         { cfg.BasicBlocks[2], new() { cfg.BasicBlocks[3] } },
                         { cfg.BasicBlocks[3], new() {  } },
                     }
-                ));
+                ).Using(setEqualityComparer));
             });
         }
 
@@ -181,13 +185,13 @@ namespace Album.Tests {
                 Assert.AreEqual(6, cfg.BasicBlocks[1].EndIndexExclusive);
                 Assert.AreEqual(6, cfg.BasicBlocks[2].StartIndex);
                 Assert.AreEqual(7, cfg.BasicBlocks[2].EndIndexExclusive);
-                Assert.That(cfg.Successors, Is.EquivalentTo(
-                    new Dictionary<BasicBlock, List<BasicBlock>> {
+                Assert.That(cfg.Successors, Is.EqualTo(
+                    new Dictionary<BasicBlock, HashSet<BasicBlock>> {
                         { cfg.BasicBlocks[0], new() { cfg.BasicBlocks[1], cfg.BasicBlocks[2] } },
                         { cfg.BasicBlocks[1], new() { cfg.BasicBlocks[0] } },
                         { cfg.BasicBlocks[2], new() {  } },
                     }
-                ));
+                ).Using(setEqualityComparer));
             });
         }
 
@@ -219,7 +223,7 @@ namespace Album.Tests {
                         { cfg.BasicBlocks[2], new() { cfg.BasicBlocks[1], cfg.BasicBlocks[4] } },
                         { cfg.BasicBlocks[4], new() { cfg.BasicBlocks[0] } },
                     }
-                ));
+                ).Using(setEqualityComparer));
             });
         }
 
