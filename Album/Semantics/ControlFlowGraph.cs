@@ -19,12 +19,17 @@ namespace Album.Semantics {
         }
 
         public void SortBasicBlocks() {
-            basicBlocks.RemoveAll(b => 
+            Predicate<BasicBlock> predicate = b => 
                 (
                     b.FirstLine?.Type != LineType.OriginalSong &&
                     b.Lines.All(l => l.Type == LineType.Comment || l.Type == LineType.OriginalSong)
-                ) || b.IsEmpty
-            );
+                ) || b.IsEmpty;
+            basicBlocks.RemoveAll(predicate);
+            foreach (var key in Successors.Keys) {
+                if (predicate(key)) {
+                    Successors.Remove(key);
+                }
+            }
             basicBlocks.Sort((b1, b2) => b1.StartIndex.CompareTo(b2.StartIndex));
         }
 
