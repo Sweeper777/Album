@@ -90,11 +90,7 @@ namespace Album.Tests {
             Assert.Multiple(() => {
                 Assert.AreEqual(0, cfg!.BasicBlocks[0].StartIndex);
                 Assert.AreEqual(4, cfg!.BasicBlocks[0].EndIndexExclusive);
-                Assert.That(cfg.Successors, Is.All
-                    .Matches<KeyValuePair<BasicBlock, HashSet<BasicBlock>>>(
-                        x => !x.Value.Any()
-                    )
-                );
+                Assert.That(cfg.Successors.Values, Is.All.EqualTo(new HashSet<BasicBlock>()));
             });
         }
 
@@ -106,11 +102,7 @@ namespace Album.Tests {
             Assert.NotNull(cfg);
             Assert.Multiple(() => {
                 Assert.AreEqual(0, cfg!.BasicBlocks.Count);
-                Assert.That(cfg.Successors, Is.All
-                    .Matches<KeyValuePair<BasicBlock, HashSet<BasicBlock>>>(
-                        x => !x.Value.Any()
-                    )
-                );
+                Assert.That(cfg.Successors.Values, Is.All.EqualTo(new HashSet<BasicBlock>()));
             });
         }
 
@@ -266,11 +258,7 @@ namespace Album.Tests {
                 Assert.AreEqual(1, cfg.BasicBlocks[0].EndIndexExclusive);
                 Assert.AreEqual(1, cfg.BasicBlocks[1].StartIndex);
                 Assert.AreEqual(2, cfg.BasicBlocks[1].EndIndexExclusive);
-                Assert.That(cfg.Successors, Is.All
-                    .Matches<KeyValuePair<BasicBlock, HashSet<BasicBlock>>>(
-                        x => !x.Value.Any()
-                    )
-                );
+                Assert.That(cfg.Successors.Values, Is.All.EqualTo(new HashSet<BasicBlock>()));
             });
         }
     }
