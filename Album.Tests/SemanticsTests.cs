@@ -90,11 +90,18 @@ namespace Album.Tests {
             });
             var cfg = analyser.CFG;
             Assert.NotNull(cfg);
-            Assert.AreEqual(1, cfg!.BasicBlocks.Count);
+            Assert.AreEqual(2, cfg!.BasicBlocks.Count);
             Assert.Multiple(() => {
                 Assert.AreEqual(0, cfg!.BasicBlocks[0].StartIndex);
                 Assert.AreEqual(4, cfg!.BasicBlocks[0].EndIndexExclusive);
-                Assert.That(cfg.Successors.Values, Is.All.EqualTo(new HashSet<BasicBlock>()));
+                Assert.AreEqual(4, cfg!.BasicBlocks[1].StartIndex);
+                Assert.AreEqual(4, cfg!.BasicBlocks[1].EndIndexExclusive);
+                Assert.That(cfg.Successors, Is.EqualTo(
+                    new Dictionary<BasicBlock, HashSet<BasicBlock>> {
+                        { cfg.BasicBlocks[0], new() { cfg.BasicBlocks[1] } },
+                        { cfg.BasicBlocks[1], new() { } },
+                    }
+                ).Using(setEqualityComparer));
             });
         }
 
@@ -119,7 +126,7 @@ namespace Album.Tests {
             });
             var cfg = analyser.CFG;
             Assert.NotNull(cfg);
-            Assert.AreEqual(3, cfg!.BasicBlocks.Count);
+            Assert.AreEqual(4, cfg!.BasicBlocks.Count);
             Assert.Multiple(() => {
                 Assert.AreEqual(0, cfg.BasicBlocks[0].StartIndex);
                 Assert.AreEqual(3, cfg.BasicBlocks[0].EndIndexExclusive);
@@ -127,11 +134,14 @@ namespace Album.Tests {
                 Assert.AreEqual(5, cfg.BasicBlocks[1].EndIndexExclusive);
                 Assert.AreEqual(5, cfg.BasicBlocks[2].StartIndex);
                 Assert.AreEqual(8, cfg.BasicBlocks[2].EndIndexExclusive);
+                Assert.AreEqual(8, cfg.BasicBlocks[3].StartIndex);
+                Assert.AreEqual(8, cfg.BasicBlocks[3].EndIndexExclusive);
                 Assert.That(cfg.Successors, Is.EqualTo(
                     new Dictionary<BasicBlock, HashSet<BasicBlock>> {
                         { cfg.BasicBlocks[0], new() { cfg.BasicBlocks[1], cfg.BasicBlocks[2] } },
                         { cfg.BasicBlocks[1], new() { cfg.BasicBlocks[2] } },
-                        { cfg.BasicBlocks[2], new() {  } },
+                        { cfg.BasicBlocks[2], new() { cfg.BasicBlocks[3] } },
+                        { cfg.BasicBlocks[3], new() {  } },
                     }
                 ).Using(setEqualityComparer));
             });
@@ -147,7 +157,7 @@ namespace Album.Tests {
             });
             var cfg = analyser.CFG;
             Assert.NotNull(cfg);
-            Assert.AreEqual(4, cfg!.BasicBlocks.Count);
+            Assert.AreEqual(5, cfg!.BasicBlocks.Count);
             Assert.Multiple(() => {
                 Assert.AreEqual(0, cfg.BasicBlocks[0].StartIndex);
                 Assert.AreEqual(3, cfg.BasicBlocks[0].EndIndexExclusive);
@@ -157,12 +167,15 @@ namespace Album.Tests {
                 Assert.AreEqual(9, cfg.BasicBlocks[2].EndIndexExclusive);
                 Assert.AreEqual(9, cfg.BasicBlocks[3].StartIndex);
                 Assert.AreEqual(10, cfg.BasicBlocks[3].EndIndexExclusive);
+                Assert.AreEqual(10, cfg.BasicBlocks[4].StartIndex);
+                Assert.AreEqual(10, cfg.BasicBlocks[4].EndIndexExclusive);
                 Assert.That(cfg.Successors, Is.EqualTo(
                     new Dictionary<BasicBlock, HashSet<BasicBlock>> {
                         { cfg.BasicBlocks[0], new() { cfg.BasicBlocks[1], cfg.BasicBlocks[2] } },
                         { cfg.BasicBlocks[1], new() { cfg.BasicBlocks[3] } },
                         { cfg.BasicBlocks[2], new() { cfg.BasicBlocks[3] } },
-                        { cfg.BasicBlocks[3], new() {  } },
+                        { cfg.BasicBlocks[3], new() { cfg.BasicBlocks[4] } },
+                        { cfg.BasicBlocks[4], new() {  } },
                     }
                 ).Using(setEqualityComparer));
             });
@@ -177,7 +190,7 @@ namespace Album.Tests {
             });
             var cfg = analyser.CFG;
             Assert.NotNull(cfg);
-            Assert.AreEqual(3, cfg!.BasicBlocks.Count);
+            Assert.AreEqual(4, cfg!.BasicBlocks.Count);
             Assert.Multiple(() => {
                 Assert.AreEqual(0, cfg.BasicBlocks[0].StartIndex);
                 Assert.AreEqual(4, cfg.BasicBlocks[0].EndIndexExclusive);
@@ -185,11 +198,14 @@ namespace Album.Tests {
                 Assert.AreEqual(6, cfg.BasicBlocks[1].EndIndexExclusive);
                 Assert.AreEqual(6, cfg.BasicBlocks[2].StartIndex);
                 Assert.AreEqual(7, cfg.BasicBlocks[2].EndIndexExclusive);
+                Assert.AreEqual(7, cfg.BasicBlocks[3].StartIndex);
+                Assert.AreEqual(7, cfg.BasicBlocks[3].EndIndexExclusive);
                 Assert.That(cfg.Successors, Is.EqualTo(
                     new Dictionary<BasicBlock, HashSet<BasicBlock>> {
                         { cfg.BasicBlocks[0], new() { cfg.BasicBlocks[1], cfg.BasicBlocks[2] } },
                         { cfg.BasicBlocks[1], new() { cfg.BasicBlocks[0] } },
-                        { cfg.BasicBlocks[2], new() {  } },
+                        { cfg.BasicBlocks[2], new() { cfg.BasicBlocks[3] } },
+                        { cfg.BasicBlocks[3], new() {  } },
                     }
                 ).Using(setEqualityComparer));
             });
@@ -204,7 +220,7 @@ namespace Album.Tests {
             });
             var cfg = analyser.CFG;
             Assert.NotNull(cfg);
-            Assert.AreEqual(5, cfg!.BasicBlocks.Count);
+            Assert.AreEqual(6, cfg!.BasicBlocks.Count);
             Assert.Multiple(() => {
                 Assert.AreEqual(0, cfg.BasicBlocks[0].StartIndex);
                 Assert.AreEqual(1, cfg.BasicBlocks[0].EndIndexExclusive);
@@ -216,13 +232,16 @@ namespace Album.Tests {
                 Assert.AreEqual(5, cfg.BasicBlocks[3].EndIndexExclusive);
                 Assert.AreEqual(5, cfg.BasicBlocks[4].StartIndex);
                 Assert.AreEqual(6, cfg.BasicBlocks[4].EndIndexExclusive);
+                Assert.AreEqual(6, cfg.BasicBlocks[5].StartIndex);
+                Assert.AreEqual(6, cfg.BasicBlocks[5].EndIndexExclusive);
                 Assert.That(cfg.Successors, Is.EqualTo(
                     new Dictionary<BasicBlock, HashSet<BasicBlock>> {
                         { cfg.BasicBlocks[0], new() { cfg.BasicBlocks[1] } },
                         { cfg.BasicBlocks[1], new() { cfg.BasicBlocks[2] } },
                         { cfg.BasicBlocks[2], new() { cfg.BasicBlocks[2], cfg.BasicBlocks[3] } },
                         { cfg.BasicBlocks[3], new() { cfg.BasicBlocks[1], cfg.BasicBlocks[4] } },
-                        { cfg.BasicBlocks[4], new() { cfg.BasicBlocks[0] } },
+                        { cfg.BasicBlocks[4], new() { cfg.BasicBlocks[0], cfg.BasicBlocks[5] } },
+                        { cfg.BasicBlocks[5], new() { } },
                     }
                 ).Using(setEqualityComparer));
             });
