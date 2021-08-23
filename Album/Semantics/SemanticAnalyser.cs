@@ -99,7 +99,8 @@ namespace Album.Semantics {
                 cfg.BasicBlocks
                     .Where(x => x.FirstLine?.IsOriginalSong(out name) == true)
                     .ToLookup(x => name!);
-            for (int i = 0; i < cfg.BasicBlocks.Count; i++) {
+            int basicBlockCount = cfg.BasicBlocks.Count;
+            for (int i = 0; i < basicBlockCount; i++) {
                 BasicBlock block = cfg.BasicBlocks[i];
                 if (block.IsEmpty) {
                     throw new Exception("There should be no empty basic blocks when calling BuildJumpEdges!");
@@ -119,6 +120,9 @@ namespace Album.Semantics {
                 if (i + 1 < cfg.BasicBlocks.Count) {
                     BasicBlock nextBlock = cfg.BasicBlocks[i + 1];
                     cfg.Successors[block].Add(nextBlock);
+                } else {
+                    cfg.BuildBasicBlock(cfg.SourceCode.Count).AddToCFG();
+                    cfg.Successors[block].Add(cfg.BasicBlocks.Last());
                 }
             }
         }
