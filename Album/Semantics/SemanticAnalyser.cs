@@ -70,8 +70,7 @@ namespace Album.Semantics {
 
             ControlFlowGraph cfg = new(lines);
             BuildBasicBlocks(cfg, UsedOriginalSongs);
-            cfg.SortBasicBlocks();
-            BuildJumpEdges(cfg);
+            cfg.GenerateEdges();
             return cfg;
         }
 
@@ -91,40 +90,6 @@ namespace Album.Semantics {
                 }
             }
             currentBlockBuilder.AddToCFG();
-        }
-
-        private void BuildJumpEdges(ControlFlowGraph cfg) {
-            string? name = null;
-            ILookup<string, BasicBlock> originalSongLeaders = 
-                cfg.BasicBlocks
-                    .Where(x => x.FirstLine?.IsOriginalSong(out name) == true)
-                    .ToLookup(x => name!);
-            int basicBlockCount = cfg.BasicBlocks.Count;
-            for (int i = 0; i < basicBlockCount; i++) {
-                BasicBlock block = cfg.BasicBlocks[i];
-                if (block.IsEmpty) {
-                    throw new Exception("There should be no empty basic blocks when calling BuildJumpEdges!");
-                }
-                if (block.LastLine.Value.IsUnconditionalBranch(out var originalSong) &&
-                    originalSongLeaders[originalSong].FirstOrDefault() is BasicBlock unconditionalSuccessor) {
-                    cfg.Successors[block].Add(unconditionalSuccessor);
-                    continue;
-                }
-                if (block.LastLine.Value.Type == LineType.InfiniteLoop || block.LastLine.Value.Type == LineType.Quit) {
-                    continue;
-                }
-                if (block.LastLine.Value.IsBranch(out originalSong) &&
-                    originalSongLeaders[originalSong].FirstOrDefault() is BasicBlock conditionalSuccessor) {
-                    cfg.Successors[block].Add(conditionalSuccessor);
-                }
-                if (i + 1 < cfg.BasicBlocks.Count) {
-                    BasicBlock nextBlock = cfg.BasicBlocks[i + 1];
-                    cfg.Successors[block].Add(nextBlock);
-                } else {
-                    cfg.BuildBasicBlock(cfg.SourceCode.Count).AddToCFG();
-                    cfg.Successors[block].Add(cfg.BasicBlocks.Last());
-                }
-            }
         }
     }
 }

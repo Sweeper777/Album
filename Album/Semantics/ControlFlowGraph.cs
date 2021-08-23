@@ -18,7 +18,7 @@ namespace Album.Semantics {
             SourceCode = sourceCode.ToList();
         }
 
-        public void SortBasicBlocks() {
+        public void GenerateEdges() {
             Predicate<BasicBlock> predicate = b => 
                 (
                     b.FirstLine?.Type != LineType.OriginalSong &&
@@ -31,6 +31,38 @@ namespace Album.Semantics {
                 }
             }
             basicBlocks.Sort((b1, b2) => b1.StartIndex.CompareTo(b2.StartIndex));
+
+            string? name = null;
+            ILookup<string, BasicBlock> originalSongLeaders = 
+                BasicBlocks
+                    .Where(x => x.FirstLine?.IsOriginalSong(out name) == true)
+                    .ToLookup(x => name!);
+            int basicBlockCount = BasicBlocks.Count;
+            for (int i = 0; i < basicBlockCount; i++) {
+                BasicBlock block = BasicBlocks[i];
+                if (block.IsEmpty) {
+                    throw new Exception("There should be no empty basic blocks when calling BuildJumpEdges!");
+                }
+                if (block.LastLine.Value.IsUnconditionalBranch(out var originalSong) &&
+                    originalSongLeaders[originalSong].FirstOrDefault() is BasicBlock unconditionalSuccessor) {
+                    Successors[block].Add(unconditionalSuccessor);
+                    continue;
+                }
+                if (block.LastLine.Value.Type == LineType.InfiniteLoop || block.LastLine.Value.Type == LineType.Quit) {
+                    continue;
+                }
+                if (block.LastLine.Value.IsBranch(out originalSong) &&
+                    originalSongLeaders[originalSong].FirstOrDefault() is BasicBlock conditionalSuccessor) {
+                    Successors[block].Add(conditionalSuccessor);
+                }
+                if (i + 1 < BasicBlocks.Count) {
+                    BasicBlock nextBlock = BasicBlocks[i + 1];
+                    Successors[block].Add(nextBlock);
+                } else {
+                    BuildBasicBlock(SourceCode.Count).AddToCFG();
+                    Successors[block].Add(BasicBlocks.Last());
+                }
+            }
         }
 
         public BasicBlockBuilder BuildBasicBlock(int startIndex) => new BasicBlockBuilder(this, startIndex);
