@@ -264,5 +264,17 @@ namespace Album.Tests {
                 Assert.That(cfg.Successors.Values, Is.All.EqualTo(new HashSet<BasicBlock>()));
             });
         }
+
+        [Test]
+        public void FindsUnreachableCode() {
+            SemanticAnalyser analyser = new();
+            analyser.Analyse(new[] {
+                OfType(Quit), OfType(InfiniteLoop)
+            });
+            var cfg = analyser.CFG;
+            var unreachableCode = cfg!.FindUnreachableBlocks();
+            CollectionAssert.AreEquivalent(new[] { cfg.BasicBlocks[1] }, unreachableCode);
+        }
+
     }
 }
