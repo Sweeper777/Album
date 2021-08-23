@@ -67,6 +67,24 @@ namespace Album.Semantics {
 
         public BasicBlockBuilder BuildBasicBlock(int startIndex) => new BasicBlockBuilder(this, startIndex);
 
+        public HashSet<BasicBlock> FindUnreachableBlocks(int startIndex) {
+            HashSet<BasicBlock> unreachables = new(BasicBlocks);
+            Queue<BasicBlock> queue = new();
+            unreachables.Remove(BasicBlocks[startIndex]);
+            queue.Enqueue(BasicBlocks[startIndex]);
+            while (queue.Any()) {
+                BasicBlock block = queue.Dequeue();
+                foreach (var successor in Successors[block]) {
+                    if (unreachables.Remove(successor)) {
+                        queue.Enqueue(successor);
+                    }
+                }
+            }
+            return unreachables;
+        }
+
+        public HashSet<BasicBlock> FindUnreachableBlocks() => FindUnreachableBlocks(0);
+
         public class BasicBlockBuilder {
             private ControlFlowGraph controlFlowGraph;
             private int startIndex;
