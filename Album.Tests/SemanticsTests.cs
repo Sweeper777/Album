@@ -269,11 +269,15 @@ namespace Album.Tests {
         public void FindsUnreachableCode() {
             SemanticAnalyser analyser = new();
             analyser.Analyse(new[] {
-                OfType(Quit), OfType(InfiniteLoop)
+                OfType(Quit, 1), OfType(InfiniteLoop, 2)
             });
             var cfg = analyser.CFG;
             var unreachableCode = cfg!.FindUnreachableBlocks();
             CollectionAssert.AreEquivalent(new[] { cfg.BasicBlocks[1] }, unreachableCode);
+            CollectionAssert.Contains(analyser.Outputs, new CompilerOutput(
+                CompilerMessage.UnreachableCode,
+                CompilerOutputType.Warning, 2
+            ));
         }
 
         [Test]
