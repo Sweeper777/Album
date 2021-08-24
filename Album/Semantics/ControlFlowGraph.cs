@@ -68,6 +68,9 @@ namespace Album.Semantics {
         public BasicBlockBuilder BuildBasicBlock(int startIndex) => new BasicBlockBuilder(this, startIndex);
 
         public HashSet<BasicBlock> FindUnreachableBlocks(int startIndex) {
+            if (startIndex < 0 || startIndex >= BasicBlocks.Count) {
+                throw new IndexOutOfRangeException("startIndex is out of range!");
+            }
             HashSet<BasicBlock> unreachables = new(BasicBlocks);
             Queue<BasicBlock> queue = new();
             unreachables.Remove(BasicBlocks[startIndex]);
@@ -83,7 +86,8 @@ namespace Album.Semantics {
             return unreachables;
         }
 
-        public HashSet<BasicBlock> FindUnreachableBlocks() => FindUnreachableBlocks(0);
+        public HashSet<BasicBlock> FindUnreachableBlocks() 
+            => BasicBlocks.Any() ? FindUnreachableBlocks(0) : new();
 
         public class BasicBlockBuilder {
             private ControlFlowGraph controlFlowGraph;
