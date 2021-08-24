@@ -36,6 +36,9 @@ namespace Album {
         public void Compile(Stream source) {
             AlbumParser parser = new(SongManifest, source);
             IList<LineInfo> lines = parser.Parse();
+            if (EnableOptimisation) {
+                lines = Optimiser.Optimise(lines);
+            }
             Analyser.Analyse(lines);
 
             IEnumerable<CompilerOutput> allOutputs = 
@@ -53,9 +56,6 @@ namespace Album {
             Outputs = allOutputs;
 
             if (!allOutputs.Any(x => x.Type == CompilerOutputType.Error)) {
-                if (EnableOptimisation) {
-                    lines = Optimiser.Optimise(lines);
-                }
                 CodeGenerator.GenerateCode(lines);
             }
         }
