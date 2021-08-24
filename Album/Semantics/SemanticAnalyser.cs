@@ -71,6 +71,15 @@ namespace Album.Semantics {
             ControlFlowGraph cfg = new(lines);
             BuildBasicBlocks(cfg, UsedOriginalSongs);
             cfg.GenerateEdges();
+            foreach (var unreachableBlock in cfg.FindUnreachableBlocks()) {
+                if (!unreachableBlock.IsEmpty) {
+                    Outputs.Add(new CompilerOutput(
+                        CompilerMessage.UnreachableCode,
+                        CompilerOutputType.Warning,
+                        unreachableBlock.FirstLine.Value.LineNumber
+                    ));
+                }
+            }
             return cfg;
         }
 
