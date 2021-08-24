@@ -1,0 +1,18 @@
+{
+    "Format": "{0} at line {1}: {2}",
+    "TypeNames": {
+        "Error": "Error",
+        "Warning": "Warning"
+    },
+    "Messages": {
+        "NoPlaylistCreatorDeclFound": "No playlist creator declaration found!",
+        "PushXTooSmall": "Negative numbers? We don't allow that here!",
+        "PushXTooLarge": "This number is too big!",
+        "Push1": "Get your plurals right!",
+        "InvalidOriginalSongName": "Original song names can't have ':', ';', or '.' in them! Those are trademarked characters!",
+        "DuplicateOriginalSong": "There's already an original song with this name!",
+        "UnknownOriginalSong": "There's no original song with this name! Did you misspell it?",
+        "UnusedOriginalSong": "This original song isn't used. How about removing it?",
+        "UnreachableCode": "This song will never be played!"
+    }
+}
