@@ -276,5 +276,16 @@ namespace Album.Tests {
             CollectionAssert.AreEquivalent(new[] { cfg.BasicBlocks[1] }, unreachableCode);
         }
 
+        [Test]
+        public void DoesNotFindUnreachableCodeWhenEverythingIsReachable() {
+            SemanticAnalyser analyser = new();
+            analyser.Analyse(new[] {
+                OriginalSong("1"), OriginalSong("2"), OriginalSong("3"),
+                Branch("3"), Branch("2"), Branch("1")
+            });
+            var cfg = analyser.CFG;
+            var unreachableCode = cfg!.FindUnreachableBlocks();
+            CollectionAssert.IsEmpty(unreachableCode);
+        }
     }
 }
