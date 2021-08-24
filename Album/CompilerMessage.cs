@@ -11,6 +11,7 @@ namespace Album {
         InvalidOriginalSongName,
         DuplicateOriginalSong,
         UnknownOriginalSong,
-        UnusedOriginalSong
+        UnusedOriginalSong,
+        UnreachableCode
     }
 }
