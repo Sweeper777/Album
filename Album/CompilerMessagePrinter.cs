@@ -32,6 +32,13 @@ namespace Album {
                 ?? GetResourceStreamFromCulture(culture.Parent);
         }
 
+        public void Print(CompilerOutput output)
+        {
+            Console.WriteLine(messages.Format, 
+                messages.LocalisedTypeNames.GetValueOrDefault(output.Type), 
+                output.LineNumber,
+                messages.LocalisedMessages.GetValueOrDefault(output.Message));
+        }
     }
 
     public class LocalisedCompilerMessages {
