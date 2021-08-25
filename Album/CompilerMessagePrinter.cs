@@ -30,4 +30,11 @@ namespace Album {
         public Dictionary<CompilerMessage, string> LocalisedMessages { get; }
     }
 
+    public class CompilerMessagePrinter : ICompilerMessagePrinter
+    {
+        public void Print(CompilerOutput output)
+        {
+            Console.WriteLine($"{output.Type} at line {output.LineNumber}: {output.Message}");
+        }
+    }
 }
