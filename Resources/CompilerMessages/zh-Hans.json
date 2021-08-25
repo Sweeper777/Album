@@ -1,0 +1,18 @@
+{
+    "Format": "第{1}行：{0}：{2}",
+    "TypeNames": {
+        "Error": "错误",
+        "Warning": "警告"
+    },
+    "Messages": {
+        "NoPlaylistCreatorDeclFound": "没找着播放列表创作者宣告！",
+        "PushXTooSmall": "这里不许有负数！",
+        "PushXTooLarge": "这个数太大了！",
+        "Push1": "这里应该是复数！",
+        "InvalidOriginalSongName": "原创歌曲名中不应有 ':'、 ';'、 或 '.' ！",
+        "DuplicateOriginalSong": "这个名字已经被另一个原创歌曲用过了！",
+        "UnknownOriginalSong": "没有原创歌曲是这个名字的，拼写错误了么？",
+        "UnusedOriginalSong": "这个原创歌曲并没有用到，要不要删了？",
+        "UnreachableCode": "这首歌永远都不会被播放！"
+    }
+}
