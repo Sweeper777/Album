@@ -1,0 +1,18 @@
+{
+    "Format": "{1}行目：{0}：{2}",
+    "TypeNames": {
+        "Error": "エラー",
+        "Warning": "警告"
+    },
+    "Messages": {
+        "NoPlaylistCreatorDeclFound": "プレイリスト宣言が見つかりません。",
+        "PushXTooSmall": "ここは負数じゃダメです！",
+        "PushXTooLarge": "この数は多すぎます。",
+        "Push1": "ここは複数形にしてください！",
+        "InvalidOriginalSongName": "オリジナル曲名は「:」、「;」、あるいは「.」を含めてはなりません。",
+        "DuplicateOriginalSong": "このオリジナル曲名は使用済みです。他にしてください。",
+        "UnknownOriginalSong": "こんな曲名のオリジナル曲は存在しません。誤字ですか？",
+        "UnusedOriginalSong": "このオリジナル曲は使われていません。削除してもいいですよ。",
+        "UnreachableCode": "この曲は再生されません。"
+    }
+}
