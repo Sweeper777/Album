@@ -5,6 +5,7 @@ using Album.CodeGen.Cecil;
 using Album.Syntax;
 using CommandLine;
 using CommandLine.Text;
+using System.Globalization;
 
 namespace Album
 {
@@ -12,6 +13,7 @@ namespace Album
     {
         static void Main(string[] args)
         {
+            
             ParserResult<CompilerOptions> parserResult = new Parser(settings => {
                 settings.AutoVersion = false;
                 settings.CaseInsensitiveEnumValues = true;
@@ -113,7 +115,15 @@ namespace Album
         }
 
         private static void PrintErrorsAndWarnings(IEnumerable<CompilerOutput> outputs) {
-            // TODO
+            ICompilerMessagePrinter printer;
+            try {
+                printer = new LocalisedCompilerMessagePrinter(CultureInfo.CurrentCulture);
+            } catch {
+                printer = new CompilerMessagePrinter();
+            }
+            foreach (var output in outputs) {
+                printer.Print(output);
+            }
         }
     }
 }
