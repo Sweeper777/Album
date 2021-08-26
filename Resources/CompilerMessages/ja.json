@@ -7,7 +7,7 @@
     "Messages": {
         "NoPlaylistCreatorDeclFound": "プレイリスト宣言が見つかりません。",
         "PushXTooSmall": "ここは負数じゃダメです！",
-        "PushXTooLarge": "この数は多すぎます。",
+        "PushXTooLarge": "この数は大きすぎます。",
         "Push1": "ここは複数形にしてください！",
         "InvalidOriginalSongName": "オリジナル曲名は「:」、「;」、あるいは「.」を含めてはなりません。",
         "DuplicateOriginalSong": "このオリジナル曲名は使用済みです。他にしてください。",

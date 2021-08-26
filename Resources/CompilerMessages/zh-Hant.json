@@ -5,7 +5,7 @@
         "Warning": "警告"
     },
     "Messages": {
-        "NoPlaylistCreatorDeclFound": "沒找著播放列表創作者宣告！",
+        "NoPlaylistCreatorDeclFound": "找不到播放列表創作者宣告！",
         "PushXTooSmall": "這裡不許有負數！",
         "PushXTooLarge": "這個數太大了！",
         "Push1": "這裡應該是複數！",
