@@ -31,6 +31,8 @@ namespace Album {
         }
     }
 
+
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum CompilerOutputType {
         Error, Warning
     }
