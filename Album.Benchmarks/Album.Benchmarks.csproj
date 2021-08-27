@@ -8,5 +8,10 @@
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
   </ItemGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="../Album/Album.csproj" />
+  </ItemGroup>
+    <ItemGroup>
+    <EmbeddedResource Include="../Resources/Examples/99_bottles_of_beer.album" />
+  </ItemGroup>
 </Project>
