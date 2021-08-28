@@ -55,6 +55,24 @@ namespace Album.Benchmarks
             proc.WaitForExit();
         }
 
+        [GlobalSetup]
+        public void GlobalSetup()
+        {
+            var codegen = new CecilCodeGenerator();
+            var compiler = new AlbumCompiler(codegen) { EnableOptimisation = true };
+            compiler.Compile(typeof(CompilationTime).Assembly.GetManifestResourceStream("Album.Benchmarks.99_bottles_of_beer.album"));
+            codegen.GeneratedAssembly.Write("optimised.dll");
+            compiler.EnableOptimisation = false;
+            compiler.Compile(typeof(CompilationTime).Assembly.GetManifestResourceStream("Album.Benchmarks.99_bottles_of_beer.album"));
+            codegen.GeneratedAssembly.Write("unoptimised.dll");
+            string runtimeConfigContents;
+            using (var stream = new StreamReader(typeof(AlbumCompiler).Assembly.GetManifestResourceStream("Album.runtimeconfig_template.json")!)) {
+                runtimeConfigContents = stream.ReadToEnd();
+            }
+            File.WriteAllText("optimised.runtimeconfig.json", runtimeConfigContents);
+            File.WriteAllText("unoptimised.runtimeconfig.json", runtimeConfigContents);
+        }
+
     }
     class Program
     {
