@@ -37,12 +37,12 @@ namespace Album.Benchmarks
     }
 
     public class ExecutionTime {
-        private void RunAssembly(string executableName) {
+        private static long RunAssembly(string executableName) {
             using var proc = new Process
             {
                 StartInfo = new ProcessStartInfo
                 {
-                    FileName = @"dotnet",
+                    FileName = "dotnet",
                     Arguments = executableName,
                     UseShellExecute = false,
                     RedirectStandardOutput = true,
@@ -50,14 +50,23 @@ namespace Album.Benchmarks
                     WorkingDirectory = ""
                 }
             };
-
             proc.Start();
             proc.WaitForExit();
+            return proc.UserProcessorTime.Ticks;
         }
 
-        [GlobalSetup]
-        public void GlobalSetup()
+        public static long RunWithOptimisation() => RunAssembly("optimised.dll");
+
+        public static long RunWithoutOptimisation() => RunAssembly("unoptimised.dll");
+
+        public static long RunControl() => RunAssembly("Beer.dll");
+    }
+    class Program
+    {
+        static void Main(string[] args)
         {
+            // var summary = BenchmarkRunner.Run<CompilationTime>();
+
             var codegen = new CecilCodeGenerator();
             var compiler = new AlbumCompiler(codegen) { EnableOptimisation = true };
             compiler.Compile(typeof(CompilationTime).Assembly.GetManifestResourceStream("Album.Benchmarks.99_bottles_of_beer.album"));
@@ -71,30 +80,10 @@ namespace Album.Benchmarks
             }
             File.WriteAllText("optimised.runtimeconfig.json", runtimeConfigContents);
             File.WriteAllText("unoptimised.runtimeconfig.json", runtimeConfigContents);
-        }
 
-        [Benchmark]
-        public void RunWithOptimisation() {
-            RunAssembly("optimised.dll");
-        }
-
-        [Benchmark]
-        public void RunWithoutOptimisation() {
-            RunAssembly("unoptimised.dll");
-        }
-
-        [Benchmark]
-        public void RunControl() {
-            RunAssembly("Beer.dll");
-        }
-    }
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            // var summary = BenchmarkRunner.Run<CompilationTime>();
-
-            var summary = BenchmarkRunner.Run<ExecutionTime>();
+            System.Console.WriteLine($"Control: {ExecutionTime.RunControl()} Ticks");
+            System.Console.WriteLine($"Optimisation: {ExecutionTime.RunWithOptimisation()} Ticks");
+            System.Console.WriteLine($"No Optimisation: {ExecutionTime.RunWithoutOptimisation()} Ticks");
         }
     }
 }
