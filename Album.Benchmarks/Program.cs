@@ -36,6 +36,26 @@ namespace Album.Benchmarks
         }
     }
 
+    public class ExecutionTime {
+        private void RunAssembly(string executableName) {
+            using var proc = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = @"dotnet",
+                    Arguments = executableName,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true,
+                    WorkingDirectory = ""
+                }
+            };
+
+            proc.Start();
+            proc.WaitForExit();
+        }
+
+    }
     class Program
     {
         static void Main(string[] args)
