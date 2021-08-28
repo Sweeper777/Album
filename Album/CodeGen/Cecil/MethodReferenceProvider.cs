@@ -1,4 +1,5 @@
 using Mono.Cecil;
+using Mono.Cecil.Cil;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Album.CodeGen.Cecil
@@ -31,5 +32,7 @@ namespace Album.CodeGen.Cecil
         public MethodReference? ConsoleWriteInt { get; init; }
         [DisallowNull]
         public MethodReference? EnvironmentExit { get; init; }
+        [DisallowNull]
+        public Instruction? LastInstruction { get; init; }
     }
 }
