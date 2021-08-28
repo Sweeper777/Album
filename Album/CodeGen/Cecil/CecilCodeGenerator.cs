@@ -55,12 +55,12 @@ namespace Album.CodeGen.Cecil
 
             GeneratedAssembly.EntryPoint = mainMethod;
 
-            InitialiseMethodReferences(GeneratedModule);
+            InitialiseMethodReferences(GeneratedModule, il);
             InitialiseCodeGenStrategies(methodReferences, il);
         }
 
         [MemberNotNull(nameof(methodReferences))]
-        private void InitialiseMethodReferences(ModuleDefinition module) {
+        private void InitialiseMethodReferences(ModuleDefinition module, ILProcessor il) {
             methodReferences = new() {
                 ConsoleWriteChar = module.ImportReference(typeof(Console).GetMethod("Write", new[] { typeof(char) })),
                 ConsoleWriteInt = module.ImportReference(typeof(Console).GetMethod("Write", new[] { typeof(int) })),
@@ -75,6 +75,7 @@ namespace Album.CodeGen.Cecil
                 LinkedListClear = module.ImportReference(typeof(LinkedList<int>).GetMethod("Clear", new Type[] { })),
                 LinkedListAddBefore = module.ImportReference(typeof(LinkedList<int>).GetMethod("AddBefore", new[] { typeof(LinkedListNode<int>), typeof(int) })),
                 EnvironmentExit = module.ImportReference(typeof(Environment).GetMethod("Exit", new[] { typeof(int) })),
+                LastInstruction = il.Create(OpCodes.Ret),
             };
         }
 
@@ -122,7 +123,7 @@ namespace Album.CodeGen.Cecil
         }
         protected override void DidGenerateLines()
         {
-            var catchEnd = il?.Create(OpCodes.Ret);
+            var catchEnd = methodReferences?.LastInstruction;
             il?.Emit(OpCodes.Pop);
             il?.Emit(OpCodes.Leave, catchEnd);
             var tryEnd = il?.Create(OpCodes.Pop);
