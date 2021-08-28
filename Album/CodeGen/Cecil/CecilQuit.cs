@@ -12,8 +12,8 @@ namespace Album.CodeGen.Cecil
 
             public override void GenerateCodeForSong(LineInfo line)
             {
-                ILProcessor.Emit(OpCodes.Ldc_I4_0);
-                ILProcessor.Emit(OpCodes.Call, methods.EnvironmentExit);
+                ILProcessor.Emit(OpCodes.Pop);
+                ILProcessor.Emit(OpCodes.Leave, methods.LastInstruction);
             }
 
             public override bool SupportsLineType(LineType type)
