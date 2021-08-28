@@ -73,6 +73,20 @@ namespace Album.Benchmarks
             File.WriteAllText("unoptimised.runtimeconfig.json", runtimeConfigContents);
         }
 
+        [Benchmark]
+        public void RunWithOptimisation() {
+            RunAssembly("optimised.dll");
+        }
+
+        [Benchmark]
+        public void RunWithoutOptimisation() {
+            RunAssembly("unoptimised.dll");
+        }
+
+        [Benchmark]
+        public void RunControl() {
+            RunAssembly("Beer.dll");
+        }
     }
     class Program
     {
@@ -80,6 +94,7 @@ namespace Album.Benchmarks
         {
             // var summary = BenchmarkRunner.Run<CompilationTime>();
 
+            var summary = BenchmarkRunner.Run<ExecutionTime>();
         }
     }
 }
