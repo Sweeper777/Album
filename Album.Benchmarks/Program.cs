@@ -66,7 +66,21 @@ namespace Album.Benchmarks
             unoptimised = unoptimisedAsm.EntryPoint;
         }
 
+        [Benchmark]
+        public void RunWithOptimisation() {
+            var stdout = Console.Out;
+            Console.SetOut(new StringWriter());
+            optimised.Invoke(null, new string[0]);
+            Console.SetOut(stdout);
+        }
 
+        [Benchmark]
+        public void RunWithoutOptimisation() {
+            var stdout = Console.Out;
+            Console.SetOut(new StringWriter());
+            unoptimised.Invoke(null, new string[0]);
+            Console.SetOut(stdout);
+        }
 
         // public static Task<long> RunControl() => RunAssembly("Beer.dll");
     }
@@ -74,6 +88,7 @@ namespace Album.Benchmarks
     {
         static void Main(string[] args)
         {
+            var summary = BenchmarkRunner.Run<ExecutionTime>();
         }
     }
 }
