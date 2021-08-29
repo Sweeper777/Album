@@ -100,7 +100,17 @@ namespace Album.Benchmarks
     {
         static void Main(string[] args)
         {
-            var summary = BenchmarkRunner.Run<ExecutionTime>();
+            var summary = BenchmarkRunner.Run<ExecutionTime>(new Config());
+            summary = BenchmarkRunner.Run<CompilationTime>(new Config());
+        }
+    }
+
+    public class Config : ManualConfig
+    {
+        public Config()
+        {
+            AddExporter(RPlotExporter.Default);
+            AddExporter(HtmlExporter.Default);
         }
     }
 }
