@@ -42,6 +42,19 @@ namespace Album.Benchmarks
 
         public MethodInfo optimised, unoptimised;
 
+        [GlobalSetup]
+        public void GlobalSetup() {
+            var codegen = new CecilCodeGenerator();
+            var compiler = new AlbumCompiler(codegen) { EnableOptimisation = true };
+            compiler.Compile(typeof(CompilationTime).Assembly.GetManifestResourceStream("Album.Benchmarks.99_bottles_of_beer.album"));
+            codegen.GeneratedAssembly.EntryPoint.DeclaringType.Namespace = "Optimised";
+            codegen.GeneratedAssembly.Name = new("Optimised", new(1, 0, 0, 0));
+            MemoryStream stream = new MemoryStream();
+            codegen.GeneratedAssembly.Write(stream);
+            stream.Position = 0;
+            Assembly optimisedAsm = System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromStream(stream);
+            optimised = optimisedAsm.EntryPoint;
+
         }
 
 
