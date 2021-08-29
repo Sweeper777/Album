@@ -55,6 +55,15 @@ namespace Album.Benchmarks
             Assembly optimisedAsm = System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromStream(stream);
             optimised = optimisedAsm.EntryPoint;
 
+            compiler.EnableOptimisation = false;
+            compiler.Compile(typeof(CompilationTime).Assembly.GetManifestResourceStream("Album.Benchmarks.99_bottles_of_beer.album"));
+            codegen.GeneratedAssembly.EntryPoint.DeclaringType.Namespace = "Unoptimised";
+            codegen.GeneratedAssembly.Name = new("Unoptimised", new(1, 0, 0, 0));
+            stream = new MemoryStream();
+            codegen.GeneratedAssembly.Write(stream);
+            stream.Position = 0;
+            Assembly unoptimisedAsm = System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromStream(stream);
+            unoptimised = unoptimisedAsm.EntryPoint;
         }
 
 
