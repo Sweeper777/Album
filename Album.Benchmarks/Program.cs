@@ -7,6 +7,8 @@ using System.IO;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Reflection;
+using BenchmarkDotNet.Configs;
+using BenchmarkDotNet.Exporters;
 
 namespace Album.Benchmarks
 {
@@ -40,7 +42,7 @@ namespace Album.Benchmarks
 
     public class ExecutionTime {
 
-        public MethodInfo optimised, unoptimised;
+        public MethodInfo optimised, unoptimised, control;
 
         [GlobalSetup]
         public void GlobalSetup() {
@@ -49,7 +51,7 @@ namespace Album.Benchmarks
             compiler.Compile(typeof(CompilationTime).Assembly.GetManifestResourceStream("Album.Benchmarks.99_bottles_of_beer.album"));
             codegen.GeneratedAssembly.EntryPoint.DeclaringType.Namespace = "Optimised";
             codegen.GeneratedAssembly.Name = new("Optimised", new(1, 0, 0, 0));
-            MemoryStream stream = new MemoryStream();
+            Stream stream = new MemoryStream();
             codegen.GeneratedAssembly.Write(stream);
             stream.Position = 0;
             Assembly optimisedAsm = System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromStream(stream);
@@ -64,13 +66,17 @@ namespace Album.Benchmarks
             stream.Position = 0;
             Assembly unoptimisedAsm = System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromStream(stream);
             unoptimised = unoptimisedAsm.EntryPoint;
+
+            stream = typeof(ExecutionTime).Assembly.GetManifestResourceStream("Album.Benchmarks.99BottlesControl.dll");
+            Assembly controlAsm = System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromStream(stream);
+            control = controlAsm.EntryPoint;
         }
 
         [Benchmark]
         public void RunWithOptimisation() {
             var stdout = Console.Out;
             Console.SetOut(new StringWriter());
-            optimised.Invoke(null, new string[0]);
+            optimised.Invoke(null, new object[0]);
             Console.SetOut(stdout);
         }
 
@@ -78,11 +84,17 @@ namespace Album.Benchmarks
         public void RunWithoutOptimisation() {
             var stdout = Console.Out;
             Console.SetOut(new StringWriter());
-            unoptimised.Invoke(null, new string[0]);
+            unoptimised.Invoke(null, new object[0]);
             Console.SetOut(stdout);
         }
 
-        // public static Task<long> RunControl() => RunAssembly("Beer.dll");
+        [Benchmark]
+        public void RunControl() {
+            var stdout = Console.Out;
+            Console.SetOut(new StringWriter());
+            control.Invoke(null, new object[] { null });
+            Console.SetOut(stdout);
+        }
     }
     class Program
     {
