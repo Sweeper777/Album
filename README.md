@@ -50,3 +50,11 @@ If `-o` is not specified, the default output file path is `./Program.exe`, or `.
 ## Song Manifests
 
 In case you don't like my choice of songs, you can make up your own songs, write them in a JSON file, and pass that to the compiler when compiling your code. This is known as a song manifest. The default song manifest is located in `Resources/`. You can use that as an example when creating your own song manifests.
+
+## Benchmarks
+
+You can go into the `Album.Benchmarks` directory and run:
+
+    dotnet run -c Release
+
+to run the benchmarks. I compare the difference in compilation time when applying optimisation versus not doing that, and the execution time of optimised vs unoptimised Album code vs C# code. On my MacBook Pro, Album runs 30 times slower than C# for the 99 bottles of beer playlist.
