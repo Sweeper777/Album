@@ -32,10 +32,13 @@ You can also choose to deploy the Album compiler using [`dotnet publish`](https:
 -P, --parse-only    Generates the parser output, with optimisations applied,
                     if any
 
+-R, --run           Runs the program immediately, without generating any
+                    files.
+
 -O, --optimise      Smaller output code size, longer compile time
 
--w, --warn          (Default: Warning) What warnings should be output as 
-                    Valid values: None, Warning, Error
+-w, --warn          (Default: Warning) What warnings should be output as Valid
+                    values: None, Warning, Error
 
 -s, --manifest      Path to custom song manifest file
 
