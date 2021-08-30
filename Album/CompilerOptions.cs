@@ -7,12 +7,17 @@ namespace Album {
         [Value(0, MetaName = "Input", Required = true)]
         public string? InputPath { get; set; }
 
-        [Option('o', "output", Required = false, HelpText = "Path to output file.")]
+        [Option('o', "output", Required = false, HelpText = "Path to output file.",
+        SetName = "CompileOptions")]
         public string? OutputPath { get; set; }
 
-        [Option('P', "parse-only", Required = false, 
+        [Option('P', "parse-only", Required = false, SetName = "CompileOptions",
         HelpText = "Generates the parser output, with optimisations applied, if any")]
         public bool ParseOnly { get; set; }
+
+        [Option('R', "run", Required = false, SetName = "RunOptions",
+        HelpText = "Runs the program immediately, without generating any files.")]
+        public bool RunsImmediately { get; set; }
 
         [Option('O', "optimise", Required = false, 
         HelpText = "Smaller output code size, longer compile time")]
