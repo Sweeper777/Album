@@ -6,6 +6,7 @@ using Album.Syntax;
 using CommandLine;
 using CommandLine.Text;
 using System.Globalization;
+using System.Reflection;
 
 namespace Album
 {
@@ -70,16 +71,25 @@ namespace Album
                 }
 
                 if (codegen.GeneratedAssembly != null && codegen.GeneratedModule != null) {
-                    Directory.CreateDirectory(directory);
                     codegen.GeneratedAssembly.Name = new Mono.Cecil.AssemblyNameDefinition("Program", new(1, 0));
                     codegen.GeneratedModule.Name = "Program";
-                    codegen.GeneratedAssembly.Write(options.OutputPath);
-                    string runtimeConfigContents;
-                    using (var stream = new StreamReader(typeof(Program).Assembly.GetManifestResourceStream("Album.runtimeconfig_template.json")!)) {
-                        runtimeConfigContents = stream.ReadToEnd();
+                    if (options.RunsImmediately) {
+                        var stream = new MemoryStream();
+                        codegen.GeneratedAssembly.Write(stream);
+                        stream.Position = 0;
+                        Assembly asm = System.Runtime.Loader.AssemblyLoadContext.Default.LoadFromStream(stream);
+                        asm.EntryPoint?.Invoke(null, new object[0]);
+                        Environment.Exit(0);
+                    } else {
+                        Directory.CreateDirectory(directory);
+                        codegen.GeneratedAssembly.Write(options.OutputPath);
+                        string runtimeConfigContents;
+                        using (var stream = new StreamReader(typeof(Program).Assembly.GetManifestResourceStream("Album.runtimeconfig_template.json")!)) {
+                            runtimeConfigContents = stream.ReadToEnd();
+                        }
+                        File.WriteAllText(configPath, runtimeConfigContents);
+                        Environment.Exit(0);
                     }
-                    File.WriteAllText(configPath, runtimeConfigContents);
-                    Environment.Exit(0);
                 }
 
                 if (parserOutputGen.Output != null) {
