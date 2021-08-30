@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Security.Cryptography;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Running;
 using Album.CodeGen.Cecil;
 using System.IO;
-using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Reflection;
 using BenchmarkDotNet.Configs;
 using BenchmarkDotNet.Exporters;
+using BenchmarkDotNet.Loggers;
+using BenchmarkDotNet.Jobs;
+using BenchmarkDotNet.Engines;
+using System.Linq;
 
 namespace Album.Benchmarks
 {
@@ -111,6 +112,11 @@ namespace Album.Benchmarks
         {
             AddExporter(RPlotExporter.Default);
             AddExporter(HtmlExporter.Default);
+            AddLogger(ConsoleLogger.Default);
+            AddColumnProvider(DefaultConfig.Instance.GetColumnProviders().ToArray());
+            AddJob(Job.Default, 
+                    Job.Default.WithStrategy(RunStrategy.ColdStart).WithId("ColdStart"));
+            
         }
     }
 }
