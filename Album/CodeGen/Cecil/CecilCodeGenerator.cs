@@ -44,7 +44,7 @@ namespace Album.CodeGen.Cecil
             GeneratedModule.Types.Add(programType);
 
             var mainMethod = new MethodDefinition("Main",
-                Mono.Cecil.MethodAttributes.Public | Mono.Cecil.MethodAttributes.Static, GeneratedModule.TypeSystem.Void);
+                Mono.Cecil.MethodAttributes.Public | Mono.Cecil.MethodAttributes.Static, GeneratedModule.TypeSystem.Int32);
 
             var stackVar = new VariableDefinition(GeneratedModule.TypeSystem.Int32);
             var exitCodeVar = new VariableDefinition(GeneratedModule.TypeSystem.Int32);
@@ -79,7 +79,7 @@ namespace Album.CodeGen.Cecil
                 LinkedListClear = module.ImportReference(typeof(LinkedList<int>).GetMethod("Clear", new Type[] { })),
                 LinkedListAddBefore = module.ImportReference(typeof(LinkedList<int>).GetMethod("AddBefore", new[] { typeof(LinkedListNode<int>), typeof(int) })),
                 EnvironmentExit = module.ImportReference(typeof(Environment).GetMethod("Exit", new[] { typeof(int) })),
-                LastInstruction = il.Create(OpCodes.Ret),
+                LastInstruction = il.Create(OpCodes.Ldloc_1),
             };
         }
 
@@ -133,9 +133,10 @@ namespace Album.CodeGen.Cecil
             var tryEnd = il?.Create(OpCodes.Pop);
             il?.Append(tryEnd);
             il?.Emit(OpCodes.Ldc_I4_1);
-            il?.Emit(OpCodes.Call, methodReferences?.EnvironmentExit);
+            il?.Emit(OpCodes.Stloc_1);
             il?.Emit(OpCodes.Leave, catchEnd);
             il?.Append(catchEnd);
+            il?.Emit(OpCodes.Ret);
 
             ExceptionHandler handler = new ExceptionHandler(ExceptionHandlerType.Catch) {
                 TryStart = il?.Body.Instructions.First (),
