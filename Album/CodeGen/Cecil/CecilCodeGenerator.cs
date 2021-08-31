@@ -47,11 +47,15 @@ namespace Album.CodeGen.Cecil
                 Mono.Cecil.MethodAttributes.Public | Mono.Cecil.MethodAttributes.Static, GeneratedModule.TypeSystem.Void);
 
             var stackVar = new VariableDefinition(GeneratedModule.TypeSystem.Int32);
+            var exitCodeVar = new VariableDefinition(GeneratedModule.TypeSystem.Int32);
             mainMethod.Body.Variables.Add(stackVar);
+            mainMethod.Body.Variables.Add(exitCodeVar);
             programType.Methods.Add(mainMethod);
 
             il = mainMethod.Body.GetILProcessor();
             il.Emit(OpCodes.Newobj, GeneratedModule.ImportReference(typeof(LinkedList<int>).GetConstructor(new Type[] {})));
+            il.Emit(OpCodes.Ldc_I4_0);
+            il.Emit(OpCodes.Stloc_1);
 
             GeneratedAssembly.EntryPoint = mainMethod;
 
