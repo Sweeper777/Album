@@ -31,8 +31,6 @@ namespace Album.CodeGen.Cecil
         [DisallowNull]
         public MethodReference? ConsoleWriteInt { get; init; }
         [DisallowNull]
-        public MethodReference? EnvironmentExit { get; init; }
-        [DisallowNull]
         public Instruction? LastInstruction { get; init; }
     }
 }

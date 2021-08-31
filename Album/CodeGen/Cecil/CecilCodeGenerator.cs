@@ -78,7 +78,6 @@ namespace Album.CodeGen.Cecil
                 LinkedListRemoveFirst = module.ImportReference(typeof(LinkedList<int>).GetMethod("RemoveFirst", new Type[] { })),
                 LinkedListClear = module.ImportReference(typeof(LinkedList<int>).GetMethod("Clear", new Type[] { })),
                 LinkedListAddBefore = module.ImportReference(typeof(LinkedList<int>).GetMethod("AddBefore", new[] { typeof(LinkedListNode<int>), typeof(int) })),
-                EnvironmentExit = module.ImportReference(typeof(Environment).GetMethod("Exit", new[] { typeof(int) })),
                 LastInstruction = il.Create(OpCodes.Ldloc_1),
             };
         }
