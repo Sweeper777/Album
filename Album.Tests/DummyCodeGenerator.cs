@@ -1,5 +1,6 @@
 using Album.Syntax;
 using Album.CodeGen;
+using System.Collections.Generic;
 
 namespace Album.Tests {
     public class DummyCodeGenerator : CodeGenerator
@@ -7,11 +8,9 @@ namespace Album.Tests {
 
         public bool HasGenerated { get; set; }
 
-        protected override void DidGenerateLines() {
+        public override void GenerateCode(IEnumerable<LineInfo> lines)
+        {
             HasGenerated = true;
         }
-        
-        protected override ICodeGenerationStrategy? GetCodeGenerationStrategyForSong(LineType type)
-            => null;
     }
 }
