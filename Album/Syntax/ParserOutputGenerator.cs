@@ -1,28 +1,21 @@
 using Album.CodeGen;
 using System.Text;
 using System.Diagnostics.CodeAnalysis;
-
+using System.Collections.Generic;
 
 namespace Album.Syntax {
-    public class ParserOutputGenerator : CodeGenerator, ICodeGenerationStrategy
+    public class ParserOutputGenerator : CodeGenerator
     {
 
         [DisallowNull]
         public StringBuilder? Output { get; private set; }
 
-        protected override void WillGenerateLines() {
-            Output = new();
-        }
-        
-        protected override ICodeGenerationStrategy? GetCodeGenerationStrategyForSong(LineType type)
-            => this;
-
-        public void GenerateCodeForSong(LineInfo line)
+        public override void GenerateCode(IEnumerable<LineInfo> lines)
         {
-            Output?.AppendLine(line.ToString());
+            Output = new();
+            foreach (var line in lines) {
+                Output.AppendLine(line.ToString());
+            }
         }
-
-        public bool SupportsLineType(LineType type)
-            => true;
     }
 }
