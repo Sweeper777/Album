@@ -31,10 +31,24 @@ namespace Album.CodeGen.Cecil
         private Dictionary<LineType, CecilCodeGenerationStrategy>? strategies;
         private MethodReferenceProvider? methodReferences;
 
-        protected override ICodeGenerationStrategy? GetCodeGenerationStrategyForSong(LineType type)
-            => strategies?.GetValueOrDefault(type);
-
-        protected override void WillGenerateLines() {
+        public override void GenerateCode(IEnumerable<LineInfo> lines)
+        {
+            this.lines = lines;
+            WillGenerateLines();
+            foreach (var line in lines) {
+                var strategy = strategies?.GetValueOrDefault(line.Type);
+                if (strategy is null) {
+                    continue;
+                }
+                if (strategy.SupportsLineType(line.Type)) {
+                    strategy.GenerateCodeForSong(line);
+                } else {
+                    throw new InvalidOperationException($"Code Generation Strategy {strategy} Does Not Support Line Type {line.Type}!");
+                }
+            }
+            DidGenerateLines();
+        }
+        private void WillGenerateLines() {
             GeneratedAssembly = AssemblyDefinition.CreateAssembly(
                 new AssemblyNameDefinition("AlbumPlaylist", new Version(1, 0, 0, 0)), "AlbumPlaylist", ModuleKind.Console);
 
@@ -124,7 +138,7 @@ namespace Album.CodeGen.Cecil
                 { LineType.InfiniteLoop, infiniteLoopStrategy }
             };
         }
-        protected override void DidGenerateLines()
+        private void DidGenerateLines()
         {
             var catchEnd = methodReferences?.LastInstruction;
             il?.Emit(OpCodes.Pop);
