@@ -60,5 +60,33 @@ namespace Album.CodeGen.LLVM {
             }
         }
 
+        private void GenerateCodeForLine(LineInfo line) {
+            
+        }
+
+        public override void GenerateCode(IEnumerable<LineInfo> lines)
+        {
+            LLVMSetup();
+            if (!lines.Any()) {
+                return;
+            }
+            var semanticAnalyser = new SemanticAnalyser();
+            semanticAnalyser.Analyse(lines);
+            if (semanticAnalyser.CFG is null) {
+                throw new Exception("This should not happen");
+            }
+            cfg = semanticAnalyser.CFG;
+            AddBasicBlocksFromCFG();
+
+            GetBasicBlocks(mainFunction).Zip(cfg.BasicBlocks).ToList()
+                .ForEach(x => GenerateCodeForBasicBlock(x.First, x.Second));
+
+             
+            LLVMFinisher();
+        }
+
+        private void LLVMFinisher() {
+
+        }
     }
 }
