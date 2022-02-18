@@ -43,5 +43,22 @@ namespace Album.CodeGen.LLVM {
             }
         }
 
+        private void GenerateCodeForBasicBlock(LLVMBasicBlockRef llvmBasicBlock, BasicBlock basicBlock) {
+            PositionBuilderAtEnd(builder, llvmBasicBlock);
+            foreach (var line in basicBlock.Lines) {
+                GenerateCodeForLine(line);
+            }
+            if (basicBlock.LastLine?.IsAnyBranch(out var _) != true || basicBlock.LastLine?.Type != LineType.Quit) {
+                var successors = basicBlock.ControlFlowGraph.Successors[basicBlock];
+                if (!successors.Any()) {
+                    BuildRet(builder, 0.ToLlvmValue());
+                } else if (successors.Count > 1) {
+                    throw new Exception("This should not be reached!");
+                } else {
+                    BuildBr(builder, GetNextBasicBlock(llvmBasicBlock));
+                }
+            }
+        }
+
     }
 }
