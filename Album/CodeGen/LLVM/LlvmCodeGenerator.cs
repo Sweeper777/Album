@@ -30,5 +30,18 @@ namespace Album.CodeGen.LLVM {
             builder = CreateBuilder();
         }
 
+        private void AddBasicBlocksFromCFG() {
+            if (cfg is null) {
+                throw new InvalidOperationException("CFG has not been created when AddBasicBlocksFromCFG is called!");
+            }
+            foreach (var basicBlock in cfg.BasicBlocks) {
+                if (basicBlock.FirstLine is LineInfo label && label.IsOriginalSong(out var name)) {
+                    AppendBasicBlock(mainFunction, name);
+                } else {
+                    AppendBasicBlock(mainFunction, "");
+                }
+            }
+        }
+
     }
 }
