@@ -39,7 +39,9 @@ namespace Album {
             if (OutputPath == null) {
                 if (ParseOnly) {
                     OutputPath = "ParserOutput.txt";
-                } else {
+                } else if (UsesLlvm) {
+                    OutputPath = "Output.ll";
+                } else  {
                     OutputPath = "Program.exe";
                 }
             }
