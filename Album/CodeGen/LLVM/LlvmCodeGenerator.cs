@@ -14,6 +14,21 @@ namespace Album.CodeGen.LLVM {
         private LLVMBuilderRef builder;
         private LLVMValueRef mainFunction;
         private LLVMValueRef putcharFunction;
+        private LLVMValueRef mallocFunction;
+        private LLVMValueRef freeFunction;
+        private LLVMValueRef printfFunction;
+        private LLVMValueRef memmoveFunction;
+        private LLVMValueRef getcharFunction;
+        private LLVMValueRef pushFunction;
+        private LLVMValueRef popFunction;
+        private LLVMValueRef setupFunction;
+        private LLVMValueRef outputIntFunction;
+        private LLVMValueRef cycleFunction;
+        private LLVMValueRef rcycleFunction;
+        private LLVMValueRef inputFunction;
+        private LLVMValueRef fpValue;
+        private LLVMValueRef spValue;
+
         private ControlFlowGraph? cfg;
         private void LLVMSetup() {
             var module = ModuleCreateWithName("AlbumPlaylist");
