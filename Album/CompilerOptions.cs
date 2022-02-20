@@ -23,6 +23,10 @@ namespace Album {
         HelpText = "Smaller output code size, longer compile time")]
         public bool DoesOptimise { get; set; }
 
+        [Option("llvm", Required = false, 
+        HelpText = "Outputs LLVM IR")]
+        public bool UsesLlvm { get; set; }
+
         [Option('w', "warn", Required = false, Default = WarningLevel.Warning,
         HelpText = "What warnings should be output as")]
         public WarningLevel WarningLevel { get; set; }
