@@ -9,5 +9,8 @@ namespace Album.CodeGen.LLVM {
         public static LLVMValueRef ToLlvmValue(this long x)
             => ConstInt(Int64Type(), (ulong)x, true);
         
+        public static LLVMTypeRef Pointer(this LLVMTypeRef type)
+            => PointerType(type, 0);
+
     }
 }
