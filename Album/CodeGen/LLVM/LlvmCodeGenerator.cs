@@ -41,6 +41,17 @@ namespace Album.CodeGen.LLVM {
 
         private void LLVMSetup() {
             var module = ModuleCreateWithName("AlbumPlaylist");
+
+            mallocFunction = AddFunction(module, "malloc", FunctionType(
+                PointerType(Int8Type(), 0), new[] { Int64Type() }, false
+            ));
+            SetLinkage(mallocFunction, LLVMLinkage.LLVMExternalLinkage);
+
+            freeFunction = AddFunction(module, "free", FunctionType(
+                VoidType(), new[] { PointerType(Int8Type(), 0) }, false
+            ));
+            SetLinkage(freeFunction, LLVMLinkage.LLVMExternalLinkage);
+
             putcharFunction = AddFunction(module, "putchar", FunctionType(
                 Int32Type(), new[] { Int32Type() }, false
             ));
