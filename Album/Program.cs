@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 using Album.CodeGen.Cecil;
+using Album.CodeGen.LLVM;
 using Album.Syntax;
 using CommandLine;
 using CommandLine.Text;
@@ -50,6 +51,7 @@ namespace Album
                 
                 CecilCodeGenerator codegen = new();
                 ParserOutputGenerator parserOutputGen = new();
+                LlvmCodeGenerator llvmGen = new();
                 SongManifest? inputManifest = null;
                 if (options.SongManifestPath != null) {
                     if (SongManifest.FromFile(options.SongManifestPath) is SongManifest manifest) {
@@ -60,7 +62,9 @@ namespace Album
                     }
                 }
                 using (var sourceFile = File.OpenRead(options.InputPath!)) {
-                    AlbumCompiler compiler = new(options.ParseOnly ? parserOutputGen : codegen);
+                    AlbumCompiler compiler = new(
+                        options.ParseOnly ? parserOutputGen :
+                        options.UsesLlvm ? llvmGen : codegen);
                     compiler.WarningLevel = options.WarningLevel;
                     compiler.EnableOptimisation = options.DoesOptimise;
                     compiler.Compile(sourceFile);
@@ -94,6 +98,11 @@ namespace Album
 
                 if (parserOutputGen.Output != null) {
                     File.WriteAllText(options.OutputPath, parserOutputGen.Output.ToString());
+                    Environment.Exit(0);
+                }
+
+                if (llvmGen.HasGenerated) {
+                    llvmGen.WriteGeneratedModuleTo(options.OutputPath);
                     Environment.Exit(0);
                 }
                 
