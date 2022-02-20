@@ -29,6 +29,9 @@ namespace Album.CodeGen.LLVM {
         private LLVMValueRef fpValue;
         private LLVMValueRef spValue;
 
+        LLVMBasicBlockRef firstBlock;
+        LLVMBasicBlockRef lastBlock;
+
         private ControlFlowGraph? cfg;
         private void LLVMSetup() {
             var module = ModuleCreateWithName("AlbumPlaylist");
