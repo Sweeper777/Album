@@ -33,6 +33,12 @@ namespace Album.CodeGen.LLVM {
         LLVMBasicBlockRef lastBlock;
 
         private ControlFlowGraph? cfg;
+
+        private Dictionary<BasicBlock, LLVMBasicBlockRef> bbMap = new();
+
+        private const long StackSize = 2000;
+        public bool HasGenerated => generatedModule.Pointer != default;
+
         private void LLVMSetup() {
             var module = ModuleCreateWithName("AlbumPlaylist");
             putcharFunction = AddFunction(module, "putchar", FunctionType(
