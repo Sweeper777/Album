@@ -98,6 +98,19 @@ namespace Album.CodeGen.LLVM {
                 BuildRetVoid(builder);
             }
 
+            void GeneratePopFunction() {
+                popFunction = AddFunction(module, "pop", FunctionType(
+                    Int32Type(), Array.Empty<LLVMTypeRef>(), false
+                ));
+                SetLinkage(popFunction, LLVMLinkage.LLVMExternalLinkage);
+                PositionBuilderAtEnd(builder, AppendBasicBlock(popFunction, ""));
+                var load = BuildLoad(builder, spValue, "");
+                var stackValue = BuildLoad(builder, load, "");
+                var stackTop = BuildInBoundsGEP(builder, load, new[] { 1L.ToLlvmValue() }, "");
+                BuildStore(builder, stackTop, spValue);
+                BuildRet(builder, stackValue);
+            }
+
             mainFunction = AddFunction(module, "main", FunctionType(
                 Int32Type(), Array.Empty<LLVMTypeRef>(), false
             ));
