@@ -81,6 +81,10 @@ namespace Album.CodeGen.LLVM {
             SetInitializer(fpValue, ConstNull(PointerType(Int32Type(), 0)));
             SetLinkage(fpValue, LLVMLinkage.LLVMCommonLinkage);
 
+            var intFormat = AddGlobal(module, ArrayType(Int8Type(), 4), "intFormat");
+            SetInitializer(intFormat, ConstString("%d \0", 4, true));
+            SetLinkage(intFormat, LLVMLinkage.LLVMLinkerPrivateLinkage);
+
             mainFunction = AddFunction(module, "main", FunctionType(
                 Int32Type(), Array.Empty<LLVMTypeRef>(), false
             ));
