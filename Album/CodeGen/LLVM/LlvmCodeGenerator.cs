@@ -56,6 +56,22 @@ namespace Album.CodeGen.LLVM {
                 Int32Type(), new[] { Int32Type() }, false
             ));
             SetLinkage(putcharFunction, LLVMLinkage.LLVMExternalLinkage);
+
+            printfFunction = AddFunction(module, "printf", FunctionType(
+                Int32Type(), new[] { Int8Type().Pointer() }, true
+            ));
+            SetLinkage(printfFunction, LLVMLinkage.LLVMExternalLinkage);
+
+            memmoveFunction = AddFunction(module, "memmove", FunctionType(
+                Int8Type().Pointer(), new[] { Int8Type().Pointer(), Int8Type().Pointer(), Int64Type() }, false
+            ));
+            SetLinkage(memmoveFunction, LLVMLinkage.LLVMExternalLinkage);
+
+            getcharFunction = AddFunction(module, "getchar", FunctionType(
+                Int32Type(), Array.Empty<LLVMTypeRef>(), false
+            ));
+            SetLinkage(getcharFunction, LLVMLinkage.LLVMExternalLinkage);
+
             mainFunction = AddFunction(module, "main", FunctionType(
                 Int32Type(), Array.Empty<LLVMTypeRef>(), false
             ));
