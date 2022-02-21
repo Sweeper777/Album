@@ -85,6 +85,19 @@ namespace Album.CodeGen.LLVM {
             SetInitializer(intFormat, ConstString("%d \0", 4, true));
             SetLinkage(intFormat, LLVMLinkage.LLVMLinkerPrivateLinkage);
 
+            void GeneratePushFunction() {
+                pushFunction = AddFunction(module, "push", FunctionType(
+                    VoidType(), new[] { Int32Type() }, false
+                ));
+                SetLinkage(pushFunction, LLVMLinkage.LLVMExternalLinkage);
+                PositionBuilderAtEnd(builder, AppendBasicBlock(pushFunction, ""));
+                var load = BuildLoad(builder, spValue, "");
+                var stackTop = BuildInBoundsGEP(builder, load, new[] { (-1).ToLlvmValue() }, "");
+                BuildStore(builder, stackTop, spValue);
+                BuildStore(builder, GetParam(pushFunction, 0), stackTop);
+                BuildRetVoid(builder);
+            }
+
             mainFunction = AddFunction(module, "main", FunctionType(
                 Int32Type(), Array.Empty<LLVMTypeRef>(), false
             ));
