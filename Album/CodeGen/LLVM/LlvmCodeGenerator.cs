@@ -111,6 +111,20 @@ namespace Album.CodeGen.LLVM {
                 BuildRet(builder, stackValue);
             }
 
+            void GenerateSetupFunction() {
+                setupFunction = AddFunction(module, "setup", FunctionType(
+                    VoidType(), Array.Empty<LLVMTypeRef>(), false
+                ));
+                SetLinkage(setupFunction, LLVMLinkage.LLVMExternalLinkage);
+                PositionBuilderAtEnd(builder, AppendBasicBlock(setupFunction, ""));
+                var bytePointer = Int8Type().Pointer().Pointer();
+                var malloc = BuildCall(builder, mallocFunction, new[] { (StackSize * 4).ToLlvmValue() }, "");
+                BuildStore(builder, malloc, BuildBitCast(builder, fpValue, bytePointer, ""));
+                var stackBottom = BuildInBoundsGEP(builder, malloc, new[] { (StackSize * 4).ToLlvmValue() }, "");
+                BuildStore(builder, stackBottom, BuildBitCast(builder, spValue, bytePointer, ""));
+                BuildRetVoid(builder);
+            }
+
             mainFunction = AddFunction(module, "main", FunctionType(
                 Int32Type(), Array.Empty<LLVMTypeRef>(), false
             ));
