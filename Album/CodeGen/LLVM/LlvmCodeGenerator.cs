@@ -72,13 +72,21 @@ namespace Album.CodeGen.LLVM {
             ));
             SetLinkage(getcharFunction, LLVMLinkage.LLVMExternalLinkage);
 
+            builder = CreateBuilder();
+            spValue = AddGlobal(module, PointerType(Int32Type(), 0), "sp");
+            SetInitializer(spValue, ConstNull(PointerType(Int32Type(), 0)));
+            SetLinkage(spValue, LLVMLinkage.LLVMCommonLinkage);
+
+            fpValue = AddGlobal(module, PointerType(Int32Type(), 0), "fp");
+            SetInitializer(fpValue, ConstNull(PointerType(Int32Type(), 0)));
+            SetLinkage(fpValue, LLVMLinkage.LLVMCommonLinkage);
+
             mainFunction = AddFunction(module, "main", FunctionType(
                 Int32Type(), Array.Empty<LLVMTypeRef>(), false
             ));
             SetLinkage(mainFunction, LLVMLinkage.LLVMExternalLinkage);
             
             generatedModule = module;
-            builder = CreateBuilder();
         }
 
         private void AddBasicBlocksFromCFG() {
