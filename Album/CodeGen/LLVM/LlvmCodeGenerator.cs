@@ -125,6 +125,21 @@ namespace Album.CodeGen.LLVM {
                 BuildRetVoid(builder);
             }
 
+            void GenerateOutputIntFunction() {
+                outputIntFunction = AddFunction(module, "outputInt", FunctionType(
+                    VoidType(), new[] { Int32Type() }, false
+                ));
+                SetLinkage(outputIntFunction, LLVMLinkage.LLVMExternalLinkage);
+                PositionBuilderAtEnd(builder, AppendBasicBlock(outputIntFunction, ""));
+                BuildCall(builder, printfFunction, 
+                    new[] { 
+                        BuildInBoundsGEP(builder, intFormat, new[] { 0L.ToLlvmValue(), 0L.ToLlvmValue() }, ""), 
+                        GetParam(outputIntFunction, 0) 
+                    }, 
+                    "");
+                BuildRetVoid(builder);
+            }
+
             mainFunction = AddFunction(module, "main", FunctionType(
                 Int32Type(), Array.Empty<LLVMTypeRef>(), false
             ));
