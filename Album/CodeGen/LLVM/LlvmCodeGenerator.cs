@@ -175,6 +175,41 @@ namespace Album.CodeGen.LLVM {
                 BuildRetVoid(builder);
             }
 
+            void GenerateRCycleFunction() {
+                rcycleFunction = AddFunction(module, "rcycle", FunctionType(
+                    VoidType(), Array.Empty<LLVMTypeRef>(), false
+                ));
+                SetLinkage(rcycleFunction, LLVMLinkage.LLVMExternalLinkage);
+                PositionBuilderAtEnd(builder, AppendBasicBlock(rcycleFunction, ""));
+                var sp = BuildLoad(builder, spValue, "");
+                var fp = BuildLoad(builder, fpValue, "");
+                var bottom = BuildInBoundsGEP(builder, fp, new[] { (StackSize - 1).ToLlvmValue() }, "");
+                var comparison = BuildICmp(builder, LLVMIntPredicate.LLVMIntULT, sp, bottom, "");
+                
+                var cycleBlock = AppendBasicBlock(rcycleFunction, "");
+                var retBlock = AppendBasicBlock(rcycleFunction, "");
+
+                BuildCondBr(builder, comparison, retBlock, cycleBlock);
+                
+                PositionBuilderAtEnd(builder, retBlock);
+                BuildRetVoid(builder);
+
+                PositionBuilderAtEnd(builder, cycleBlock);
+                var topValue = BuildLoad(builder, sp, "");
+                var nextAfterTop = BuildInBoundsGEP(builder, sp, new[] { 1L.ToLlvmValue() }, "");
+                var nextAfterTopBytePointer = BuildBitCast(builder, nextAfterTop, Int8Type().Pointer(), "");
+                var spBytePointer = BuildBitCast(builder, sp, Int8Type().Pointer(), "");
+                var bottomPointerToInt = BuildPtrToInt(builder, bottom, Int64Type(), "");
+                var spPointerToInt = BuildPtrToInt(builder, sp, Int64Type(), "");
+                var stackSize = BuildSub(builder, bottomPointerToInt, spPointerToInt, "");
+                BuildCall(builder, memmoveFunction, new[] { 
+                    nextAfterTopBytePointer, spBytePointer, stackSize
+                 }, "");
+                 sp = BuildLoad(builder, spValue, "");
+                 BuildStore(builder, topValue, bottom);
+                BuildRetVoid(builder);
+            }
+
             mainFunction = AddFunction(module, "main", FunctionType(
                 Int32Type(), Array.Empty<LLVMTypeRef>(), false
             ));
