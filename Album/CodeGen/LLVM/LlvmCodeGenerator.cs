@@ -253,9 +253,11 @@ namespace Album.CodeGen.LLVM {
             }
             foreach (var basicBlock in cfg.BasicBlocks) {
                 if (basicBlock.FirstLine is LineInfo label && label.IsOriginalSong(out var name)) {
-                    AppendBasicBlock(mainFunction, name);
+                    var bb = AppendBasicBlock(mainFunction, name);
+                    bbMap.Add(basicBlock, bb);
                 } else {
-                    AppendBasicBlock(mainFunction, "");
+                    var bb = AppendBasicBlock(mainFunction, "");
+                    bbMap.Add(basicBlock, bb);
                 }
             }
         }
