@@ -221,6 +221,14 @@ namespace Album.CodeGen.LLVM {
                 BuildRetVoid(builder);
             }
 
+            GeneratePushFunction();
+            GeneratePopFunction();
+            GenerateSetupFunction();
+            GenerateOutputIntFunction();
+            GenerateCycleFunction();
+            GenerateRCycleFunction();
+            GenerateInputFunction();
+
             mainFunction = AddFunction(module, "main", FunctionType(
                 Int32Type(), Array.Empty<LLVMTypeRef>(), false
             ));
