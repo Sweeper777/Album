@@ -210,6 +210,17 @@ namespace Album.CodeGen.LLVM {
                 BuildRetVoid(builder);
             }
 
+            void GenerateInputFunction() {
+                inputFunction = AddFunction(module, "input", FunctionType(
+                    VoidType(), Array.Empty<LLVMTypeRef>(), false
+                ));
+                SetLinkage(inputFunction, LLVMLinkage.LLVMExternalLinkage);
+                PositionBuilderAtEnd(builder, AppendBasicBlock(inputFunction, ""));
+                var input = BuildCall(builder, getcharFunction, Array.Empty<LLVMValueRef>(), "");
+                BuildCall(builder, pushFunction, new[] { input }, "");
+                BuildRetVoid(builder);
+            }
+
             mainFunction = AddFunction(module, "main", FunctionType(
                 Int32Type(), Array.Empty<LLVMTypeRef>(), false
             ));
