@@ -237,6 +237,16 @@ namespace Album.CodeGen.LLVM {
             generatedModule = module;
         }
 
+        private void GenerateFirstBlock() {
+            if (CountBasicBlocks(mainFunction) > 0) { 
+                firstBlock = InsertBasicBlock(GetFirstBasicBlock(mainFunction), "");
+            } else {
+                firstBlock = AppendBasicBlock(mainFunction, "");
+            }
+            PositionBuilderAtEnd(builder, firstBlock);
+            BuildCall(builder, setupFunction, Array.Empty<LLVMValueRef>(), "");
+        }
+
         private void AddBasicBlocksFromCFG() {
             if (cfg is null) {
                 throw new InvalidOperationException("CFG has not been created when AddBasicBlocksFromCFG is called!");
