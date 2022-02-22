@@ -267,10 +267,11 @@ namespace Album.CodeGen.LLVM {
             foreach (var line in basicBlock.Lines) {
                 GenerateCodeForLine(line);
             }
-            if (basicBlock.LastLine?.IsAnyBranch(out var _) != true || basicBlock.LastLine?.Type != LineType.Quit) {
+            if (!basicBlock.Lines.Any (x => x.IsAnyBranch(out var _)) && 
+                !basicBlock.Lines.Any (x => x.Type == LineType.Quit)) {
                 var successors = basicBlock.ControlFlowGraph.Successors[basicBlock];
                 if (!successors.Any()) {
-                    BuildRet(builder, 0.ToLlvmValue());
+                    BuildBr(builder, lastBlock);
                 } else if (successors.Count > 1) {
                     throw new Exception("This should not be reached!");
                 } else {
