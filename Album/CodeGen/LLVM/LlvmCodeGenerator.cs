@@ -281,7 +281,10 @@ namespace Album.CodeGen.LLVM {
         }
 
         private void GenerateCodeForLine(LineInfo line) {
-            
+            if (line.IsPush(out var x)) {
+                BuildCall(builder, pushFunction, new[] { x.Value.ToLlvmValue() }, "");
+            } else {
+            }
         }
 
         public override void GenerateCode(IEnumerable<LineInfo> lines)
