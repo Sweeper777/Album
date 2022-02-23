@@ -310,6 +310,10 @@ namespace Album.CodeGen.LLVM {
         {
             LLVMSetup();
             if (!lines.Any()) {
+                GenerateFirstBlock();
+                GenerateLastBlock();
+                PositionBuilderAtEnd(builder, firstBlock);
+                BuildBr(builder, lastBlock);
                 return;
             }
             var semanticAnalyser = new SemanticAnalyser();
