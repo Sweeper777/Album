@@ -275,7 +275,7 @@ namespace Album.CodeGen.LLVM {
                 } else if (successors.Count > 1) {
                     throw new Exception("This should not be reached!");
                 } else {
-                    BuildBr(builder, GetNextBasicBlock(llvmBasicBlock));
+                    BuildBr(builder, bbMap[successors.Single()]);
                 }
             }
         }
