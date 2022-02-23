@@ -284,6 +284,15 @@ namespace Album.CodeGen.LLVM {
             if (line.IsPush(out var x)) {
                 BuildCall(builder, pushFunction, new[] { x.Value.ToLlvmValue() }, "");
             } else {
+                LLVMValueRef operand1, operand2, result, operand;
+                switch (line.Type) {
+                    case LineType.Add:
+                    operand1 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    operand2 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    result = BuildAdd(builder, operand1, operand2, "");
+                    BuildCall(builder, pushFunction, new[] { result }, "");
+                    break;
+                }
             }
         }
 
