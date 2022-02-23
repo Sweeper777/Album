@@ -298,6 +298,10 @@ namespace Album.CodeGen.LLVM {
                     result = BuildSub(builder, operand2, operand1, "");
                     BuildCall(builder, pushFunction, new[] { result }, "");
                     break;
+                    case LineType.OutputInt:
+                    operand = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    BuildCall(builder, outputIntFunction, new[] { operand }, "");
+                    break;
                 }
             }
         }
