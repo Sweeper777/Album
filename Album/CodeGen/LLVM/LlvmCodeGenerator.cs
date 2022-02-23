@@ -323,12 +323,13 @@ namespace Album.CodeGen.LLVM {
             }
             cfg = semanticAnalyser.CFG;
             AddBasicBlocksFromCFG();
-
-            GetBasicBlocks(mainFunction).Zip(cfg.BasicBlocks).ToList()
-                .ForEach(x => GenerateCodeForBasicBlock(x.First, x.Second));
-
-             
-            LLVMFinisher();
+            GenerateFirstBlock();
+            PositionBuilderAtEnd(builder, firstBlock);
+            BuildBr(builder, bbMap[cfg.BasicBlocks.First()]);
+            GenerateLastBlock();
+            foreach (var bb in cfg.BasicBlocks) {
+                GenerateCodeForBasicBlock(bbMap[bb], bb);
+            }
         }
 
         private void LLVMFinisher() {
