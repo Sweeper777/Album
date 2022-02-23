@@ -292,6 +292,12 @@ namespace Album.CodeGen.LLVM {
                     result = BuildAdd(builder, operand1, operand2, "");
                     BuildCall(builder, pushFunction, new[] { result }, "");
                     break;
+                    case LineType.Sub:
+                    operand1 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    operand2 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    result = BuildSub(builder, operand2, operand1, "");
+                    BuildCall(builder, pushFunction, new[] { result }, "");
+                    break;
                 }
             }
         }
