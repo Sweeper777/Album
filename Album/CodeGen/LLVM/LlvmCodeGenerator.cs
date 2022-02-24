@@ -332,7 +332,12 @@ namespace Album.CodeGen.LLVM {
             }
         }
 
-        private void LLVMFinisher() {
+        private void GenerateLastBlock() {
+            lastBlock = AppendBasicBlock(mainFunction, "");
+            PositionBuilderAtEnd(builder, lastBlock);
+            var load = BuildLoad(builder, BuildBitCast(builder, fpValue, Int8Type().Pointer().Pointer(), ""), "");
+            BuildCall(builder, freeFunction, new[] { load }, "");
+            BuildRet(builder, 0.ToLlvmValue());
 
         }
     }
