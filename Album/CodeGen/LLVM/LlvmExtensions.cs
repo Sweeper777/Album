@@ -25,5 +25,17 @@ namespace Album.CodeGen.LLVM {
             return func;
         }
 
+        public static LLVMValueRef AddGlobalVariable(
+            this LLVMModuleRef module,
+            string name,
+            LLVMTypeRef type,
+            LLVMValueRef initialValue
+        ) {
+            var value = AddGlobal(module, type, name);
+            SetInitializer(value, initialValue);
+            SetLinkage(value, LLVMLinkage.LLVMCommonLinkage);
+            return value;
+        }
+
     }
 }
