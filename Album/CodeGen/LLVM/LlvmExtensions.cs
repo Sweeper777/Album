@@ -37,5 +37,15 @@ namespace Album.CodeGen.LLVM {
             return value;
         }
 
+        public static LLVMValueRef AddGlobalString(
+            this LLVMModuleRef module,
+            string name,
+            string initialValue
+        ) {
+            var value = AddGlobal(module, ArrayType(Int8Type(), 4), name);
+            SetInitializer(value, ConstString(initialValue, (uint)initialValue.Length, true));
+            SetLinkage(value, LLVMLinkage.LLVMLinkerPrivateLinkage);
+            return value;
+        }
     }
 }
