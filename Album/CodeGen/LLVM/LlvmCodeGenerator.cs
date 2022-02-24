@@ -338,7 +338,13 @@ namespace Album.CodeGen.LLVM {
             var load = BuildLoad(builder, BuildBitCast(builder, fpValue, Int8Type().Pointer().Pointer(), ""), "");
             BuildCall(builder, freeFunction, new[] { load }, "");
             BuildRet(builder, 0.ToLlvmValue());
+        }
 
+        public void WriteGeneratedModuleTo(string path) {
+            VerifyModule(generatedModule, LLVMVerifierFailureAction.LLVMPrintMessageAction, out var message);
+            Console.WriteLine(message);
+            PrintModuleToFile(generatedModule, path, out message);
+            Console.WriteLine(message);
         }
     }
 }
