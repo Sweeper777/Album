@@ -306,6 +306,9 @@ namespace Album.CodeGen.LLVM {
                     operand = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
                     BuildCall(builder, putcharFunction, new LLVMValueRef[] { operand }, "");
                     break;
+                    case LineType.Input:
+                    BuildCall(builder, inputFunction, Array.Empty<LLVMValueRef>(), "");
+                    break;
                 }
             }
         }
