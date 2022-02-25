@@ -327,6 +327,9 @@ namespace Album.CodeGen.LLVM {
                     case LineType.Pop:
                     BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
                     break;
+                    case LineType.Quit:
+                    BuildBr(builder, lastBlock);
+                    break;
                 }
             }
         }
