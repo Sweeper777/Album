@@ -314,6 +314,11 @@ namespace Album.CodeGen.LLVM {
                     result = BuildMul(builder, operand, 2.ToLlvmValue(), "");
                     BuildCall(builder, pushFunction, new[] { result }, "");
                     break;
+                    case LineType.Halve:
+                    operand = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    result = BuildAShr(builder, operand, 1.ToLlvmValue(), "");
+                    BuildCall(builder, pushFunction, new[] { result }, "");
+                    break;
                 }
             }
         }
