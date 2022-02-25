@@ -324,6 +324,9 @@ namespace Album.CodeGen.LLVM {
                     var bottom = BuildInBoundsGEP(builder, fp, new[] { StackSize.ToLlvmValue() }, "");
                     BuildStore(builder, bottom, spValue);
                     break;
+                    case LineType.Pop:
+                    BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    break;
                 }
             }
         }
