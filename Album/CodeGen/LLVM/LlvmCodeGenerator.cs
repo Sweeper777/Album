@@ -309,6 +309,11 @@ namespace Album.CodeGen.LLVM {
                     case LineType.Input:
                     BuildCall(builder, inputFunction, Array.Empty<LLVMValueRef>(), "");
                     break;
+                    case LineType.Double:
+                    operand = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    result = BuildMul(builder, operand, 2.ToLlvmValue(), "");
+                    BuildCall(builder, pushFunction, new[] { result }, "");
+                    break;
                 }
             }
         }
