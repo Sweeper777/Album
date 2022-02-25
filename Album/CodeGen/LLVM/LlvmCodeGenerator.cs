@@ -319,6 +319,11 @@ namespace Album.CodeGen.LLVM {
                     result = BuildAShr(builder, operand, 1.ToLlvmValue(), "");
                     BuildCall(builder, pushFunction, new[] { result }, "");
                     break;
+                    case LineType.Clear:
+                    var fp = BuildLoad(builder, fpValue, "");
+                    var bottom = BuildInBoundsGEP(builder, fp, new[] { StackSize.ToLlvmValue() }, "");
+                    BuildStore(builder, bottom, spValue);
+                    break;
                 }
             }
         }
