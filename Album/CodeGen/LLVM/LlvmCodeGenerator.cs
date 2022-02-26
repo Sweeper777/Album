@@ -69,13 +69,7 @@ namespace Album.CodeGen.LLVM {
             spValue = module.AddGlobalVariable("sp", Int32Type().Pointer(), ConstNull(Int32Type().Pointer()));
             fpValue = module.AddGlobalVariable("fp", Int32Type().Pointer(), ConstNull(Int32Type().Pointer()));
 
-            fpValue = AddGlobal(module, PointerType(Int32Type(), 0), "fp");
-            SetInitializer(fpValue, ConstNull(PointerType(Int32Type(), 0)));
-            SetLinkage(fpValue, LLVMLinkage.LLVMCommonLinkage);
-
-            var intFormat = AddGlobal(module, ArrayType(Int8Type(), 4), "intFormat");
-            SetInitializer(intFormat, ConstString("%d \0", 4, true));
-            SetLinkage(intFormat, LLVMLinkage.LLVMLinkerPrivateLinkage);
+            var intFormat = module.AddGlobalString("intFormat", "%d \0");
 
             void GeneratePushFunction() {
                 pushFunction = AddFunction(module, "push", FunctionType(
