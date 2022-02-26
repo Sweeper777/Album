@@ -42,35 +42,28 @@ namespace Album.CodeGen.LLVM {
         private void LLVMSetup() {
             var module = ModuleCreateWithName("AlbumPlaylist");
 
-            mallocFunction = AddFunction(module, "malloc", FunctionType(
-                PointerType(Int8Type(), 0), new[] { Int64Type() }, false
-            ));
-            SetLinkage(mallocFunction, LLVMLinkage.LLVMExternalLinkage);
+            mallocFunction = module.AddFunction("malloc",
+                Int8Type().Pointer(), Int64Type()
+            );
 
-            freeFunction = AddFunction(module, "free", FunctionType(
-                VoidType(), new[] { PointerType(Int8Type(), 0) }, false
-            ));
-            SetLinkage(freeFunction, LLVMLinkage.LLVMExternalLinkage);
+            freeFunction = module.AddFunction("free",
+                VoidType(), PointerType(Int8Type(), 0)
+            );
 
-            putcharFunction = AddFunction(module, "putchar", FunctionType(
-                Int32Type(), new[] { Int32Type() }, false
-            ));
-            SetLinkage(putcharFunction, LLVMLinkage.LLVMExternalLinkage);
+            putcharFunction = module.AddFunction("putchar",
+                Int32Type(), Int32Type()
+            );
 
             printfFunction = AddFunction(module, "printf", FunctionType(
                 Int32Type(), new[] { Int8Type().Pointer() }, true
             ));
             SetLinkage(printfFunction, LLVMLinkage.LLVMExternalLinkage);
 
-            memmoveFunction = AddFunction(module, "memmove", FunctionType(
-                Int8Type().Pointer(), new[] { Int8Type().Pointer(), Int8Type().Pointer(), Int64Type() }, false
-            ));
-            SetLinkage(memmoveFunction, LLVMLinkage.LLVMExternalLinkage);
+            memmoveFunction = module.AddFunction("memmove",
+                Int8Type().Pointer(), Int8Type().Pointer(), Int8Type().Pointer(), Int64Type()
+            );
 
-            getcharFunction = AddFunction(module, "getchar", FunctionType(
-                Int32Type(), Array.Empty<LLVMTypeRef>(), false
-            ));
-            SetLinkage(getcharFunction, LLVMLinkage.LLVMExternalLinkage);
+            getcharFunction = module.AddFunction("getchar", Int32Type());
 
             builder = CreateBuilder();
             spValue = AddGlobal(module, PointerType(Int32Type(), 0), "sp");
