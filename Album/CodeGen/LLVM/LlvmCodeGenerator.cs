@@ -66,9 +66,8 @@ namespace Album.CodeGen.LLVM {
             getcharFunction = module.AddFunction("getchar", Int32Type());
 
             builder = CreateBuilder();
-            spValue = AddGlobal(module, PointerType(Int32Type(), 0), "sp");
-            SetInitializer(spValue, ConstNull(PointerType(Int32Type(), 0)));
-            SetLinkage(spValue, LLVMLinkage.LLVMCommonLinkage);
+            spValue = module.AddGlobalVariable("sp", Int32Type().Pointer(), ConstNull(Int32Type().Pointer()));
+            fpValue = module.AddGlobalVariable("fp", Int32Type().Pointer(), ConstNull(Int32Type().Pointer()));
 
             fpValue = AddGlobal(module, PointerType(Int32Type(), 0), "fp");
             SetInitializer(fpValue, ConstNull(PointerType(Int32Type(), 0)));
