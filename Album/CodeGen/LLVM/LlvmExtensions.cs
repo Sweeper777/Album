@@ -12,7 +12,7 @@ namespace Album.CodeGen.LLVM {
         public static LLVMTypeRef Pointer(this LLVMTypeRef type)
             => PointerType(type, 0);
 
-        public static LLVMValueRef AddFunction(
+        public static LLVMValueRef AddBuiltinFunction(
             this LLVMModuleRef module,
             string name,
             LLVMTypeRef returnType,

@@ -42,15 +42,15 @@ namespace Album.CodeGen.LLVM {
         private void LLVMSetup() {
             var module = ModuleCreateWithName("AlbumPlaylist");
 
-            mallocFunction = module.AddFunction("malloc",
+            mallocFunction = module.AddBuiltinFunction("malloc",
                 Int8Type().Pointer(), Int64Type()
             );
 
-            freeFunction = module.AddFunction("free",
+            freeFunction = module.AddBuiltinFunction("free",
                 VoidType(), PointerType(Int8Type(), 0)
             );
 
-            putcharFunction = module.AddFunction("putchar",
+            putcharFunction = module.AddBuiltinFunction("putchar",
                 Int32Type(), Int32Type()
             );
 
@@ -59,11 +59,11 @@ namespace Album.CodeGen.LLVM {
             ));
             SetLinkage(printfFunction, LLVMLinkage.LLVMExternalLinkage);
 
-            memmoveFunction = module.AddFunction("memmove",
+            memmoveFunction = module.AddBuiltinFunction("memmove",
                 Int8Type().Pointer(), Int8Type().Pointer(), Int8Type().Pointer(), Int64Type()
             );
 
-            getcharFunction = module.AddFunction("getchar", Int32Type());
+            getcharFunction = module.AddBuiltinFunction("getchar", Int32Type());
 
             builder = CreateBuilder();
             spValue = module.AddGlobalVariable("sp", Int32Type().Pointer(), ConstNull(Int32Type().Pointer()));
