@@ -157,21 +157,21 @@ namespace Album.CodeGen.LLVM {
                 var cycleBlock = AppendBasicBlock(cycleFunction, "");
                 var retBlock = AppendBasicBlock(cycleFunction, "");
 
-                BuildCondBr(builder, comparison, retBlock, cycleBlock);
+                BuildCondBr(builder, comparison, cycleBlock, retBlock);
                 
                 PositionBuilderAtEnd(builder, retBlock);
                 BuildRetVoid(builder);
 
                 PositionBuilderAtEnd(builder, cycleBlock);
                 var bottomValue = BuildLoad(builder, bottom, "");
-                var bottomBytePointer = BuildBitCast(builder, bottom, Int8Type().Pointer(), "");
+                var spBytePointer = BuildBitCast(builder, sp, Int8Type().Pointer(), "");
                 var nextAfterTop = BuildInBoundsGEP(builder, sp, new[] { 1L.ToLlvmValue() }, "");
                 var nextAfterTopBytePointer = BuildBitCast(builder, nextAfterTop, Int8Type().Pointer(), "");
                 var bottomPointerToInt = BuildPtrToInt(builder, bottom, Int64Type(), "");
                 var spPointerToInt = BuildPtrToInt(builder, sp, Int64Type(), "");
                 var stackSize = BuildSub(builder, bottomPointerToInt, spPointerToInt, "");
                 BuildCall(builder, memmoveFunction, new[] { 
-                    bottomBytePointer, nextAfterTopBytePointer, stackSize
+                    nextAfterTopBytePointer, spBytePointer, stackSize
                  }, "");
                  sp = BuildLoad(builder, spValue, "");
                  BuildStore(builder, bottomValue, sp);
