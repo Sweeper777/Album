@@ -93,12 +93,25 @@ namespace Album.CodeGen.LLVM {
                     Int32Type(), Array.Empty<LLVMTypeRef>(), false
                 ));
                 SetLinkage(popFunction, LLVMLinkage.LLVMExternalLinkage);
-                PositionBuilderAtEnd(builder, AppendBasicBlock(popFunction, ""));
+                var mainBlock = AppendBasicBlock(popFunction, "");
+                var popBlock = AppendBasicBlock(popFunction, "");
+                var exitBlock = AppendBasicBlock(popFunction, "");
+                PositionBuilderAtEnd(builder, mainBlock);
+                var sp = BuildLoad(builder, spValue, "");
+                var fp = BuildLoad(builder, fpValue, "");
+                var bottom = BuildInBoundsGEP(builder, fp, new[] { StackSize.ToLlvmValue() }, "");
+                var comparison = BuildICmp(builder, LLVMIntPredicate.LLVMIntEQ, sp, bottom, "");
+                BuildCondBr(builder, comparison, exitBlock, popBlock);
+
+                PositionBuilderAtEnd(builder, popBlock);
                 var load = BuildLoad(builder, spValue, "");
                 var stackValue = BuildLoad(builder, load, "");
                 var stackTop = BuildInBoundsGEP(builder, load, new[] { 1L.ToLlvmValue() }, "");
                 BuildStore(builder, stackTop, spValue);
                 BuildRet(builder, stackValue);
+                PositionBuilderAtEnd(builder, exitBlock);
+                BuildCall(builder, exitFunction, new[] { 1.ToLlvmValue() }, "");
+                BuildRet(builder, 0.ToLlvmValue());
             }
 
             void GenerateSetupFunction() {
