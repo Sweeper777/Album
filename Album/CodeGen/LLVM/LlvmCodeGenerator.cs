@@ -269,7 +269,7 @@ namespace Album.CodeGen.LLVM {
         private void GenerateCodeForBasicBlock(LLVMBasicBlockRef llvmBasicBlock, BasicBlock basicBlock) {
             PositionBuilderAtEnd(builder, llvmBasicBlock);
             foreach (var line in basicBlock.Lines) {
-                GenerateCodeForLine(line);
+                GenerateCodeForLine(line, llvmBasicBlock);
             }
             if (!basicBlock.Lines.Any (x => x.IsAnyBranch(out var _)) && 
                 !basicBlock.Lines.Any (x => x.Type == LineType.Quit)) {
@@ -284,7 +284,7 @@ namespace Album.CodeGen.LLVM {
             }
         }
 
-        private void GenerateCodeForLine(LineInfo line) {
+        private void GenerateCodeForLine(LineInfo line, LLVMBasicBlockRef basicBlock) {
             if (line.IsPush(out var x)) {
                 BuildCall(builder, pushFunction, new[] { x.Value.ToLlvmValue() }, "");
             } else {
