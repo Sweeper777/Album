@@ -192,7 +192,7 @@ namespace Album.CodeGen.LLVM {
                 var cycleBlock = AppendBasicBlock(rcycleFunction, "");
                 var retBlock = AppendBasicBlock(rcycleFunction, "");
 
-                BuildCondBr(builder, comparison, retBlock, cycleBlock);
+                BuildCondBr(builder, comparison, cycleBlock, retBlock);
                 
                 PositionBuilderAtEnd(builder, retBlock);
                 BuildRetVoid(builder);
@@ -206,7 +206,7 @@ namespace Album.CodeGen.LLVM {
                 var spPointerToInt = BuildPtrToInt(builder, sp, Int64Type(), "");
                 var stackSize = BuildSub(builder, bottomPointerToInt, spPointerToInt, "");
                 BuildCall(builder, memmoveFunction, new[] { 
-                    nextAfterTopBytePointer, spBytePointer, stackSize
+                    spBytePointer, nextAfterTopBytePointer, stackSize
                  }, "");
                  sp = BuildLoad(builder, spValue, "");
                  BuildStore(builder, topValue, bottom);
