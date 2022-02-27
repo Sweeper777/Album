@@ -26,6 +26,7 @@ namespace Album.CodeGen.LLVM {
         private LLVMValueRef cycleFunction;
         private LLVMValueRef rcycleFunction;
         private LLVMValueRef inputFunction;
+        private LLVMValueRef exitFunction;
         private LLVMValueRef fpValue;
         private LLVMValueRef spValue;
 
@@ -64,6 +65,8 @@ namespace Album.CodeGen.LLVM {
             );
 
             getcharFunction = module.AddBuiltinFunction("getchar", Int32Type());
+
+            exitFunction = module.AddBuiltinFunction("exit", VoidType(), Int32Type());
 
             builder = CreateBuilder();
             spValue = module.AddGlobalVariable("sp", Int32Type().Pointer(), ConstNull(Int32Type().Pointer()));
