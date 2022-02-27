@@ -36,6 +36,7 @@ namespace Album.CodeGen.LLVM {
         private ControlFlowGraph? cfg;
 
         private Dictionary<BasicBlock, LLVMBasicBlockRef> bbMap = new();
+        private Dictionary<string, LLVMBasicBlockRef> bbNameMap = new();
 
         private const long StackSize = 2000;
         public bool HasGenerated => generatedModule.Pointer != default;
@@ -244,6 +245,7 @@ namespace Album.CodeGen.LLVM {
                 if (basicBlock.FirstLine is LineInfo label && label.IsOriginalSong(out var name)) {
                     var bb = AppendBasicBlock(mainFunction, name);
                     bbMap.Add(basicBlock, bb);
+                    bbNameMap.Add(name, bb);
                 } else {
                     var bb = AppendBasicBlock(mainFunction, "");
                     bbMap.Add(basicBlock, bb);
