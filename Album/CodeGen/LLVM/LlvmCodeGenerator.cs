@@ -287,6 +287,10 @@ namespace Album.CodeGen.LLVM {
         private void GenerateCodeForLine(LineInfo line, LLVMBasicBlockRef basicBlock) {
             if (line.IsPush(out var x)) {
                 BuildCall(builder, pushFunction, new[] { x.Value.ToLlvmValue() }, "");
+            } else if (line.IsBranch(out var label)) {
+                var operand = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                var comparison = BuildICmp(builder, LLVMIntPredicate.LLVMIntNE, operand, 0.ToLlvmValue(), "");
+                BuildCondBr(builder, comparison, bbNameMap[label], GetNextBasicBlock(basicBlock));
             } else {
                 LLVMValueRef operand1, operand2, result, operand;
                 switch (line.Type) {
