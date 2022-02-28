@@ -272,7 +272,7 @@ namespace Album.CodeGen.LLVM {
                 GenerateCodeForLine(line, llvmBasicBlock);
             }
             if (!basicBlock.Lines.Any (x => x.IsAnyBranch(out var _)) && 
-                !basicBlock.Lines.Any (x => x.Type == LineType.Quit)) {
+                !basicBlock.Lines.Any (x => x.Type == LineType.Quit || x.Type == LineType.InfiniteLoop)) {
                 var successors = basicBlock.ControlFlowGraph.Successors[basicBlock];
                 if (!successors.Any()) {
                     BuildBr(builder, lastBlock);
