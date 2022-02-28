@@ -348,6 +348,12 @@ namespace Album.CodeGen.LLVM {
                     result = BuildAnd(builder, operand1, operand2, "");
                     BuildCall(builder, pushFunction, new[] { result }, "");
                     break;
+                    case LineType.Or:
+                    operand1 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    operand2 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    result = BuildOr(builder, operand1, operand2, "");
+                    BuildCall(builder, pushFunction, new[] { result }, "");
+                    break;
                     case LineType.Quit:
                     BuildBr(builder, lastBlock);
                     break;
