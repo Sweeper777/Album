@@ -337,6 +337,11 @@ namespace Album.CodeGen.LLVM {
                     case LineType.Pop:
                     BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
                     break;
+                    case LineType.Dup:
+                    operand = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    BuildCall(builder, pushFunction, new[] { operand }, "");
+                    BuildCall(builder, pushFunction, new[] { operand }, "");
+                    break;
                     case LineType.Quit:
                     BuildBr(builder, lastBlock);
                     break;
