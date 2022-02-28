@@ -291,6 +291,8 @@ namespace Album.CodeGen.LLVM {
                 var operand = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
                 var comparison = BuildICmp(builder, LLVMIntPredicate.LLVMIntNE, operand, 0.ToLlvmValue(), "");
                 BuildCondBr(builder, comparison, bbNameMap[label], GetNextBasicBlock(basicBlock));
+            } else if (line.IsUnconditionalBranch(out label)) {
+                BuildBr(builder, bbNameMap[label]);
             } else {
                 LLVMValueRef operand1, operand2, result, operand;
                 switch (line.Type) {
