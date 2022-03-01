@@ -366,6 +366,9 @@ namespace Album.CodeGen.LLVM {
                     BuildCall(builder, pushFunction, new[] { operand1 }, "");
                     BuildCall(builder, pushFunction, new[] { operand2 }, "");
                     break;
+                    case LineType.Cycle:
+                    BuildCall(builder, cycleFunction, Array.Empty<LLVMValueRef>(), "");
+                    break;
                     case LineType.Quit:
                     BuildBr(builder, lastBlock);
                     break;
