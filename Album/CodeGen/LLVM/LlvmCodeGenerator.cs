@@ -379,6 +379,13 @@ namespace Album.CodeGen.LLVM {
                         BuildZExt(builder, result, Int32Type(), "")
                     }, "");
                     break;
+                    case LineType.TopNegative:
+                    operand = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    result = BuildICmp(builder, LLVMIntPredicate.LLVMIntSLE, operand, 0.ToLlvmValue(), "");
+                    BuildCall(builder, pushFunction, new[] { 
+                        BuildZExt(builder, result, Int32Type(), "")
+                    }, "");
+                    break;
                     case LineType.Quit:
                     BuildBr(builder, lastBlock);
                     break;
