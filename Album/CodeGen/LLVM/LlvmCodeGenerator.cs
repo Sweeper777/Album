@@ -372,6 +372,13 @@ namespace Album.CodeGen.LLVM {
                     case LineType.RCycle:
                     BuildCall(builder, rcycleFunction, Array.Empty<LLVMValueRef>(), "");
                     break;
+                    case LineType.TopPositive:
+                    operand = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    result = BuildICmp(builder, LLVMIntPredicate.LLVMIntSGT, operand, 0.ToLlvmValue(), "");
+                    BuildCall(builder, pushFunction, new[] { 
+                        BuildZExt(builder, result, Int32Type(), "")
+                    }, "");
+                    break;
                     case LineType.Quit:
                     BuildBr(builder, lastBlock);
                     break;
