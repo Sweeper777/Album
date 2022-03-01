@@ -360,6 +360,12 @@ namespace Album.CodeGen.LLVM {
                     result = BuildXor(builder, operand1, operand2, "");
                     BuildCall(builder, pushFunction, new[] { result }, "");
                     break;
+                    case LineType.Swap:
+                    operand1 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    operand2 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    BuildCall(builder, pushFunction, new[] { operand1 }, "");
+                    BuildCall(builder, pushFunction, new[] { operand2 }, "");
+                    break;
                     case LineType.Quit:
                     BuildBr(builder, lastBlock);
                     break;
