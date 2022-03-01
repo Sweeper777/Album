@@ -393,6 +393,15 @@ namespace Album.CodeGen.LLVM {
                         BuildZExt(builder, result, Int32Type(), "")
                     }, "");
                     break;
+                    case LineType.InfiniteLoop:
+                    var loopBlock1 = AppendBasicBlock(mainFunction, "");
+                    var loopBlock2 = AppendBasicBlock(mainFunction, "");
+                    BuildBr(builder, loopBlock1);
+                    PositionBuilderAtEnd(builder, loopBlock1);
+                    BuildBr(builder, loopBlock2);
+                    PositionBuilderAtEnd(builder, loopBlock2);
+                    BuildBr(builder, loopBlock1);
+                    break;
                     case LineType.Quit:
                     BuildBr(builder, lastBlock);
                     break;
