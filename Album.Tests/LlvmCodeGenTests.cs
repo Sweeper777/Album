@@ -8,5 +8,23 @@ namespace Album.Tests {
     public class LlvmCodeGenTests {
         
 
+        private string RunLlvmIr(LlvmCodeGenerator codeGenerator, int expectedExitCode) {
+            codeGenerator.WriteGeneratedModuleTo("TestOutput.ll");
+            using var compileProcess = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = @"clang",
+                    Arguments = "-o TestOutput TestOutput.ll",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = false,
+                    CreateNoWindow = true,
+                    WorkingDirectory = ""
+                }
+            };
+
+            compileProcess.Start();
+            compileProcess.WaitForExit();
+        }
     }
 }
