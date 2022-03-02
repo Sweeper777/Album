@@ -7,11 +7,10 @@ namespace Album {
         [Value(0, MetaName = "Input", Required = true)]
         public string? InputPath { get; set; }
 
-        [Option('o', "output", Required = false, HelpText = "Path to output file.",
-        SetName = "CompileOptions")]
+        [Option('o', "output", Required = false, HelpText = "Path to output file.")]
         public string? OutputPath { get; set; }
 
-        [Option('P', "parse-only", Required = false, SetName = "CompileOptions",
+        [Option('P', "parse-only", Required = false, SetName = "RunOptions",
         HelpText = "Generates the parser output, with optimisations applied, if any")]
         public bool ParseOnly { get; set; }
 
@@ -24,7 +23,7 @@ namespace Album {
         public bool DoesOptimise { get; set; }
 
         [Option("llvm", Required = false, 
-        HelpText = "Outputs LLVM IR")]
+        HelpText = "Outputs LLVM IR", SetName = "RunOptions")]
         public bool UsesLlvm { get; set; }
 
         [Option('w', "warn", Required = false, Default = WarningLevel.Warning,
