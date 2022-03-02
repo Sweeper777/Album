@@ -285,6 +285,12 @@ namespace Album.CodeGen.LLVM {
         }
 
         private void GenerateCodeForLine(LineInfo line, LLVMBasicBlockRef basicBlock) {
+            LLVMValueRef BuildPop() => BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+
+            void BuildPush(LLVMValueRef value) {
+                BuildCall(builder, pushFunction, new[] { value }, "");
+            }
+
             if (line.IsPush(out var x)) {
                 BuildCall(builder, pushFunction, new[] { x.Value.ToLlvmValue() }, "");
             } else if (line.IsBranch(out var label)) {
