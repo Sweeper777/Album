@@ -25,6 +25,25 @@ namespace Album.Tests {
 
             compileProcess.Start();
             compileProcess.WaitForExit();
+            using var executeProcess = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = @"./TestOutput",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true,
+                    WorkingDirectory = ""
+                }
+            };
+
+            executeProcess.Start();
+            executeProcess.WaitForExit();
+            string output = executeProcess.StandardOutput.ReadToEnd();
+            File.Delete("TestOutput");
+            File.Delete("TestOutput.ll");
+            Assert.AreEqual(expectedExitCode, executeProcess.ExitCode);
+            return output;
         }
     }
 }
