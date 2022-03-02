@@ -8,6 +8,27 @@ namespace Album.Tests {
     public class LlvmCodeGenTests {
         
 
+        [TestCase("Album.Tests.50plus1000minus7.album", "1043", false)]
+        [TestCase("Album.Tests.arithmetic.album", "23", false)]
+        [TestCase("Album.Tests.branching.album", "10", false)]
+        [TestCase("Album.Tests.stack.album", "1 3 2 4", false)]
+        [TestCase("Album.Tests.overflow.album", "-2147483648 2147483647", false)]
+        [TestCase("Album.Tests.empty.album", "", false)]
+        [TestCase("Album.Tests.50plus1000minus7.album", "1043", true)]
+        [TestCase("Album.Tests.arithmetic.album", "23", true)]
+        [TestCase("Album.Tests.branching.album", "10", true)]
+        [TestCase("Album.Tests.stack.album", "1 3 2 4", true)]
+        [TestCase("Album.Tests.overflow.album", "-2147483648 2147483647", true)]
+        [TestCase("Album.Tests.empty.album", "", true)]
+        public void ProgramProducesCorrectOutput(string programResourceName, string expectedOutput, bool optimised) {
+            using var stream = typeof(CecilCodeGeneratorTests).Assembly.GetManifestResourceStream(programResourceName);
+            Assert.IsNotNull(stream);
+            LlvmCodeGenerator codegen = new();
+            AlbumCompiler compiler = new(codegen);
+            compiler.EnableOptimisation = optimised;
+            compiler.Compile(stream!);
+            Assert.AreEqual(expectedOutput, RunLlvmIr(codegen, 0).Trim());
+        }
         private string RunLlvmIr(LlvmCodeGenerator codeGenerator, int expectedExitCode) {
             codeGenerator.WriteGeneratedModuleTo("TestOutput.ll");
             using var compileProcess = new Process
