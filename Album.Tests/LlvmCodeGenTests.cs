@@ -29,6 +29,21 @@ namespace Album.Tests {
             compiler.Compile(stream!);
             Assert.AreEqual(expectedOutput, RunLlvmIr(codegen, 0).Trim());
         }
+
+        [TestCase("Album.Tests.pop_empty.album", false)]
+        [TestCase("Album.Tests.clear.album", false)]
+        [TestCase("Album.Tests.pop_empty.album", true)]
+        [TestCase("Album.Tests.clear.album", true)]
+        public void ProgramTerminatesWhenPoppingEmptyStack(string programResourceName, bool optimised) {
+            using var stream = typeof(CecilCodeGeneratorTests).Assembly.GetManifestResourceStream(programResourceName);
+            Assert.IsNotNull(stream);
+            LlvmCodeGenerator codegen = new();
+            AlbumCompiler compiler = new(codegen);
+            compiler.EnableOptimisation = optimised;
+            compiler.Compile(stream!);
+            RunLlvmIr(codegen, 1);
+        }
+
         private string RunLlvmIr(LlvmCodeGenerator codeGenerator, int expectedExitCode) {
             codeGenerator.WriteGeneratedModuleTo("TestOutput.ll");
             using var compileProcess = new Process
