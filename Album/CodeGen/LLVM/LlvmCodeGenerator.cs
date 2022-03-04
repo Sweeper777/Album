@@ -303,37 +303,37 @@ namespace Album.CodeGen.LLVM {
                 LLVMValueRef operand1, operand2, result, operand;
                 switch (line.Type) {
                     case LineType.Add:
-                    operand1 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
-                    operand2 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    operand1 = BuildPop();
+                    operand2 = BuildPop();
                     result = BuildAdd(builder, operand1, operand2, "");
-                    BuildCall(builder, pushFunction, new[] { result }, "");
+                    BuildPush(result);
                     break;
                     case LineType.Sub:
-                    operand1 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
-                    operand2 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    operand1 = BuildPop();
+                    operand2 = BuildPop();
                     result = BuildSub(builder, operand2, operand1, "");
-                    BuildCall(builder, pushFunction, new[] { result }, "");
+                    BuildPush(result);
                     break;
                     case LineType.OutputInt:
-                    operand = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
-                    BuildCall(builder, outputIntFunction, new[] { operand }, "");
+                    operand = BuildPop();
+                    BuildPush(operand);
                     break;
                     case LineType.OutputChar:
-                    operand = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    operand = BuildPop();
                     BuildCall(builder, putcharFunction, new LLVMValueRef[] { operand }, "");
                     break;
                     case LineType.Input:
                     BuildCall(builder, inputFunction, Array.Empty<LLVMValueRef>(), "");
                     break;
                     case LineType.Double:
-                    operand = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    operand = BuildPop();
                     result = BuildMul(builder, operand, 2.ToLlvmValue(), "");
-                    BuildCall(builder, pushFunction, new[] { result }, "");
+                    BuildPush(result);
                     break;
                     case LineType.Halve:
-                    operand = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    operand = BuildPop();
                     result = BuildAShr(builder, operand, 1.ToLlvmValue(), "");
-                    BuildCall(builder, pushFunction, new[] { result }, "");
+                    BuildPush(result);
                     break;
                     case LineType.Clear:
                     var fp = BuildLoad(builder, fpValue, "");
@@ -341,36 +341,36 @@ namespace Album.CodeGen.LLVM {
                     BuildStore(builder, bottom, spValue);
                     break;
                     case LineType.Pop:
-                    BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    BuildPop();
                     break;
                     case LineType.Dup:
-                    operand = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
-                    BuildCall(builder, pushFunction, new[] { operand }, "");
-                    BuildCall(builder, pushFunction, new[] { operand }, "");
+                    operand = BuildPop();
+                    BuildPush(operand);
+                    BuildPush(operand);
                     break;
                     case LineType.And:
-                    operand1 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
-                    operand2 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    operand1 = BuildPop();
+                    operand2 = BuildPop();
                     result = BuildAnd(builder, operand1, operand2, "");
-                    BuildCall(builder, pushFunction, new[] { result }, "");
+                    BuildPush(result);
                     break;
                     case LineType.Or:
-                    operand1 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
-                    operand2 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    operand1 = BuildPop();
+                    operand2 = BuildPop();
                     result = BuildOr(builder, operand1, operand2, "");
-                    BuildCall(builder, pushFunction, new[] { result }, "");
+                    BuildPush(result);
                     break;
                     case LineType.Eor:
-                    operand1 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
-                    operand2 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    operand1 = BuildPop();
+                    operand2 = BuildPop();
                     result = BuildXor(builder, operand1, operand2, "");
-                    BuildCall(builder, pushFunction, new[] { result }, "");
+                    BuildPush(result);
                     break;
                     case LineType.Swap:
-                    operand1 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
-                    operand2 = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
-                    BuildCall(builder, pushFunction, new[] { operand1 }, "");
-                    BuildCall(builder, pushFunction, new[] { operand2 }, "");
+                    operand1 = BuildPop();
+                    operand2 = BuildPop();
+                    BuildPush(operand1);
+                    BuildPush(operand2);
                     break;
                     case LineType.Cycle:
                     BuildCall(builder, cycleFunction, Array.Empty<LLVMValueRef>(), "");
@@ -379,25 +379,19 @@ namespace Album.CodeGen.LLVM {
                     BuildCall(builder, rcycleFunction, Array.Empty<LLVMValueRef>(), "");
                     break;
                     case LineType.TopPositive:
-                    operand = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    operand = BuildPop();
                     result = BuildICmp(builder, LLVMIntPredicate.LLVMIntSGT, operand, 0.ToLlvmValue(), "");
-                    BuildCall(builder, pushFunction, new[] { 
-                        BuildZExt(builder, result, Int32Type(), "")
-                    }, "");
+                    BuildPush(BuildZExt(builder, result, Int32Type(), ""));
                     break;
                     case LineType.TopNegative:
-                    operand = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    operand = BuildPop();
                     result = BuildICmp(builder, LLVMIntPredicate.LLVMIntSLE, operand, 0.ToLlvmValue(), "");
-                    BuildCall(builder, pushFunction, new[] { 
-                        BuildZExt(builder, result, Int32Type(), "")
-                    }, "");
+                    BuildPush(BuildZExt(builder, result, Int32Type(), ""));
                     break;
                     case LineType.TopZero:
-                    operand = BuildCall(builder, popFunction, Array.Empty<LLVMValueRef>(), "");
+                    operand = BuildPop();
                     result = BuildICmp(builder, LLVMIntPredicate.LLVMIntEQ, operand, 0.ToLlvmValue(), "");
-                    BuildCall(builder, pushFunction, new[] { 
-                        BuildZExt(builder, result, Int32Type(), "")
-                    }, "");
+                    BuildPush(BuildZExt(builder, result, Int32Type(), ""));
                     break;
                     case LineType.InfiniteLoop:
                     var loopBlock1 = AppendBasicBlock(mainFunction, "");
